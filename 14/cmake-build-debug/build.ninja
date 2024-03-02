@@ -47,7 +47,7 @@ cmake_ninja_workdir = D$:/uni/programming_foundations/14/cmake-build-debug/
 #############################################
 # Order-only phony target for 14
 
-build cmake_object_order_depends_target_14: phony || CMakeFiles/14.dir
+build cmake_object_order_depends_target_14: phony || cmake_object_order_depends_target_data_structures
 
 build CMakeFiles/14.dir/main.c.obj: C_COMPILER__14_unscanned_Debug D$:/uni/programming_foundations/14/main.c || cmake_object_order_depends_target_14
   DEP_FILE = CMakeFiles\14.dir\main.c.obj.d
@@ -69,9 +69,9 @@ build CMakeFiles/14.dir/libs/data_structures/vector/vector.c.obj: C_COMPILER__14
 #############################################
 # Link the executable 14.exe
 
-build 14.exe: C_EXECUTABLE_LINKER__14_Debug CMakeFiles/14.dir/main.c.obj CMakeFiles/14.dir/libs/data_structures/vector/vector.c.obj
+build 14.exe: C_EXECUTABLE_LINKER__14_Debug CMakeFiles/14.dir/main.c.obj CMakeFiles/14.dir/libs/data_structures/vector/vector.c.obj | libs/data_structures/libdata_structures.a || libs/data_structures/libdata_structures.a
   FLAGS = -g
-  LINK_LIBRARIES = -lkernel32 -luser32 -lgdi32 -lwinspool -lshell32 -lole32 -loleaut32 -luuid -lcomdlg32 -ladvapi32
+  LINK_LIBRARIES = libs/data_structures/libdata_structures.a  -lkernel32 -luser32 -lgdi32 -lwinspool -lshell32 -lole32 -loleaut32 -luuid -lcomdlg32 -ladvapi32
   OBJECT_DIR = CMakeFiles\14.dir
   POST_BUILD = cd .
   PRE_LINK = cd .
@@ -103,9 +103,100 @@ build CMakeFiles/rebuild_cache.util: CUSTOM_COMMAND
 build rebuild_cache: phony CMakeFiles/rebuild_cache.util
 
 # =============================================================================
+# Write statements declared in CMakeLists.txt:
+# D:/uni/programming_foundations/14/CMakeLists.txt
+# =============================================================================
+
+
+#############################################
+# Utility command for edit_cache
+
+build libs/CMakeFiles/edit_cache.util: CUSTOM_COMMAND
+  COMMAND = cmd.exe /C "cd /D D:\uni\programming_foundations\14\cmake-build-debug\libs && "C:\JB\CLion 2023.2.1\bin\cmake\win\x64\bin\cmake.exe" -E echo "No interactive CMake dialog available.""
+  DESC = No interactive CMake dialog available...
+  restat = 1
+
+build libs/edit_cache: phony libs/CMakeFiles/edit_cache.util
+
+
+#############################################
+# Utility command for rebuild_cache
+
+build libs/CMakeFiles/rebuild_cache.util: CUSTOM_COMMAND
+  COMMAND = cmd.exe /C "cd /D D:\uni\programming_foundations\14\cmake-build-debug\libs && "C:\JB\CLion 2023.2.1\bin\cmake\win\x64\bin\cmake.exe" --regenerate-during-build -SD:\uni\programming_foundations\14 -BD:\uni\programming_foundations\14\cmake-build-debug"
+  DESC = Running CMake to regenerate build system...
+  pool = console
+  restat = 1
+
+build libs/rebuild_cache: phony libs/CMakeFiles/rebuild_cache.util
+
+# =============================================================================
+# Write statements declared in CMakeLists.txt:
+# D:/uni/programming_foundations/14/libs/CMakeLists.txt
+# =============================================================================
+
+# =============================================================================
+# Object build statements for STATIC_LIBRARY target data_structures
+
+
+#############################################
+# Order-only phony target for data_structures
+
+build cmake_object_order_depends_target_data_structures: phony || libs/data_structures/CMakeFiles/data_structures.dir
+
+build libs/data_structures/CMakeFiles/data_structures.dir/vector/vector.c.obj: C_COMPILER__data_structures_unscanned_Debug D$:/uni/programming_foundations/14/libs/data_structures/vector/vector.c || cmake_object_order_depends_target_data_structures
+  DEP_FILE = libs\data_structures\CMakeFiles\data_structures.dir\vector\vector.c.obj.d
+  FLAGS = -g -std=gnu11 -fdiagnostics-color=always
+  OBJECT_DIR = libs\data_structures\CMakeFiles\data_structures.dir
+  OBJECT_FILE_DIR = libs\data_structures\CMakeFiles\data_structures.dir\vector
+
+
+# =============================================================================
+# Link build statements for STATIC_LIBRARY target data_structures
+
+
+#############################################
+# Link the static library libs\data_structures\libdata_structures.a
+
+build libs/data_structures/libdata_structures.a: C_STATIC_LIBRARY_LINKER__data_structures_Debug libs/data_structures/CMakeFiles/data_structures.dir/vector/vector.c.obj
+  LANGUAGE_COMPILE_FLAGS = -g
+  OBJECT_DIR = libs\data_structures\CMakeFiles\data_structures.dir
+  POST_BUILD = cd .
+  PRE_LINK = cd .
+  TARGET_FILE = libs\data_structures\libdata_structures.a
+  TARGET_PDB = data_structures.a.dbg
+
+
+#############################################
+# Utility command for edit_cache
+
+build libs/data_structures/CMakeFiles/edit_cache.util: CUSTOM_COMMAND
+  COMMAND = cmd.exe /C "cd /D D:\uni\programming_foundations\14\cmake-build-debug\libs\data_structures && "C:\JB\CLion 2023.2.1\bin\cmake\win\x64\bin\cmake.exe" -E echo "No interactive CMake dialog available.""
+  DESC = No interactive CMake dialog available...
+  restat = 1
+
+build libs/data_structures/edit_cache: phony libs/data_structures/CMakeFiles/edit_cache.util
+
+
+#############################################
+# Utility command for rebuild_cache
+
+build libs/data_structures/CMakeFiles/rebuild_cache.util: CUSTOM_COMMAND
+  COMMAND = cmd.exe /C "cd /D D:\uni\programming_foundations\14\cmake-build-debug\libs\data_structures && "C:\JB\CLion 2023.2.1\bin\cmake\win\x64\bin\cmake.exe" --regenerate-during-build -SD:\uni\programming_foundations\14 -BD:\uni\programming_foundations\14\cmake-build-debug"
+  DESC = Running CMake to regenerate build system...
+  pool = console
+  restat = 1
+
+build libs/data_structures/rebuild_cache: phony libs/data_structures/CMakeFiles/rebuild_cache.util
+
+# =============================================================================
 # Target aliases.
 
 build 14: phony 14.exe
+
+build data_structures: phony libs/data_structures/libdata_structures.a
+
+build libdata_structures.a: phony libs/data_structures/libdata_structures.a
 
 # =============================================================================
 # Folder targets.
@@ -115,7 +206,21 @@ build 14: phony 14.exe
 #############################################
 # Folder: D:/uni/programming_foundations/14/cmake-build-debug
 
-build all: phony 14.exe
+build all: phony 14.exe libs/all
+
+# =============================================================================
+
+#############################################
+# Folder: D:/uni/programming_foundations/14/cmake-build-debug/libs
+
+build libs/all: phony libs/data_structures/all
+
+# =============================================================================
+
+#############################################
+# Folder: D:/uni/programming_foundations/14/cmake-build-debug/libs/data_structures
+
+build libs/data_structures/all: phony libs/data_structures/libdata_structures.a
 
 # =============================================================================
 # Built-in targets
@@ -124,14 +229,14 @@ build all: phony 14.exe
 #############################################
 # Re-run CMake if any of its inputs changed.
 
-build build.ninja: RERUN_CMAKE | C$:/JB/CLion$ 2023.2.1/bin/cmake/win/x64/share/cmake-3.26/Modules/CMakeCInformation.cmake C$:/JB/CLion$ 2023.2.1/bin/cmake/win/x64/share/cmake-3.26/Modules/CMakeCommonLanguageInclude.cmake C$:/JB/CLion$ 2023.2.1/bin/cmake/win/x64/share/cmake-3.26/Modules/CMakeGenericSystem.cmake C$:/JB/CLion$ 2023.2.1/bin/cmake/win/x64/share/cmake-3.26/Modules/CMakeInitializeConfigs.cmake C$:/JB/CLion$ 2023.2.1/bin/cmake/win/x64/share/cmake-3.26/Modules/CMakeLanguageInformation.cmake C$:/JB/CLion$ 2023.2.1/bin/cmake/win/x64/share/cmake-3.26/Modules/CMakeRCInformation.cmake C$:/JB/CLion$ 2023.2.1/bin/cmake/win/x64/share/cmake-3.26/Modules/CMakeSystemSpecificInformation.cmake C$:/JB/CLion$ 2023.2.1/bin/cmake/win/x64/share/cmake-3.26/Modules/CMakeSystemSpecificInitialize.cmake C$:/JB/CLion$ 2023.2.1/bin/cmake/win/x64/share/cmake-3.26/Modules/Compiler/CMakeCommonCompilerMacros.cmake C$:/JB/CLion$ 2023.2.1/bin/cmake/win/x64/share/cmake-3.26/Modules/Compiler/GNU-C.cmake C$:/JB/CLion$ 2023.2.1/bin/cmake/win/x64/share/cmake-3.26/Modules/Compiler/GNU.cmake C$:/JB/CLion$ 2023.2.1/bin/cmake/win/x64/share/cmake-3.26/Modules/Platform/Windows-GNU-C-ABI.cmake C$:/JB/CLion$ 2023.2.1/bin/cmake/win/x64/share/cmake-3.26/Modules/Platform/Windows-GNU-C.cmake C$:/JB/CLion$ 2023.2.1/bin/cmake/win/x64/share/cmake-3.26/Modules/Platform/Windows-GNU.cmake C$:/JB/CLion$ 2023.2.1/bin/cmake/win/x64/share/cmake-3.26/Modules/Platform/Windows-windres.cmake C$:/JB/CLion$ 2023.2.1/bin/cmake/win/x64/share/cmake-3.26/Modules/Platform/Windows.cmake C$:/JB/CLion$ 2023.2.1/bin/cmake/win/x64/share/cmake-3.26/Modules/Platform/WindowsPaths.cmake CMakeCache.txt CMakeFiles/3.26.4/CMakeCCompiler.cmake CMakeFiles/3.26.4/CMakeRCCompiler.cmake CMakeFiles/3.26.4/CMakeSystem.cmake D$:/uni/programming_foundations/14/CMakeLists.txt
+build build.ninja: RERUN_CMAKE | C$:/JB/CLion$ 2023.2.1/bin/cmake/win/x64/share/cmake-3.26/Modules/CMakeCInformation.cmake C$:/JB/CLion$ 2023.2.1/bin/cmake/win/x64/share/cmake-3.26/Modules/CMakeCommonLanguageInclude.cmake C$:/JB/CLion$ 2023.2.1/bin/cmake/win/x64/share/cmake-3.26/Modules/CMakeGenericSystem.cmake C$:/JB/CLion$ 2023.2.1/bin/cmake/win/x64/share/cmake-3.26/Modules/CMakeInitializeConfigs.cmake C$:/JB/CLion$ 2023.2.1/bin/cmake/win/x64/share/cmake-3.26/Modules/CMakeLanguageInformation.cmake C$:/JB/CLion$ 2023.2.1/bin/cmake/win/x64/share/cmake-3.26/Modules/CMakeRCInformation.cmake C$:/JB/CLion$ 2023.2.1/bin/cmake/win/x64/share/cmake-3.26/Modules/CMakeSystemSpecificInformation.cmake C$:/JB/CLion$ 2023.2.1/bin/cmake/win/x64/share/cmake-3.26/Modules/CMakeSystemSpecificInitialize.cmake C$:/JB/CLion$ 2023.2.1/bin/cmake/win/x64/share/cmake-3.26/Modules/Compiler/CMakeCommonCompilerMacros.cmake C$:/JB/CLion$ 2023.2.1/bin/cmake/win/x64/share/cmake-3.26/Modules/Compiler/GNU-C.cmake C$:/JB/CLion$ 2023.2.1/bin/cmake/win/x64/share/cmake-3.26/Modules/Compiler/GNU.cmake C$:/JB/CLion$ 2023.2.1/bin/cmake/win/x64/share/cmake-3.26/Modules/Platform/Windows-GNU-C-ABI.cmake C$:/JB/CLion$ 2023.2.1/bin/cmake/win/x64/share/cmake-3.26/Modules/Platform/Windows-GNU-C.cmake C$:/JB/CLion$ 2023.2.1/bin/cmake/win/x64/share/cmake-3.26/Modules/Platform/Windows-GNU.cmake C$:/JB/CLion$ 2023.2.1/bin/cmake/win/x64/share/cmake-3.26/Modules/Platform/Windows-windres.cmake C$:/JB/CLion$ 2023.2.1/bin/cmake/win/x64/share/cmake-3.26/Modules/Platform/Windows.cmake C$:/JB/CLion$ 2023.2.1/bin/cmake/win/x64/share/cmake-3.26/Modules/Platform/WindowsPaths.cmake CMakeCache.txt CMakeFiles/3.26.4/CMakeCCompiler.cmake CMakeFiles/3.26.4/CMakeRCCompiler.cmake CMakeFiles/3.26.4/CMakeSystem.cmake D$:/uni/programming_foundations/14/CMakeLists.txt D$:/uni/programming_foundations/14/libs/CMakeLists.txt D$:/uni/programming_foundations/14/libs/data_structures/CMakeLists.txt
   pool = console
 
 
 #############################################
 # A missing CMake input file is not an error.
 
-build C$:/JB/CLion$ 2023.2.1/bin/cmake/win/x64/share/cmake-3.26/Modules/CMakeCInformation.cmake C$:/JB/CLion$ 2023.2.1/bin/cmake/win/x64/share/cmake-3.26/Modules/CMakeCommonLanguageInclude.cmake C$:/JB/CLion$ 2023.2.1/bin/cmake/win/x64/share/cmake-3.26/Modules/CMakeGenericSystem.cmake C$:/JB/CLion$ 2023.2.1/bin/cmake/win/x64/share/cmake-3.26/Modules/CMakeInitializeConfigs.cmake C$:/JB/CLion$ 2023.2.1/bin/cmake/win/x64/share/cmake-3.26/Modules/CMakeLanguageInformation.cmake C$:/JB/CLion$ 2023.2.1/bin/cmake/win/x64/share/cmake-3.26/Modules/CMakeRCInformation.cmake C$:/JB/CLion$ 2023.2.1/bin/cmake/win/x64/share/cmake-3.26/Modules/CMakeSystemSpecificInformation.cmake C$:/JB/CLion$ 2023.2.1/bin/cmake/win/x64/share/cmake-3.26/Modules/CMakeSystemSpecificInitialize.cmake C$:/JB/CLion$ 2023.2.1/bin/cmake/win/x64/share/cmake-3.26/Modules/Compiler/CMakeCommonCompilerMacros.cmake C$:/JB/CLion$ 2023.2.1/bin/cmake/win/x64/share/cmake-3.26/Modules/Compiler/GNU-C.cmake C$:/JB/CLion$ 2023.2.1/bin/cmake/win/x64/share/cmake-3.26/Modules/Compiler/GNU.cmake C$:/JB/CLion$ 2023.2.1/bin/cmake/win/x64/share/cmake-3.26/Modules/Platform/Windows-GNU-C-ABI.cmake C$:/JB/CLion$ 2023.2.1/bin/cmake/win/x64/share/cmake-3.26/Modules/Platform/Windows-GNU-C.cmake C$:/JB/CLion$ 2023.2.1/bin/cmake/win/x64/share/cmake-3.26/Modules/Platform/Windows-GNU.cmake C$:/JB/CLion$ 2023.2.1/bin/cmake/win/x64/share/cmake-3.26/Modules/Platform/Windows-windres.cmake C$:/JB/CLion$ 2023.2.1/bin/cmake/win/x64/share/cmake-3.26/Modules/Platform/Windows.cmake C$:/JB/CLion$ 2023.2.1/bin/cmake/win/x64/share/cmake-3.26/Modules/Platform/WindowsPaths.cmake CMakeCache.txt CMakeFiles/3.26.4/CMakeCCompiler.cmake CMakeFiles/3.26.4/CMakeRCCompiler.cmake CMakeFiles/3.26.4/CMakeSystem.cmake D$:/uni/programming_foundations/14/CMakeLists.txt: phony
+build C$:/JB/CLion$ 2023.2.1/bin/cmake/win/x64/share/cmake-3.26/Modules/CMakeCInformation.cmake C$:/JB/CLion$ 2023.2.1/bin/cmake/win/x64/share/cmake-3.26/Modules/CMakeCommonLanguageInclude.cmake C$:/JB/CLion$ 2023.2.1/bin/cmake/win/x64/share/cmake-3.26/Modules/CMakeGenericSystem.cmake C$:/JB/CLion$ 2023.2.1/bin/cmake/win/x64/share/cmake-3.26/Modules/CMakeInitializeConfigs.cmake C$:/JB/CLion$ 2023.2.1/bin/cmake/win/x64/share/cmake-3.26/Modules/CMakeLanguageInformation.cmake C$:/JB/CLion$ 2023.2.1/bin/cmake/win/x64/share/cmake-3.26/Modules/CMakeRCInformation.cmake C$:/JB/CLion$ 2023.2.1/bin/cmake/win/x64/share/cmake-3.26/Modules/CMakeSystemSpecificInformation.cmake C$:/JB/CLion$ 2023.2.1/bin/cmake/win/x64/share/cmake-3.26/Modules/CMakeSystemSpecificInitialize.cmake C$:/JB/CLion$ 2023.2.1/bin/cmake/win/x64/share/cmake-3.26/Modules/Compiler/CMakeCommonCompilerMacros.cmake C$:/JB/CLion$ 2023.2.1/bin/cmake/win/x64/share/cmake-3.26/Modules/Compiler/GNU-C.cmake C$:/JB/CLion$ 2023.2.1/bin/cmake/win/x64/share/cmake-3.26/Modules/Compiler/GNU.cmake C$:/JB/CLion$ 2023.2.1/bin/cmake/win/x64/share/cmake-3.26/Modules/Platform/Windows-GNU-C-ABI.cmake C$:/JB/CLion$ 2023.2.1/bin/cmake/win/x64/share/cmake-3.26/Modules/Platform/Windows-GNU-C.cmake C$:/JB/CLion$ 2023.2.1/bin/cmake/win/x64/share/cmake-3.26/Modules/Platform/Windows-GNU.cmake C$:/JB/CLion$ 2023.2.1/bin/cmake/win/x64/share/cmake-3.26/Modules/Platform/Windows-windres.cmake C$:/JB/CLion$ 2023.2.1/bin/cmake/win/x64/share/cmake-3.26/Modules/Platform/Windows.cmake C$:/JB/CLion$ 2023.2.1/bin/cmake/win/x64/share/cmake-3.26/Modules/Platform/WindowsPaths.cmake CMakeCache.txt CMakeFiles/3.26.4/CMakeCCompiler.cmake CMakeFiles/3.26.4/CMakeRCCompiler.cmake CMakeFiles/3.26.4/CMakeSystem.cmake D$:/uni/programming_foundations/14/CMakeLists.txt D$:/uni/programming_foundations/14/libs/CMakeLists.txt D$:/uni/programming_foundations/14/libs/data_structures/CMakeLists.txt: phony
 
 
 #############################################

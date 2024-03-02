@@ -1,5 +1,7 @@
 #include <stdlib.h>
 #include <stdio.h>
+#include <stdbool.h>
+#include <assert.h>
 #include "vector.h"
 
 
@@ -22,9 +24,9 @@ void reserve(vector* v, size_t new_capacity)
 {
     if (v->capacity != 0 && new_capacity == 0)
     {
-        free(v->data);
+        deleteVector(v);
+        clear(v);
         v->data = NULL;
-        v->size = 0;
         v->capacity = 0;
     }
     else if (new_capacity != 0)
@@ -52,8 +54,10 @@ void reserve(vector* v, size_t new_capacity)
             if (data)
             {
                 v->data = data;
-                v->size = new_capacity;
                 v->capacity = new_capacity;
+
+                if (v->size > v->capacity)
+                    shrinkToFit(v);
             }
             else
             {
@@ -75,7 +79,7 @@ void clear(vector* v)
 // освобождает память, выделенную под неиспользуемые элементы
 void shrinkToFit(vector* v)
 {
-    v->capacity = v->size;
+    v->size = v->capacity;
 }
 
 

@@ -13,7 +13,8 @@
 	{
 		"commands" : 
 		[
-			"add_executable"
+			"add_executable",
+			"target_link_libraries"
 		],
 		"files" : 
 		[
@@ -28,6 +29,12 @@
 				"command" : 0,
 				"file" : 0,
 				"line" : 6,
+				"parent" : 0
+			},
+			{
+				"command" : 1,
+				"file" : 0,
+				"line" : 11,
 				"parent" : 0
 			}
 		]
@@ -57,6 +64,13 @@
 			]
 		}
 	],
+	"dependencies" : 
+	[
+		{
+			"backtrace" : 2,
+			"id" : "data_structures::@396ab3a44f37844d7cdb"
+		}
+	],
 	"id" : "14::@6890427a1f51a3e7e1df",
 	"link" : 
 	{
@@ -69,6 +83,11 @@
 			{
 				"fragment" : "",
 				"role" : "flags"
+			},
+			{
+				"backtrace" : 2,
+				"fragment" : "libs\\data_structures\\libdata_structures.a",
+				"role" : "libraries"
 			},
 			{
 				"fragment" : "-lkernel32 -luser32 -lgdi32 -lwinspool -lshell32 -lole32 -loleaut32 -luuid -lcomdlg32 -ladvapi32",

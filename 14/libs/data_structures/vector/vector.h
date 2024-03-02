@@ -2,6 +2,7 @@
 #define INC_14_VECTOR_H
 
 #include <stdio.h>
+#include <stdbool.h>
 
 typedef struct vector
 {

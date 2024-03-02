@@ -100,6 +100,12 @@
 			"isCMake" : true,
 			"isExternal" : true,
 			"path" : "C:/JB/CLion 2023.2.1/bin/cmake/win/x64/share/cmake-3.26/Modules/CMakeCommonLanguageInclude.cmake"
+		},
+		{
+			"path" : "libs/CMakeLists.txt"
+		},
+		{
+			"path" : "libs/data_structures/CMakeLists.txt"
 		}
 	],
 	"kind" : "cmakeFiles",

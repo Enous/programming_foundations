@@ -1,4 +1,13 @@
 "C:\JB\CLion 2023.2.1\bin\cmake\win\x64\bin\cmake.exe" -DCMAKE_BUILD_TYPE=Debug "-DCMAKE_MAKE_PROGRAM=C:/JB/CLion 2023.2.1/bin/ninja/win/x64/ninja.exe" -G Ninja -S D:\uni\programming_foundations\14 -B D:\uni\programming_foundations\14\cmake-build-debug
--- Configuring done (0.1s)
--- Generating done (0.0s)
--- Build files have been written to: D:/uni/programming_foundations/14/cmake-build-debug
+-- Configuring done (0.2s)
+CMake Error at libs/data_structures/CMakeLists.txt:1 (add_library):
+  Cannot find source file:
+
+    vector/vector.c,
+
+
+CMake Error at libs/data_structures/CMakeLists.txt:1 (add_library):
+  No SOURCES given to target: data_structures
+
+
+CMake Generate step failed.  Build files cannot be regenerated correctly.
