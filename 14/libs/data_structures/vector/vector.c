@@ -27,7 +27,7 @@ void reserve(vector* v, size_t new_capacity)
         deleteVector(v);
         clear(v);
         v->data = NULL;
-        v->capacity = 0;
+        v->capacity = new_capacity;
     }
     else if (new_capacity != 0)
     {
