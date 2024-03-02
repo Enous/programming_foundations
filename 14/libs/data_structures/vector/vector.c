@@ -38,7 +38,6 @@ void reserve(vector* v, size_t new_capacity)
             if (data)
             {
                 v->data = data;
-                v->size = new_capacity;
                 v->capacity = new_capacity;
             }
             else
@@ -87,4 +86,55 @@ void shrinkToFit(vector* v)
 void deleteVector(vector* v)
 {
     free(v->data);
+}
+
+
+// возвращает true, если вектор пустой,
+// и false в противном случае
+bool isEmpty(vector* v)
+{
+    return v->size == 0;
+}
+
+
+// возвращает true, если вектор полный,
+// и false в противном случае
+bool isFull(vector* v)
+{
+    return v->size == v->capacity;
+}
+
+
+// возвращает i-й элемент вектора
+int getVectorValue(vector* v, size_t idx)
+{
+    return v->data[idx];
+}
+
+
+// добавляет элемент x в конец вектора v
+void pushBack(vector* v, int x)
+{
+    if (isFull(v))
+    {
+        size_t new_capacity = 0;
+
+        if (v->capacity == 0)
+            new_capacity = 1;
+        else
+            new_capacity = v->capacity * 2;
+
+        reserve(v, new_capacity);
+    }
+
+    v->data[(v->size)++] = x;
+}
+
+
+void popBack(vector* v)
+{
+    assert(!isEmpty(v));
+
+    (v->size)--;
+    v->data = realloc(v->data, v->size);
 }
