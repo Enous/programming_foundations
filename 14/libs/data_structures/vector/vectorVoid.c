@@ -2,6 +2,7 @@
 #include <stdio.h>
 #include <stdbool.h>
 #include <assert.h>
+#include <memory.h>
 #include "vectorVoid.h"
 
 // возвращает структуру-дескриптор вектор из n значений
@@ -47,7 +48,7 @@ void reserveV(vectorVoid* v, size_t new_capacity)
         }
         else
         {
-            int* data = realloc(v->data, new_capacity);
+            int* data = realloc(v->data, new_capacity * v->base_type_size);
 
             if (data)
             {
@@ -85,4 +86,71 @@ void clearV(vectorVoid* v)
 void deleteVectorV(vectorVoid* v)
 {
     free(v->data);
+}
+
+
+// возвращает true, если вектор пустой,
+// и false в противном случае
+bool isEmptyV(vectorVoid* v)
+{
+    return v->size == 0;
+}
+
+
+// возвращает true, если вектор полный,
+// и false в противном случае
+bool isFullV(vectorVoid* v)
+{
+    return v->size == v->capacity;
+}
+
+
+// записывает по адресу destination idx-ый элемент вектора v
+void getVectorValueV(vectorVoid* v, size_t idx, void* destination)
+{
+    assert(idx < v->size);
+
+    memcpy(destination, v->data + idx * v->base_type_size, v->base_type_size);
+}
+
+
+// записывает на idx-ый элемент вектора v значение,
+// расположенное по адресу source
+void setVectorValueV(vectorVoid* v, size_t idx, void* source)
+{
+    assert(idx < v->size);
+
+    memcpy(v->data + idx * v->base_type_size, source, v->base_type_size);
+}
+
+
+// удаляет последний элемент из вектора
+void popBackV(vectorVoid* v)
+{
+    assert(!isEmptyV(v));
+
+    (v->size)--;
+    v->data = realloc(v->data, v->size);
+}
+
+
+// записывает по адресу пустой ячейки памяти, идущей после последней заполненной ячейки,
+// значение, расположенное по адресу source
+void pushBackV(vectorVoid* v, void* source)
+{
+    if (isFullV(v))
+    {
+        size_t new_capacity = 0;
+
+        if (v->capacity == 0)
+            new_capacity = 1;
+        else
+            new_capacity = v->capacity * 2;
+
+        reserveV(v, new_capacity);
+    }
+
+    memcpy(v->data + v->size * v->base_type_size, source, v->base_type_size);
+
+    (v->size)++;
 }
