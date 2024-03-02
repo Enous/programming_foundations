@@ -131,10 +131,36 @@ void pushBack(vector* v, int x)
 }
 
 
+// удаляет последний элемент из вектора
 void popBack(vector* v)
 {
     assert(!isEmpty(v));
 
     (v->size)--;
     v->data = realloc(v->data, v->size);
+}
+
+
+// возвращает указатель на idx-ый элемент вектора
+int* getPointerToVectorElem(vector* v, size_t idx)
+{
+    if (idx < v->size)
+        return v->data + idx;
+
+    fprintf(stderr, "IndexError: Index (%lld) out of range", idx);
+    exit(1);
+}
+
+
+// возвращает указатель на последний элемент вектора
+int* back(vector* v)
+{
+    return v->data + v->size - 1;
+}
+
+
+// возвращает указатель на нулевой элемент вектора
+int* front(vector* v)
+{
+    return v->data;
 }

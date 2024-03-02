@@ -45,4 +45,13 @@ void pushBack(vector*, int);
 // удаляет последний элемент из вектора
 void popBack(vector*);
 
+// возвращает указатель на idx-ый элемент вектора
+int* getPointerToVectorElem(vector*, size_t);
+
+// возвращает указатель на последний элемент вектора
+int* back(vector*);
+
+// возвращает указатель на нулевой элемент вектора
+int* front(vector*);
+
 #endif //INC_14_VECTOR_H
