@@ -1,7 +1,6 @@
 #include <stdio.h>
-#include <stdint.h>
 #include "libs/data_structures/vector/vector.h"
-#include <stdbool.h>
+#include "libs/data_structures/vector/vectorVoid.h"
 #include <assert.h>
 
 void test_pushBack_emptyVector()
@@ -128,7 +127,7 @@ void test()
 
 int main()
 {
-    test();
+    vectorVoid v_void;
 
     return 0;
 }
