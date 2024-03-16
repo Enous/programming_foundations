@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <assert.h>
 
 #include "matrix.h"
 
@@ -74,7 +75,7 @@ void outputMatrix(matrix mx)
     for (int i = 0; i < mx.rows_count; i++)
     {
         for (int j = 0; j < mx.cols_count; j++)
-            printf("%d", mx.values[i][j]);
+            printf("%d ", mx.values[i][j]);
 
         printf("\n");
     }
@@ -85,5 +86,35 @@ void outputMatrix(matrix mx)
 void outputMatrices(matrix* mxs, int matrices_count)
 {
     for (int i = 0; i < matrices_count; i++)
+    {
         outputMatrix(mxs[i]);
+        printf("\n");
+    }
+}
+
+
+/* обмен строк матрицы по индексам */
+void swapRows(matrix mx, int i1, int i2)
+{
+    assert(i1 >= 0 && i1 < mx.rows_count);
+    assert(i2 >= 0 && i2 < mx.rows_count);
+
+    int* temp = mx.values[i1];
+    mx.values[i1] = mx.values[i2];
+    mx.values[i2] = temp;
+}
+
+
+/* обмен столбцов матрицы по индексам */
+void swapCols(matrix mx, int j1, int j2)
+{
+    assert(j1 >= 0 && j1 < mx.cols_count);
+    assert(j2 >= 0 && j2 < mx.cols_count);
+
+    for (int i = 0; i < mx.rows_count; i++)
+    {
+        int temp = mx.values[i][j1];
+        mx.values[i][j1] = mx.values[i][j2];
+        mx.values[i][j2] = temp;
+    }
 }

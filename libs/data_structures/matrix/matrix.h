@@ -40,4 +40,10 @@ void outputMatrix(matrix);
 /* вывод массива их matrices_count, хранящегося по адресу mxs */
 void outputMatrices(matrix*, int);
 
+/* обмен строк матрицы по индексам */
+void swapRows(matrix, int, int);
+
+/* обмен столбцов матрицы по индексам */
+void swapCols(matrix, int, int);
+
 #endif //LIBS_MATRIX_H
