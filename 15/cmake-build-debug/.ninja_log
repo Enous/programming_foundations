@@ -1,0 +1,6 @@
+# ninja log v5
+2	106	7322874469729167	build.ninja	2d8d7135a0bfca4f
+255	391	7322866346954886	libdata_structures.a	e6904a22a58c0772
+2	83	7322862850175551	CMakeFiles/15.dir/main.c.obj	826f8081461e9b0e
+392	492	7322866347920872	15.exe	ace872efb83abd7f
+2	254	7322866345554242	CMakeFiles/data_structures.dir/D_/uni/programming_foundations/libs/data_structures/vector/vector.c.obj	afc89073ceb5013e
