@@ -25,7 +25,19 @@ matrix* getMemArrayOfMatrices(int, int, int);
 /* освобождает память, выделенную под хранение матрицы mx */
 void freeMemMatrix(matrix*);
 
-/*  освобождает память, выделенную под хранение массива mxs из matrices_count матриц */
+/* освобождает память, выделенную под хранение массива mxs из matrices_count матриц */
 void freeMemMatrices(matrix*, int);
+
+/* ввод матрицы */
+void inputMatrix(matrix* mx);
+
+/* ввод массива из matrices_count матриц, хранящегося по адресу mxs */
+void inputMatrices(matrix*, int);
+
+/* вывод матрицы */
+void outputMatrix(matrix);
+
+/* вывод массива их matrices_count, хранящегося по адресу mxs */
+void outputMatrices(matrix*, int);
 
 #endif //LIBS_MATRIX_H

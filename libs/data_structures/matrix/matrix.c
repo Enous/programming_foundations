@@ -39,11 +39,51 @@ void freeMemMatrix(matrix* mx)
 }
 
 
-/*  освобождает память, выделенную под хранение массива mxs из matrices_count матриц */
+/* освобождает память, выделенную под хранение массива mxs из matrices_count матриц */
 void freeMemMatrices(matrix* mxs, int matrices_count)
 {
     for (int i = 0; i < matrices_count; i++)
         freeMemMatrix(&mxs[i]);
 
     free(mxs);
+}
+
+
+/* ввод матрицы */
+void inputMatrix(matrix* mx)
+{
+    for (int i = 0; i < mx->rows_count; i++)
+    {
+        for (int j = 0; j < mx->cols_count; j++)
+            scanf("%d", &mx->values[i][j]);
+    }
+}
+
+
+/* ввод массива из matrices_count матриц, хранящегося по адресу mxs */
+void inputMatrices(matrix* mxs, int matrices_count)
+{
+    for (int i = 0; i < matrices_count; i++)
+        inputMatrix(&mxs[i]);
+}
+
+
+/* вывод матрицы */
+void outputMatrix(matrix mx)
+{
+    for (int i = 0; i < mx.rows_count; i++)
+    {
+        for (int j = 0; j < mx.cols_count; j++)
+            printf("%d", mx.values[i][j]);
+
+        printf("\n");
+    }
+}
+
+
+/* вывод массива их matrices_count, хранящегося по адресу mxs */
+void outputMatrices(matrix* mxs, int matrices_count)
+{
+    for (int i = 0; i < matrices_count; i++)
+        outputMatrix(mxs[i]);
 }
