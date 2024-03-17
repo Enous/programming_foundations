@@ -46,4 +46,19 @@ void swapRows(matrix, int, int);
 /* обмен столбцов матрицы по индексам */
 void swapCols(matrix, int, int);
 
+/* возвращает сумму элементов целочисленного массива */
+int getSum(int*, int);
+
+/* выполняет сортировку вставками строк
+   матрицы по неубыванию значения функции,
+   применяемой для строк */
+void insertionSortMatrixRows(matrix, int (*)(int*, int));
+
+/* выполняет сортировку выбором строк
+   матрицы по неубыванию значения функции,
+   применяемой для столбцов */
+void selectionSortMatrixCols(matrix, int (*)(int*, int));
+
+void swap(int*, int*);
+
 #endif //LIBS_MATRIX_H
