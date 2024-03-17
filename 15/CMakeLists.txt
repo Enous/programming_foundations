@@ -4,7 +4,8 @@ project("15" C)
 set(CMAKE_C_STANDARD 11)
 include_directories(../libs/data_structures/matrix)
 
-add_library(data_structures ../libs/data_structures/matrix/matrix.c)
+add_library(data_structures ../libs/data_structures/matrix/matrix.c
+                            ../libs/data_structures/vector/vector.c)
 
 add_executable(15 main.c)
 

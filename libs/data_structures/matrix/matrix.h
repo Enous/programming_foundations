@@ -61,4 +61,40 @@ void selectionSortMatrixCols(matrix, int (*)(int*, int));
 
 void swap(int*, int*);
 
+/* возвращает true, если матрица является квадратной,
+   и false в противном случае */
+bool isSquareMatrix(matrix*);
+
+
+/* возвращает true, если две матрицы равны,
+   и false в противном случае */
+bool TwoMatricesAreEqual(matrix*, matrix*);
+
+/* возвращает true, если матрица является единичной,
+   и false в противном случае */
+bool isIdentityMatrix(matrix*);
+
+/* возвращает значение true, если матрица является симметричной,
+   и false в противном случае */
+bool isSymmetricMatrix(matrix*);
+
+/* транспонирует квадратную матрицу */
+void transposeSquareMatrix(matrix*);
+
+/* транспонирует матрицу */
+void transposeMatrix(matrix*);
+
+/* возвращает позицию минимального элемента матрицы */
+position getMinValuePos(matrix);
+
+/* возвращает позицию минимального элемента матрицы */
+position getMaxValuePos(matrix);
+
+/* возвращает матрицу, построенную из элементов данного массива */
+matrix createMatrixFromArray(const int*, size_t, size_t);
+
+/* возвращает указатель на нулевую матрицу массива из матриц, размещенных
+   в динамической памяти, построенных из элементов данного массива */
+matrix* createMatrixArrayFromArray(const int*, size_t, size_t, size_t);
+
 #endif //LIBS_MATRIX_H

@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <assert.h>
 #include <stdbool.h>
+#include <memory.h>
 
 #include "matrix.h"
 
@@ -136,9 +137,9 @@ int getSum(int* arr, int size)
 /* обменивает значение двух целочисленных переменных по адресам */
 void swap(int* a, int* b)
 {
-    int* temp = a;
+    int temp = *a;
     *a = *b;
-    *b = *temp;
+    *b = temp;
 }
 
 /* выполняет сортировку вставками строк
@@ -202,4 +203,224 @@ void selectionSortMatrixCols(matrix mx, int (*condition)(int*, int))
             swapCols(mx, min_idx, i);
         }
     }
+}
+
+
+/* возвращает true, если матрица является квадратной,
+   и false в противном случае */
+bool isSquareMatrix(matrix* mx)
+{
+    return mx->cols_count == mx->rows_count;
+}
+
+
+/* возвращает true, если две матрицы равны,
+   и false в противном случае */
+bool TwoMatricesAreEqual(matrix* mx1, matrix* mx2)
+{
+    if (mx1->rows_count != mx2->rows_count || mx1->cols_count != mx2->cols_count)
+        return false;
+
+    for (int i = 0; i < mx1->rows_count; i++)
+    {
+        if (memcmp(mx1->values[i], mx2->values[i], sizeof(int) * mx1->cols_count) != 0)
+            return false;
+    }
+
+    return true;
+}
+
+
+/* возвращает true, если матрица является единичной,
+   и false в противном случае */
+bool isIdentityMatrix(matrix* mx)
+{
+    if (mx->rows_count != mx->cols_count)
+        return false;
+
+    if (mx->values[0][0] == 1)
+    {
+        for (int i = 0; i < mx->rows_count; i++)
+        {
+            for (int j = 0; j < mx->cols_count; j++)
+            {
+                if (i == j)
+                {
+                    if (mx->values[i][j] != 1)
+                        return false;
+                }
+                else
+                {
+                    if (mx->values[i][j] != 0)
+                        return false;
+                }
+            }
+        }
+    }
+    else if (mx->values[0][mx->cols_count - 1] == 1)
+    {
+        for (int i = 0; i < mx->rows_count; i++)
+        {
+            for (int j = 0; j < mx->cols_count; j++)
+            {
+                if (i == mx->cols_count - j - 1)
+                {
+                    if (mx->values[i][j] != 1)
+                        return false;
+                }
+                else
+                {
+                    if (mx->values[i][j] != 0)
+                        return false;
+                }
+            }
+        }
+    }
+    else
+        return false;
+
+    return true;
+}
+
+
+/* возвращает значение true, если матрица является симметричной,
+   и false в противном случае */
+bool isSymmetricMatrix(matrix* mx)
+{
+    if (mx->rows_count != mx->cols_count)
+        return false;
+
+    for (int i = 0; i < mx->rows_count; i++)
+    {
+        for (int j = i + 1; j < mx->cols_count; j++)
+        {
+            if (mx->values[i][j] != mx->values[j][i])
+                return false;
+        }
+    }
+
+    return true;
+}
+
+
+/* транспонирует квадратную матрицу */
+void transposeSquareMatrix(matrix* mx)
+{
+    for (int i = 0; i < mx->rows_count; i++)
+    {
+        for (int j = i + 1; j < mx->cols_count; j++)
+            swap(&mx->values[i][j], &mx->values[j][i]);
+    }
+}
+
+
+/* транспонирует матрицу */
+void transposeMatrix(matrix* mx)
+{
+    if (mx->rows_count > mx->cols_count)
+    {
+        for (int i = 0; i < mx->rows_count; i++)
+        {
+            mx->values[i] = realloc(mx->values[i], sizeof(int) * mx->rows_count);
+
+            for (int j = i + 1; j < mx->rows_count; j++)
+                swap(&mx->values[i][j], &mx->values[j][i]);
+        }
+
+        swap(&mx->rows_count, &mx->cols_count);
+
+        mx->values = realloc(mx->values, sizeof(int*) * mx->rows_count);
+    }
+    else
+    {
+        mx->values = realloc(mx->values, sizeof(int*) * mx->cols_count);
+
+        for (int i = mx->rows_count; i < mx->cols_count; i++)
+            mx->values[i] = malloc(sizeof(int) * mx->rows_count);
+
+        for (int i = 0; i < mx->cols_count; i++)
+        {
+            for (int j = i + 1; j < mx->cols_count; j++)
+                swap(&mx->values[i][j], &mx->values[j][i]);
+        }
+
+        swap(&mx->rows_count, &mx->cols_count);
+
+        for (int i = 0; i < mx->cols_count; i++)
+            mx->values[i] = realloc(mx->values[i], sizeof(int) * mx->cols_count);
+    }
+}
+
+
+/* возвращает позицию минимального элемента матрицы */
+position getMinValuePos(matrix mx)
+{
+    position min_elem_pos = {0, 0};
+
+    for (int i = 0; i < mx.rows_count; i++)
+    {
+        for (int j = 0; j < mx.cols_count; j++)
+        {
+            if (mx.values[i][j] < mx.values[min_elem_pos.row_idx][min_elem_pos.col_idx])
+            {
+                min_elem_pos.row_idx = i;
+                min_elem_pos.col_idx = j;
+            }
+        }
+    }
+
+    return min_elem_pos;
+}
+
+
+/* возвращает позицию максимального элемента матрицы */
+position getMaxValuePos(matrix mx)
+{
+    position max_elem_pos = {0, 0};
+
+    for (int i = 0; i < mx.rows_count; i++)
+    {
+        for (int j = 0; j < mx.cols_count; j++)
+        {
+            if (mx.values[i][j] > mx.values[max_elem_pos.row_idx][max_elem_pos.col_idx])
+            {
+                max_elem_pos.row_idx = i;
+                max_elem_pos.col_idx = j;
+            }
+        }
+    }
+
+    return max_elem_pos;
+}
+
+
+/* возвращает матрицу, построенную из элементов данного массива */
+matrix createMatrixFromArray(const int* arr, size_t rows_count, size_t cols_count)
+{
+    matrix m = getMemMatrix(rows_count, cols_count);
+
+    int k = 0;
+
+    for (int i = 0; i < rows_count; i++)
+        for (int j = 0; j < cols_count; j++)
+            m.values[i][j] = arr[k++];
+
+    return m;
+}
+
+
+/* возвращает указатель на нулевую матрицу массива из матриц, размещенных
+   в динамической памяти, построенных из элементов данного массива */
+matrix* createMatrixArrayFromArray(const int* values, size_t matrices_count, size_t rows_count, size_t cols_count)
+{
+    matrix* mxs = getMemArrayOfMatrices(matrices_count, rows_count, cols_count);
+
+    int l = 0;
+
+    for (size_t k = 0; k < matrices_count; k++)
+        for (size_t i = 0; i < rows_count; i++)
+            for (size_t j = 0; j < cols_count; j++)
+                mxs[k].values[i][j] = values[l++];
+
+    return mxs;
 }
