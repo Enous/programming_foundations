@@ -12,6 +12,7 @@ int getMax(int*, int);
 /* упорядочивает строки матрицы по неубыванию наибольших элементов строк */
 void sortMatrixRowsByMaxRowElem(matrix*);
 
-
+/* упорядочивает столбцы матрицы по неубыванию минимальных элементов столбцов */
+void sortMatrixColsByMinColElem(matrix*);
 
 #endif //INC_16_FUNCS_H

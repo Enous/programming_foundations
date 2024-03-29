@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <limits.h>
 
 #include "funcs.h"
 
@@ -35,4 +36,26 @@ int getMax(int* arr, int size)
 void sortMatrixRowsByMaxRowElem(matrix* mx)
 {
     insertionSortMatrixRows(*mx, getMax);
+}
+
+
+/* возвращает наименьший элемент целочисленного массива */
+int getMin(int* arr, int size)
+{
+    int min = INT_MAX;
+
+    for (int i = 0; i < size; i++)
+    {
+        if (min > arr[i])
+            min = arr[i];
+    }
+
+    return min;
+}
+
+
+/* упорядочивает столбцы матрицы по неубыванию минимальных элементов столбцов */
+void sortMatrixColsByMinColElem(matrix* mx)
+{
+    selectionSortMatrixCols(*mx, getMin);
 }

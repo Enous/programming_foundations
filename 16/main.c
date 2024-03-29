@@ -75,10 +75,10 @@ void test_sortMatrixRowsByMaxRowElem()
 
     matrix mx1 = createMatrixFromArray(
             (int[]) {
-                    6, 5, 4,
+                    4, 5, 6,
                     3, 2, 1,
-                    10, 3, 5,
-                    7, 1, 4
+                    5, 3, 10,
+                    1, 7, 4
             }, rows_count1, cols_count1);
 
     sortMatrixRowsByMaxRowElem(&mx1);
@@ -86,9 +86,40 @@ void test_sortMatrixRowsByMaxRowElem()
     matrix mx2 = createMatrixFromArray(
             (int[]) {
                     3, 2, 1,
-                    6, 5, 4,
-                    7, 1, 4,
-                    10, 3, 5
+                    4, 5, 6,
+                    1, 7, 4,
+                    5, 3, 10
+            }, rows_count1, cols_count1);
+
+    bool res = TwoMatricesAreEqual(&mx1, &mx2);
+    bool ans = true;
+
+    assert(res == ans);
+
+    freeMemMatrix(&mx1);
+    freeMemMatrix(&mx2);
+}
+
+
+void test_sortMatrixColsByMinColElem()
+{
+    int rows_count1 = 3;
+    int cols_count1 = 6;
+
+    matrix mx1 = createMatrixFromArray(
+            (int[]) {
+                    3, 5, 2, 4, 3, 3,
+                    2, 5, 1, 8, 2, 7,
+                    6, 1, 4, 4, 8, 3
+            }, rows_count1, cols_count1);
+
+    sortMatrixColsByMinColElem(&mx1);
+
+    matrix mx2 = createMatrixFromArray(
+            (int[]) {
+                    5, 2, 3, 3, 3, 4,
+                    5, 1, 2, 2, 7, 8,
+                    1, 4, 6, 8, 3, 4
             }, rows_count1, cols_count1);
 
     bool res = TwoMatricesAreEqual(&mx1, &mx2);
@@ -106,6 +137,7 @@ void test()
     test_swapRowsWithMinAndMaxELems1();
     test_swapRowsWithMinAndMaxELems2();
     test_sortMatrixRowsByMaxRowElem();
+    test_sortMatrixColsByMinColElem();
 }
 
 
