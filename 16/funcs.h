@@ -7,4 +7,11 @@
    в которых находятся максимальный и минимальный элементы */
 void swapRowsWithMinAndMaxELems(matrix*);
 
+int getMax(int*, int);
+
+/* упорядочивает строки матрицы по неубыванию наибольших элементов строк */
+void sortMatrixRowsByMaxRowElem(matrix*);
+
+
+
 #endif //INC_16_FUNCS_H

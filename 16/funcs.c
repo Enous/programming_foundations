@@ -14,3 +14,25 @@ void swapRowsWithMinAndMaxELems(matrix* mx)
 
     swapRows(*mx, row_with_min_elem_idx, row_with_max_elem_idx);
 }
+
+
+/* возвращает наибольший элемент целочисленного массива */
+int getMax(int* arr, int size)
+{
+    int max = 0;
+
+    for (int i = 0; i < size; i++)
+    {
+        if (max < arr[i])
+            max = arr[i];
+    }
+
+    return max;
+}
+
+
+/* упорядочивает строки матрицы по неубыванию наибольших элементов строк */
+void sortMatrixRowsByMaxRowElem(matrix* mx)
+{
+    insertionSortMatrixRows(*mx, getMax);
+}
