@@ -18,4 +18,11 @@ void sortMatrixColsByMinColElem(matrix*);
 /* заменяет квадратную матрицу ее квадратом, если она симметрична */
 void raiseMatrixToTheSecondPowerIfSymmetric(matrix*);
 
+/* возвращает true, если все элементы целочисленного массива уникальны,
+   и false в противном случае */
+bool ifAllElemsAreUnique(int*, int);
+
+/* транспонирует квадратную матрицу, если суммы элементов её строк различны */
+void transposeMatrixIfThereAreNoEqualRowElemSums(matrix);
+
 #endif //INC_16_FUNCS_H

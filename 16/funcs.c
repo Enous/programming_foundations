@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <limits.h>
 #include <memory.h>
+#include <stdlib.h>
 
 #include "funcs.h"
 
@@ -73,4 +74,36 @@ void raiseMatrixToTheSecondPowerIfSymmetric(matrix* mx)
     *mx = multiplyMatrices(mx_copy, mx_copy);
 
     freeMemMatrix(&mx_copy);
+}
+
+
+/* возвращает true, если все элементы целочисленного массива уникальны,
+   и false в противном случае */
+bool ifAllElemsAreUnique(int* arr, int size)
+{
+    for (int i = 0; i < size; i++)
+    {
+        for (int j = i + 1; j < size; j++)
+            if (arr[i] == arr[j])
+                return false;
+    }
+
+    return true;
+}
+
+
+/* транспонирует квадратную матрицу, если суммы элементов её строк различны */
+void transposeMatrixIfThereAreNoEqualRowElemSums(matrix mx)
+{
+    int* sums = malloc(sizeof(int) * mx.rows_count);
+
+    for (int i = 0; i < mx.rows_count; i++)
+    {
+        sums[i] = getSum(mx.values[i], mx.cols_count);
+
+        if (!ifAllElemsAreUnique(sums, i + 1))
+            return;
+    }
+
+    transposeMatrix(&mx);
 }
