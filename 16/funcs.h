@@ -15,4 +15,7 @@ void sortMatrixRowsByMaxRowElem(matrix*);
 /* упорядочивает столбцы матрицы по неубыванию минимальных элементов столбцов */
 void sortMatrixColsByMinColElem(matrix*);
 
+/* заменяет квадратную матрицу ее квадратом, если она симметрична */
+void raiseMatrixToTheSecondPowerIfSymmetric(matrix*);
+
 #endif //INC_16_FUNCS_H

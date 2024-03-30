@@ -132,12 +132,76 @@ void test_sortMatrixColsByMinColElem()
 }
 
 
+void test_raiseMatrixToTheSecondPowerIfSymmetric1()
+{
+    int rows_count1 = 3;
+    int cols_count1 = 3;
+
+    matrix mx1 = createMatrixFromArray(
+            (int[]) {
+                    2, 3, 6,
+                    3, 4, 5,
+                    6, 5, 9
+            }, rows_count1, cols_count1);
+
+    raiseMatrixToTheSecondPowerIfSymmetric(&mx1);
+
+    matrix mx2 = createMatrixFromArray(
+            (int[]) {
+                    49, 48, 81,
+                    48, 50, 83,
+                    81, 83, 142
+            }, rows_count1, cols_count1);
+
+    bool res = TwoMatricesAreEqual(&mx1, &mx2);
+    bool ans = true;
+
+    assert(res == ans);
+
+    freeMemMatrix(&mx1);
+    freeMemMatrix(&mx2);
+}
+
+
+void test_raiseMatrixToTheSecondPowerIfSymmetric2()
+{
+    int rows_count1 = 3;
+    int cols_count1 = 3;
+
+    matrix mx1 = createMatrixFromArray(
+            (int[]) {
+                    2, 3, 6,
+                    7, 4, 5,
+                    6, 5, 9
+            }, rows_count1, cols_count1);
+
+    raiseMatrixToTheSecondPowerIfSymmetric(&mx1);
+
+    matrix mx2 = createMatrixFromArray(
+            (int[]) {
+                    61, 48, 81,
+                    72, 62, 107,
+                    101, 83, 142
+            }, rows_count1, cols_count1);
+
+    bool res = TwoMatricesAreEqual(&mx1, &mx2);
+    bool ans = false;
+
+    assert(res == ans);
+
+    freeMemMatrix(&mx1);
+    freeMemMatrix(&mx2);
+}
+
+
 void test()
 {
     test_swapRowsWithMinAndMaxELems1();
     test_swapRowsWithMinAndMaxELems2();
     test_sortMatrixRowsByMaxRowElem();
     test_sortMatrixColsByMinColElem();
+    test_raiseMatrixToTheSecondPowerIfSymmetric1();
+    test_raiseMatrixToTheSecondPowerIfSymmetric2();
 }
 
 

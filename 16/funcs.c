@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <limits.h>
+#include <memory.h>
 
 #include "funcs.h"
 
@@ -58,4 +59,18 @@ int getMin(int* arr, int size)
 void sortMatrixColsByMinColElem(matrix* mx)
 {
     selectionSortMatrixCols(*mx, getMin);
+}
+
+
+/* заменяет квадратную матрицу ее квадратом, если она симметрична */
+void raiseMatrixToTheSecondPowerIfSymmetric(matrix* mx)
+{
+    if (!isSymmetricMatrix(mx))
+        return;
+
+    matrix mx_copy = *mx;
+
+    *mx = multiplyMatrices(mx_copy, mx_copy);
+
+    freeMemMatrix(&mx_copy);
 }
