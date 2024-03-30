@@ -256,6 +256,93 @@ void test_transposeMatrixIfThereAreNoEqualRowElemSums2()
 }
 
 
+void test_twoSquareMatricesAreInversesOfEachOther()
+{
+    int rows_count1 = 2;
+    int cols_count1 = 2;
+
+    matrix mx1 = createMatrixFromArray(
+            (int[]) {
+                    3, -2,
+                    -1, 1
+            }, rows_count1, cols_count1);
+
+    matrix mx2 = createMatrixFromArray(
+            (int[]) {
+                    1, 2,
+                    1, 3
+            }, rows_count1, cols_count1);
+
+    bool res = twoSquareMatricesAreInversesOfEachOther(mx1, mx2);
+    bool ans = true;
+
+    assert(res == ans);
+
+    freeMemMatrix(&mx1);
+    freeMemMatrix(&mx2);
+}
+
+
+void test_getSumOfPseudoDiagonalsMaxElems1()
+{
+    int rows_count1 = 3;
+    int cols_count1 = 4;
+
+    matrix mx1 = createMatrixFromArray(
+            (int[]) {
+                    3, 2, 5, 4,
+                    1, 3, 6, 3,
+                    3, 2, 1, 2
+            }, rows_count1, cols_count1);
+
+    long long res = getSumOfPseudoDiagonalsMaxElems(mx1);
+    long long ans = 23;
+
+    assert(res == ans);
+
+    freeMemMatrix(&mx1);
+}
+
+
+void test_getSumOfPseudoDiagonalsMaxElems2()
+{
+    int rows_count1 = 1;
+    int cols_count1 = 2;
+
+    matrix mx1 = createMatrixFromArray(
+            (int[]) {
+                    4, 6
+            }, rows_count1, cols_count1);
+
+    long long res = getSumOfPseudoDiagonalsMaxElems(mx1);
+    long long ans = 10;
+
+    assert(res == ans);
+
+    freeMemMatrix(&mx1);
+}
+
+
+void test_getSumOfPseudoDiagonalsMaxElems3()
+{
+    int rows_count1 = 2;
+    int cols_count1 = 1;
+
+    matrix mx1 = createMatrixFromArray(
+            (int[]) {
+                    4,
+                    6
+            }, rows_count1, cols_count1);
+
+    long long res = getSumOfPseudoDiagonalsMaxElems(mx1);
+    long long ans = 10;
+
+    assert(res == ans);
+
+    freeMemMatrix(&mx1);
+}
+
+
 void test()
 {
     test_swapRowsWithMinAndMaxELems1();
@@ -266,6 +353,10 @@ void test()
     test_raiseMatrixToTheSecondPowerIfSymmetric2();
     test_transposeMatrixIfThereAreNoEqualRowElemSums1();
     test_transposeMatrixIfThereAreNoEqualRowElemSums2();
+    test_twoSquareMatricesAreInversesOfEachOther();
+    test_getSumOfPseudoDiagonalsMaxElems1();
+    test_getSumOfPseudoDiagonalsMaxElems2();
+    test_getSumOfPseudoDiagonalsMaxElems3();
 }
 
 

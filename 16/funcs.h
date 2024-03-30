@@ -25,4 +25,11 @@ bool ifAllElemsAreUnique(int*, int);
 /* транспонирует квадратную матрицу, если суммы элементов её строк различны */
 void transposeMatrixIfThereAreNoEqualRowElemSums(matrix);
 
+/* возвращает true, если две квадратные матрицы взаимно обратные,
+   и false в противном случае */
+bool twoSquareMatricesAreInversesOfEachOther(matrix mx1, matrix mx2);
+
+/* возвращает сумму максимальных элементов псевдодиагоналей */
+long long getSumOfPseudoDiagonalsMaxElems(matrix);
+
 #endif //INC_16_FUNCS_H

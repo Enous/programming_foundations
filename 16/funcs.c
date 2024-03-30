@@ -106,4 +106,60 @@ void transposeMatrixIfThereAreNoEqualRowElemSums(matrix mx)
     }
 
     transposeMatrix(&mx);
+
+    free(sums);
+}
+
+
+/* возвращает true, если две квадратные матрицы взаимно обратные,
+   и false в противном случае */
+bool twoSquareMatricesAreInversesOfEachOther(matrix mx1, matrix mx2)
+{
+    matrix product = multiplyMatrices(mx1, mx2);
+
+    bool res = isIdentityMatrix(&product);
+
+    freeMemMatrix(&product);
+
+    return res;
+}
+
+
+/* возвращает сумму максимальных элементов псевдодиагоналей */
+long long getSumOfPseudoDiagonalsMaxElems(matrix mx)
+{
+    int i = mx.rows_count - 1;
+    int j = 0;
+
+    int sum = 0;
+    int curr_step = 0;
+    int total_elems = mx.rows_count + mx.cols_count - 1;
+
+    while (curr_step < total_elems)
+    {
+        int k = i;
+        int l = j;
+
+        int max = mx.values[k++][l++];
+
+        while (k + 1 <= mx.rows_count && l + 1 <= mx.cols_count)
+        {
+            if (mx.values[k][l] > max)
+                max = mx.values[k][l];
+
+            k++;
+            l++;
+        }
+
+        if (i - 1 >= 0)
+            i--;
+        else
+            j++;
+
+        sum += max;
+
+        curr_step++;
+    }
+
+    return sum;
 }
