@@ -634,6 +634,35 @@ void test_swapPenultimateRowWithFirstColWithMinElemInMatrix3()
 }
 
 
+void test_countMatricesWithRowElemsSortedInNonDescendingOrder()
+{
+    int rows_count1 = 2;
+    int cols_count1 = 2;
+    int total_mxs = 4;
+
+    matrix* mxs = createMatrixArrayFromArray(
+            (int[]) {7, 1,
+                     1, 1,
+
+                     1, 6,
+                     2, 2,
+
+                     5, 4,
+                     2, 3,
+
+                     1, 3,
+                     7, 9
+                     }, total_mxs, rows_count1, cols_count1);
+
+    int res = countMatricesWithRowElemsSortedInNonDescendingOrder(mxs, total_mxs);
+    int ans = 2;
+
+    assert(res == ans);
+
+    freeMemMatrices(mxs, total_mxs);
+}
+
+
 void test()
 {
     test_swapRowsWithMinAndMaxELems1();
@@ -659,6 +688,7 @@ void test()
     test_swapPenultimateRowWithFirstColWithMinElemInMatrix1();
     test_swapPenultimateRowWithFirstColWithMinElemInMatrix2();
     test_swapPenultimateRowWithFirstColWithMinElemInMatrix3();
+    test_countMatricesWithRowElemsSortedInNonDescendingOrder();
 }
 
 

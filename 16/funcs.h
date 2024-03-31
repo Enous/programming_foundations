@@ -67,13 +67,13 @@ void swapPenultimateRowWithFirstColWithMinElemInMatrix(matrix);
 
 /* возвращает true, если массив отсортирован в порядке неубывания,
    и false в противном случае */
-bool isInNonDescendingOrder(int*, int);
+bool isSortedInNonDescendingOrder(int*, int);
 
 /* возвращает true, если элементы всех рядов матрицы отсортированы в порядке неубывания,
    и false в противном случае */
-bool elemsInAllRowsAreInNonDescendingOrder(matrix);
+bool elemsInAllRowsAreSortedInNonDescendingOrder(matrix);
 
 /* подсчитывает количество матриц, строки которых упорядочены по неубыванию элементов */
-int countMatricesWithRowElemsPositionedInNonDescendingOrder(matrix*, int);
+int countMatricesWithRowElemsSortedInNonDescendingOrder(matrix*, int);
 
 #endif //INC_16_FUNCS_H

@@ -366,14 +366,42 @@ void swapPenultimateRowWithFirstColWithMinElemInMatrix(matrix mx)
 
 /* возвращает true, если массив отсортирован в порядке неубывания,
    и false в противном случае */
-bool isInNonDescendingOrder(int* arr, int size)
+bool isSortedInNonDescendingOrder(int* arr, int size)
 {
+    for (int i = 0; i < size - 1; i++)
+    {
+        if (arr[i] > arr[i + 1])
+            return false;
+    }
 
+    return true;
+}
+
+
+/* возвращает true, если элементы всех рядов матрицы отсортированы в порядке неубывания,
+   и false в противном случае */
+bool elemsInAllRowsAreSortedInNonDescendingOrder(matrix mx)
+{
+    for (int i = 0; i < mx.rows_count; i++)
+    {
+        if (!isSortedInNonDescendingOrder(mx.values[i], mx.cols_count))
+            return false;
+    }
+
+    return true;
 }
 
 
 /* подсчитывает количество матриц, строки которых упорядочены по неубыванию элементов */
-int countMatricesWithRowElemsPositionedInNonDescendingOrder(matrix* mxs, int total_mxs)
+int countMatricesWithRowElemsSortedInNonDescendingOrder(matrix* mxs, int total_mxs)
 {
+    int count = 0;
 
+    for (int i = 0; i < total_mxs; i++)
+    {
+        if (elemsInAllRowsAreSortedInNonDescendingOrder(mxs[i]))
+            count++;
+    }
+
+    return count;
 }
