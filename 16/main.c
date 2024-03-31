@@ -495,6 +495,48 @@ void test_countRowsWithEqualElemSums()
 }
 
 
+void test_countSpecialElems1()
+{
+    int rows_count1 = 3;
+    int cols_count1 = 4;
+
+    matrix mx1 = createMatrixFromArray(
+            (int[]) {
+                    3, 5, 5, 4,
+                    2, 3, 6, 7,
+                    12, 2, 1, 2
+            }, rows_count1, cols_count1);
+
+    int res = countSpecialElems(mx1);
+    int ans = 2;
+
+    assert(res == ans);
+
+    freeMemMatrix(&mx1);
+}
+
+
+void test_countSpecialElems2()
+{
+    int rows_count1 = 3;
+    int cols_count1 = 4;
+
+    matrix mx1 = createMatrixFromArray(
+            (int[]) {
+                    3, 5, 5, 4,
+                    2, 3, 7, 6,
+                    5, 2, 1, 2
+            }, rows_count1, cols_count1);
+
+    int res = countSpecialElems(mx1);
+    int ans = 1;
+
+    assert(res == ans);
+
+    freeMemMatrix(&mx1);
+}
+
+
 void test()
 {
     test_swapRowsWithMinAndMaxELems1();
@@ -515,6 +557,8 @@ void test()
     test_sortByDistances1();
     test_sortByDistances2();
     test_countRowsWithEqualElemSums();
+    test_countSpecialElems1();
+    test_countSpecialElems2();
 }
 
 

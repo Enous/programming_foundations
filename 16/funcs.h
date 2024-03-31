@@ -54,4 +54,8 @@ int countUniqueRowElemSums(long long* arr, int size);
 /* подсчитывает количество классов эквивалентных строк данной матрицы */
 int countRowClassesWithEqualRowElemsSums(matrix m);
 
+/* подсчитывает количество элементов матрицы, если они больше суммы остальных
+   элементов своего столбца */
+int countSpecialElems(matrix);
+
 #endif //INC_16_FUNCS_H

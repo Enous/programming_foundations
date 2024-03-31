@@ -294,3 +294,30 @@ int countRowClassesWithEqualRowElemsSums(matrix mx)
 
     return count;
 }
+
+
+/* подсчитывает количество элементов матрицы, если они больше суммы остальных
+   элементов своего столбца */
+int countSpecialElems(matrix mx)
+{
+    int count = 0;
+
+    for (int i = 0; i < mx.cols_count; i++)
+    {
+        int max = mx.values[0][i];
+        int sum = max;
+
+        for (int j = 1; j < mx.rows_count; j++)
+        {
+            if (max < mx.values[j][i])
+                max = mx.values[j][i];
+
+            sum += mx.values[j][i];
+        }
+
+        if (sum - max < max)
+            count++;
+    }
+
+    return count;
+}
