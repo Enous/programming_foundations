@@ -251,3 +251,46 @@ void sortByDistances(matrix mx)
 {
     insertionSortMatrixRowsFloatCondition(mx, getDistance);
 }
+
+
+int cmp_longlong(const void* pa, const void* pb)
+{
+    const long long a = *(const long long*) pa;
+    const long long b = *(const long long*) pb;
+
+    return (a > b) - (a < b);
+}
+
+
+/* подсчитывает количество уникальных сумм элементов рядов матрицы */
+int countUniqueRowElemSums(long long* arr, int size)
+{
+    int count = 0;
+
+    for (int i = 0; i < size - 1; i++)
+        if (i == 0 || arr[i] != arr[i + 1])
+            count++;
+
+    return count;
+}
+
+
+/* подсчитывает количество классов эквивалентных строк данной матрицы */
+int countRowClassesWithEqualRowElemsSums(matrix mx)
+{
+    long long* sums = calloc(mx.rows_count, sizeof(long long));
+
+    for (int i = 0; i < mx.rows_count; i++)
+    {
+        for (int j = 0; j < mx.cols_count; j++)
+            sums[i] += mx.values[i][j];
+    }
+
+    qsort(sums, mx.rows_count, sizeof(long long), cmp_longlong);
+
+    int count = countUniqueRowElemSums(sums, mx.rows_count);
+
+    free(sums);
+
+    return count;
+}

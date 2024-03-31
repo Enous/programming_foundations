@@ -46,4 +46,12 @@ void insertionSortMatrixRowsFloatCondition(matrix, float (*)(int*, int));
    расстояний до начала координат */
 void sortByDistances(matrix);
 
+int cmp_longlong(const void* pa, const void* pb);
+
+/* подсчитывает количество уникальных сумм элементов рядов матрицы */
+int countUniqueRowElemSums(long long* arr, int size);
+
+/* подсчитывает количество классов эквивалентных строк данной матрицы */
+int countRowClassesWithEqualRowElemsSums(matrix m);
+
 #endif //INC_16_FUNCS_H
