@@ -321,3 +321,59 @@ int countSpecialElems(matrix mx)
 
     return count;
 }
+
+
+/* возвращает позицию первого минимального элемента матрицы (слева направо) */
+position getFirstMinPos(matrix mx)
+{
+    position min_elem_pos;
+    min_elem_pos.row_idx = 0;
+    min_elem_pos.col_idx = 0;
+
+    for (int i = 0; i < mx.cols_count; i++)
+    {
+        for (int j = 0; j < mx.rows_count; j++)
+        {
+            if (mx.values[min_elem_pos.row_idx][min_elem_pos.col_idx] > mx.values[j][i])
+            {
+                min_elem_pos.row_idx = j;
+                min_elem_pos.col_idx = i;
+            }
+        }
+    }
+
+    return min_elem_pos;
+}
+
+
+/* заменяет предпоследнюю строку матрицы первым
+   из столбцов, в котором находится минимальный элемент матрицы */
+void swapPenultimateRowWithFirstColWithMinElemInMatrix(matrix mx)
+{
+    position min_elem_pos = getFirstMinPos(mx);
+
+    int temp = mx.values[mx.rows_count - 2][min_elem_pos.col_idx];
+
+    for (int i = 0; i < mx.cols_count; i++)
+    {
+        if (i == mx.rows_count - 2)
+            mx.values[mx.rows_count - 2][i] = temp;
+        else
+            mx.values[mx.rows_count - 2][i] = mx.values[i][min_elem_pos.col_idx];
+    }
+}
+
+
+/* возвращает true, если массив отсортирован в порядке неубывания,
+   и false в противном случае */
+bool isInNonDescendingOrder(int* arr, int size)
+{
+
+}
+
+
+/* подсчитывает количество матриц, строки которых упорядочены по неубыванию элементов */
+int countMatricesWithRowElemsPositionedInNonDescendingOrder(matrix* mxs, int total_mxs)
+{
+
+}

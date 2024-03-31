@@ -537,6 +537,103 @@ void test_countSpecialElems2()
 }
 
 
+void test_swapPenultimateRowWithFirstColWithMinElemInMatrix1()
+{
+    int rows_count1 = 3;
+    int cols_count1 = 3;
+
+    matrix mx1 = createMatrixFromArray(
+            (int[]) {
+                    1, 2, 3,
+                    4, 5, 6,
+                    7, 8, 1
+            }, rows_count1, cols_count1);
+
+    swapPenultimateRowWithFirstColWithMinElemInMatrix(mx1);
+
+    matrix mx2 = createMatrixFromArray(
+            (int[]) {
+                    1, 2, 3,
+                    1, 4, 7,
+                    7, 8, 1
+            }, rows_count1, cols_count1);
+
+    bool res = TwoMatricesAreEqual(&mx1, &mx2);
+    bool ans = true;
+
+    assert(res == ans);
+
+    freeMemMatrix(&mx1);
+    freeMemMatrix(&mx2);
+}
+
+
+void test_swapPenultimateRowWithFirstColWithMinElemInMatrix2()
+{
+    int rows_count1 = 4;
+    int cols_count1 = 4;
+
+    matrix mx1 = createMatrixFromArray(
+            (int[]) {
+                    6, 2, 3, 4,
+                    4, 5, 6, 5,
+                    7, 8, 1, 7,
+                    8, 9, 12, 3
+            }, rows_count1, cols_count1);
+
+    swapPenultimateRowWithFirstColWithMinElemInMatrix(mx1);
+
+    matrix mx2 = createMatrixFromArray(
+            (int[]) {
+                    6, 2, 3, 4,
+                    4, 5, 6, 5,
+                    3, 6, 1, 12,
+                    8, 9, 12, 3
+            }, rows_count1, cols_count1);
+
+    bool res = TwoMatricesAreEqual(&mx1, &mx2);
+    bool ans = true;
+
+    assert(res == ans);
+
+    freeMemMatrix(&mx1);
+    freeMemMatrix(&mx2);
+}
+
+
+void test_swapPenultimateRowWithFirstColWithMinElemInMatrix3()
+{
+    int rows_count1 = 4;
+    int cols_count1 = 4;
+
+    matrix mx1 = createMatrixFromArray(
+            (int[]) {
+                    6, 2, 3, 4,
+                    4, 5, 6, 5,
+                    3, 6, 13, 12,
+                    8, 9, 12, 1
+            }, rows_count1, cols_count1);
+
+    swapPenultimateRowWithFirstColWithMinElemInMatrix(mx1);
+
+    matrix mx2 = createMatrixFromArray(
+            (int[]) {
+                    6, 2, 3, 4,
+                    4, 5, 6, 5,
+                    4, 5, 12, 1,
+                    8, 9, 12, 1
+            }, rows_count1, cols_count1);
+
+    bool res = TwoMatricesAreEqual(&mx1, &mx2);
+    bool ans = true;
+
+    assert(res == ans);
+
+    freeMemMatrix(&mx1);
+    freeMemMatrix(&mx2);
+}
+
+
 void test()
 {
     test_swapRowsWithMinAndMaxELems1();
@@ -559,6 +656,9 @@ void test()
     test_countRowsWithEqualElemSums();
     test_countSpecialElems1();
     test_countSpecialElems2();
+    test_swapPenultimateRowWithFirstColWithMinElemInMatrix1();
+    test_swapPenultimateRowWithFirstColWithMinElemInMatrix2();
+    test_swapPenultimateRowWithFirstColWithMinElemInMatrix3();
 }
 
 

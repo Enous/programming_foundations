@@ -58,4 +58,22 @@ int countRowClassesWithEqualRowElemsSums(matrix m);
    элементов своего столбца */
 int countSpecialElems(matrix);
 
+/* возвращает позицию первого минимального элемента матрицы (слева направо) */
+position getFirstMinPos(matrix);
+
+/* заменяет предпоследнюю строку матрицы первым
+   из столбцов, в котором находится минимальный элемент матрицы */
+void swapPenultimateRowWithFirstColWithMinElemInMatrix(matrix);
+
+/* возвращает true, если массив отсортирован в порядке неубывания,
+   и false в противном случае */
+bool isInNonDescendingOrder(int*, int);
+
+/* возвращает true, если элементы всех рядов матрицы отсортированы в порядке неубывания,
+   и false в противном случае */
+bool elemsInAllRowsAreInNonDescendingOrder(matrix);
+
+/* подсчитывает количество матриц, строки которых упорядочены по неубыванию элементов */
+int countMatricesWithRowElemsPositionedInNonDescendingOrder(matrix*, int);
+
 #endif //INC_16_FUNCS_H
