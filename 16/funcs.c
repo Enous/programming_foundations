@@ -544,3 +544,49 @@ int countSpecialMatrixElems(matrix mx)
 
     return count;
 }
+
+
+/* возвращает длину вектора */
+double getVectorLength(int* a, int n)
+{
+    double length = 0;
+
+    for (int i = 0; i < n; i++)
+        length += a[i] * a[i];
+
+    return sqrt(length);
+}
+
+
+/* возвращает отношение прилежащего катета к гипотенузе */
+double getCosine(int* a, int* b, int n)
+{
+    double vector_product = 0;
+
+    for (int i = 0; i < n; i++)
+        vector_product += a[i] * b[i];
+
+    return (double) vector_product / (getVectorLength(a, n) * getVectorLength(b, n));
+}
+
+
+/* возвращает индекс вектора, который образует
+   максимальный угол с данным вектором */
+int getVectorIndexWithMaxAngle(matrix mx, int* b)
+{
+    double max_angle = getCosine(mx.values[0], b, mx.cols_count);;
+    int max_angle_idx = 0;
+
+    for (int i = 1; i < mx.rows_count; i++)
+    {
+        double angle = getCosine(mx.values[i], b, mx.cols_count);
+
+        if (max_angle > angle)
+        {
+            max_angle = angle;
+            max_angle_idx = i;
+        }
+    }
+
+    return max_angle_idx;
+}

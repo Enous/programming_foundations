@@ -726,6 +726,30 @@ void test_countSpecialMatrixElems()
 }
 
 
+void test_getVectorIndexWithMaxAngle()
+{
+    int rows_count1 = 4;
+    int cols_count1 = 3;
+
+    matrix mx1 = createMatrixFromArray(
+            (int[]) {
+                    2, 3, 6,
+                    5, 2, 4,
+                    3, 4, 1,
+                    6, 2, 8
+            }, rows_count1, cols_count1);
+
+    int* b = (int[]) {1, 2, 3};
+
+    int res = getVectorIndexWithMaxAngle(mx1, b);
+    int ans = 2;
+
+    assert(res == ans);
+
+    freeMemMatrix(&mx1);
+}
+
+
 void test()
 {
     test_swapRowsWithMinAndMaxELems1();
@@ -770,6 +794,8 @@ void test()
     test_getMaxAbsoluteValue();
 
     test_countSpecialMatrixElems();
+
+    test_getVectorIndexWithMaxAngle();
 }
 
 

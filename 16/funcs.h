@@ -27,7 +27,7 @@ void transposeMatrixIfThereAreNoEqualRowElemSums(matrix);
 
 /* возвращает true, если две квадратные матрицы взаимно обратные,
    и false в противном случае */
-bool twoSquareMatricesAreInversesOfEachOther(matrix mx1, matrix mx2);
+bool twoSquareMatricesAreInversesOfEachOther(matrix, matrix);
 
 /* возвращает сумму максимальных элементов псевдодиагоналей */
 long long getSumOfPseudoDiagonalsMaxElems(matrix);
@@ -46,13 +46,13 @@ void insertionSortMatrixRowsFloatCondition(matrix, float (*)(int*, int));
    расстояний до начала координат */
 void sortByDistances(matrix);
 
-int cmp_longlong(const void* pa, const void* pb);
+int cmp_longlong(const void*, const void*);
 
 /* подсчитывает количество уникальных сумм элементов рядов матрицы */
-int countUniqueRowElemSums(long long* arr, int size);
+int countUniqueRowElemSums(long long*, int);
 
 /* подсчитывает количество классов эквивалентных строк данной матрицы */
-int countRowClassesWithEqualRowElemsSums(matrix m);
+int countRowClassesWithEqualRowElemsSums(matrix);
 
 /* подсчитывает количество элементов матрицы, если они больше суммы остальных
    элементов своего столбца */
@@ -91,5 +91,15 @@ void printMatrixWithMinMaxAbsoluteValues(matrix*, int);
 /* подсчитывает количество элементов в матрице, слева от которых
    только меньшие элементы, а справа - только большие */
 int countSpecialMatrixElems(matrix);
+
+/* возвращает длину вектора */
+double getVectorLength(int*, int);
+
+/* возвращает отношение прилежащего катета к гипотенузе */
+double getCosine(int*, int*, int);
+
+/* возвращает индекс вектора, который образует
+   максимальный угол с данным вектором */
+int getVectorIndexWithMaxAngle(matrix, int*);
 
 #endif //INC_16_FUNCS_H
