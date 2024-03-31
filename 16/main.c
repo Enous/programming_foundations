@@ -343,6 +343,70 @@ void test_getSumOfPseudoDiagonalsMaxElems3()
 }
 
 
+void test_getMinElemInSelectedArea1()
+{
+    int rows_count1 = 3;
+    int cols_count1 = 4;
+
+    matrix mx1 = createMatrixFromArray(
+            (int[]) {
+                    10, 7, 5, 6,
+                    3, 11, 8, 9,
+                    4, 1, 12, 2
+            }, rows_count1, cols_count1);
+
+    int res = getMinElemInSelectedArea(mx1);
+    int ans = 5;
+
+    assert(res == ans);
+
+    freeMemMatrix(&mx1);
+}
+
+
+void test_getMinElemInSelectedArea2()
+{
+    int rows_count1 = 3;
+    int cols_count1 = 4;
+
+    matrix mx1 = createMatrixFromArray(
+            (int[]) {
+                    6, 8, 9, 2,
+                    7, 12, 3, 4,
+                    10, 11, 5, 1
+            }, rows_count1, cols_count1);
+
+    int res = getMinElemInSelectedArea(mx1);
+    int ans = 6;
+
+    assert(res == ans);
+
+    freeMemMatrix(&mx1);
+}
+
+
+void test_getMinElemInSelectedArea3()
+{
+    int rows_count1 = 4;
+    int cols_count1 = 1;
+
+    matrix mx1 = createMatrixFromArray(
+            (int[]) {
+                    3,
+                    8,
+                    9,
+                    2,
+            }, rows_count1, cols_count1);
+
+    int res = getMinElemInSelectedArea(mx1);
+    int ans = 3;
+
+    assert(res == ans);
+
+    freeMemMatrix(&mx1);
+}
+
+
 void test()
 {
     test_swapRowsWithMinAndMaxELems1();
@@ -357,6 +421,9 @@ void test()
     test_getSumOfPseudoDiagonalsMaxElems1();
     test_getSumOfPseudoDiagonalsMaxElems2();
     test_getSumOfPseudoDiagonalsMaxElems3();
+    test_getMinElemInSelectedArea1();
+    test_getMinElemInSelectedArea2();
+    test_getMinElemInSelectedArea3();
 }
 
 

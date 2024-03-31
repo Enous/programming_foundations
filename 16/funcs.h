@@ -32,4 +32,7 @@ bool twoSquareMatricesAreInversesOfEachOther(matrix mx1, matrix mx2);
 /* возвращает сумму максимальных элементов псевдодиагоналей */
 long long getSumOfPseudoDiagonalsMaxElems(matrix);
 
+/* возвращает минимальный элемент матрицы в выделенной области */
+int getMinElemInSelectedArea(matrix);
+
 #endif //INC_16_FUNCS_H

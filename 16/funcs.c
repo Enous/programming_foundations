@@ -163,3 +163,43 @@ long long getSumOfPseudoDiagonalsMaxElems(matrix mx)
 
     return sum;
 }
+
+
+/* возвращает минимальный элемент матрицы в выделенной области */
+int getMinElemInSelectedArea(matrix mx)
+{
+    position border = getMaxValuePos(mx);
+
+    int i = border.row_idx - 1;
+    int j = border.col_idx;
+
+    int k = j;
+    int min = mx.values[i][j];
+
+    while (1)
+    {
+        if (k + 1 < mx.cols_count)
+            k++;
+
+        if (j - 1 >= 0)
+            j--;
+
+        int l = j;
+
+        while (l <= k)
+        {
+            if (min > mx.values[i][l])
+                min = mx.values[i][l];
+
+            l++;
+        }
+
+        if (i == 0 && j == 0)
+            break;
+
+        if (i - 1 >= 0)
+            i--;
+    }
+
+    return min;
+}
