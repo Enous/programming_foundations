@@ -102,4 +102,11 @@ double getCosine(int*, int*, int);
    максимальный угол с данным вектором */
 int getVectorIndexWithMaxAngle(matrix, int*);
 
+/* возвращает скалярное произведение ряда на столбец */
+long long getScalarProductOfRowAndCol(matrix, int, int);
+
+/* возвращает скалярное произведение ряда с наибольшим элементом матрицы
+   на столбец с наименьшим элементом матрицы */
+long long getSpecialScalarProduct(matrix);
+
 #endif //INC_16_FUNCS_H

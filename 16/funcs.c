@@ -590,3 +590,29 @@ int getVectorIndexWithMaxAngle(matrix mx, int* b)
 
     return max_angle_idx;
 }
+
+
+/* возвращает скалярное произведение ряда на столбец */
+long long getScalarProductOfRowAndCol(matrix mx, int i, int j)
+{
+    long long product = 0;
+
+    for (int k = 0; k < mx.rows_count; k++)
+        product += mx.values[i][k] * mx.values[k][j];
+
+    return product;
+}
+
+
+/* возвращает скалярное произведение ряда с наибольшим элементом матрицы
+   на столбец с наименьшим элементом матрицы */
+long long getSpecialScalarProduct(matrix mx)
+{
+    position row_pos = getMaxValuePos(mx);
+    int i = row_pos.row_idx;
+
+    position col_pos = getMinValuePos(mx);
+    int j = col_pos.col_idx;
+
+    return getScalarProductOfRowAndCol(mx, i, j);
+}

@@ -750,6 +750,27 @@ void test_getVectorIndexWithMaxAngle()
 }
 
 
+void test_getSpecialScalarProduct()
+{
+    int rows_count1 = 3;
+    int cols_count1 = 3;
+
+    matrix mx1 = createMatrixFromArray(
+            (int[]) {
+                    2, 3, 6,
+                    5, 2, 4,
+                    3, 4, 1
+            }, rows_count1, cols_count1);
+
+    long long res = getSpecialScalarProduct(mx1);
+    long long ans = 30;
+
+    assert(res == ans);
+
+    freeMemMatrix(&mx1);
+}
+
+
 void test()
 {
     test_swapRowsWithMinAndMaxELems1();
@@ -796,6 +817,8 @@ void test()
     test_countSpecialMatrixElems();
 
     test_getVectorIndexWithMaxAngle();
+
+    test_getSpecialScalarProduct();
 }
 
 
