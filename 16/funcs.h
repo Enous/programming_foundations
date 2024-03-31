@@ -35,4 +35,15 @@ long long getSumOfPseudoDiagonalsMaxElems(matrix);
 /* возвращает минимальный элемент матрицы в выделенной области */
 int getMinElemInSelectedArea(matrix);
 
+/* находит расстояние от данной точки до начала координат */
+float getDistance(int*, int);
+
+/* упорядочивает ряды матрицы по неубыванию их
+   расстояний до начала координат */
+void insertionSortMatrixRowsFloatCondition(matrix, float (*)(int*, int));
+
+/* упорядочивает элементы матрицы (точки) по неубыванию их
+   расстояний до начала координат */
+void sortByDistances(matrix);
+
 #endif //INC_16_FUNCS_H

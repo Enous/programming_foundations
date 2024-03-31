@@ -407,6 +407,70 @@ void test_getMinElemInSelectedArea3()
 }
 
 
+void test_sortByDistances1()
+{
+    int rows_count1 = 3;
+    int cols_count1 = 4;
+
+    matrix mx1 = createMatrixFromArray(
+            (int[]) {
+                    10, 11, 5, 1,
+                    6, 8, 9, 2,
+                    7, 12, 3, 4
+            }, rows_count1, cols_count1);
+
+    sortByDistances(mx1);
+
+    matrix mx2 = createMatrixFromArray(
+            (int[]) {
+                    6, 8, 9, 2,
+                    7, 12, 3, 4,
+                    10, 11, 5, 1
+            }, rows_count1, cols_count1);
+
+    bool res = TwoMatricesAreEqual(&mx1, &mx2);
+    bool ans = true;
+
+    assert(res == ans);
+
+    freeMemMatrix(&mx1);
+    freeMemMatrix(&mx2);
+}
+
+
+void test_sortByDistances2()
+{
+    int rows_count1 = 4;
+    int cols_count1 = 1;
+
+    matrix mx1 = createMatrixFromArray(
+            (int[]) {
+                    3,
+                    8,
+                    9,
+                    2,
+            }, rows_count1, cols_count1);
+
+    sortByDistances(mx1);
+
+    matrix mx2 = createMatrixFromArray(
+            (int[]) {
+                    2,
+                    3,
+                    8,
+                    9,
+            }, rows_count1, cols_count1);
+
+    bool res = TwoMatricesAreEqual(&mx1, &mx2);
+    bool ans = true;
+
+    assert(res == ans);
+
+    freeMemMatrix(&mx1);
+    freeMemMatrix(&mx2);
+}
+
+
 void test()
 {
     test_swapRowsWithMinAndMaxELems1();
@@ -424,6 +488,8 @@ void test()
     test_getMinElemInSelectedArea1();
     test_getMinElemInSelectedArea2();
     test_getMinElemInSelectedArea3();
+    test_sortByDistances1();
+    test_sortByDistances2();
 }
 
 

@@ -2,6 +2,7 @@
 #include <limits.h>
 #include <memory.h>
 #include <stdlib.h>
+#include <math.h>
 
 #include "funcs.h"
 
@@ -202,4 +203,51 @@ int getMinElemInSelectedArea(matrix mx)
     }
 
     return min;
+}
+
+
+/* находит расстояние от данной точки до начала координат */
+float getDistance(int* arr, int size)
+{
+    float distance = 0;
+
+    for (int i = 0; i < size; i++)
+        distance += (arr[i] * arr[i]);
+
+    return sqrt(distance);
+}
+
+
+/* упорядочивает ряды матрицы по неубыванию их
+   расстояний до начала координат */
+void insertionSortMatrixRowsFloatCondition(matrix mx, float (*condition)(int*, int))
+{
+    int* condition_func_res = malloc(mx.rows_count * sizeof(float));
+    condition_func_res[0] = condition(mx.values[0], mx.cols_count);
+
+    for (int i = 1; i < mx.rows_count; i++)
+    {
+        condition_func_res[i] = condition(mx.values[i], mx.cols_count);
+        int temp = condition_func_res[i];
+        int j = i;
+
+        while (j > 0 && condition_func_res[j - 1] > temp)
+        {
+            condition_func_res[j] = condition_func_res[j - 1];
+            swapRows(mx, j, j - 1);
+            j--;
+        }
+
+        condition_func_res[j] = temp;
+    }
+
+    free(condition_func_res);
+}
+
+
+/* упорядочивает элементы матрицы (точки) по неубыванию их
+   расстояний до начала координат */
+void sortByDistances(matrix mx)
+{
+    insertionSortMatrixRowsFloatCondition(mx, getDistance);
 }
