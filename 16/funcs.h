@@ -80,6 +80,12 @@ int countMatricesWithRowElemsSortedInNonDescendingOrder(matrix*, int);
 int countRowsThatContainOnlyZeroes(matrix);
 
 /* выводит матрицы с наибольшим числом нулевых строк */
-void printMatrixWithMaxRowsThatContainOnlyZeroes(matrix*, int);
+void printMatricesWithMaxRowsThatContainOnlyZeroes(matrix*, int);
+
+/* возвращает максимум абсолютных значений элементов матрицы */
+int getMinMaxAbsoluteValue(matrix);
+
+/* выводит матрицы с наименьшей нормой */
+void printMatrixWithMinMaxAbsoluteValues(matrix*, int);
 
 #endif //INC_16_FUNCS_H

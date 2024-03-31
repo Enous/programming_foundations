@@ -684,6 +684,27 @@ void test_countRowsThatContainOnlyZeroes()
 }
 
 
+void test_getMinMaxAbsoluteValue()
+{
+    int rows_count1 = 3;
+    int cols_count1 = 2;
+
+    matrix mx1 = createMatrixFromArray(
+            (int[]) {
+                    10, 0,
+                    3, -1,
+                    -12, 2,
+            }, rows_count1, cols_count1);
+
+    int res = getMinMaxAbsoluteValue(mx1);
+    int ans = 12;
+
+    assert(res == ans);
+
+    freeMemMatrix(&mx1);
+}
+
+
 void test()
 {
     test_swapRowsWithMinAndMaxELems1();
@@ -724,6 +745,8 @@ void test()
     test_countMatricesWithRowElemsSortedInNonDescendingOrder();
 
     test_countRowsThatContainOnlyZeroes();
+
+    test_getMinMaxAbsoluteValue();
 }
 
 
@@ -733,29 +756,31 @@ int main()
 
     int rows_count1 = 3;
     int cols_count1 = 2;
-    int total_mxs = 5;
+    int total_matrices = 5;
 
     matrix* mxs = createMatrixArrayFromArray(
-            (int[]) {0, 1,
-                     1, 0,
-                     0, 0,
+            (int[]) {4, 1,
+                     13, -10,
+                     -2, 5,
 
-                     1, 1,
-                     2, 1,
-                     1, 1,
+                     -1, 1,
+                     -12, 5,
+                     2, 14,
 
-                     0, 0,
-                     0, 0,
+                     0, 11,
+                     -9, 8,
                      4, 7,
 
-                     0, 0,
-                     0, 1,
-                     0, 0,
+                     3, 14,
+                     -5, -16,
+                     2, 1,
 
                      0, 1,
-                     0, 2,
+                     -11, 2,
                      0, 3
-            }, total_mxs, rows_count1, cols_count1);
+            }, total_matrices, rows_count1, cols_count1);
 
-    printMatrixWithMaxRowsThatContainOnlyZeroes(mxs, total_mxs);
+    printMatrixWithMinMaxAbsoluteValues(mxs, total_matrices);
+
+    freeMemMatrices(mxs, total_matrices);
 }

@@ -434,7 +434,7 @@ int countRowsThatContainOnlyZeroes(matrix mx)
 
 
 /* выводит матрицы с наибольшим числом нулевых строк */
-void printMatrixWithMaxRowsThatContainOnlyZeroes(matrix* mxs, int total_matrices)
+void printMatricesWithMaxRowsThatContainOnlyZeroes(matrix* mxs, int total_matrices)
 {
     int* zero_only_rows = malloc(sizeof(int) * total_matrices);
     int max = 0;
@@ -452,4 +452,46 @@ void printMatrixWithMaxRowsThatContainOnlyZeroes(matrix* mxs, int total_matrices
         if (zero_only_rows[j] == max)
             outputMatrix(mxs[j]);
     }
+
+    free(zero_only_rows);
+}
+
+
+/* возвращает максимум абсолютных значений элементов матрицы */
+int getMinMaxAbsoluteValue(matrix mx)
+{
+    int max_abs = 0;
+
+    for (int i = 0; i < mx.rows_count; i++)
+    {
+        for (int j = 0; j < mx.cols_count; j++)
+            if (max_abs < abs(mx.values[i][j]))
+                max_abs = abs(mx.values[i][j]);
+    }
+
+    return max_abs;
+}
+
+
+/* выводит матрицы с наименьшей нормой */
+void printMatrixWithMinMaxAbsoluteValues(matrix* mxs, int total_matrices)
+{
+    int* max_abs_values = malloc(sizeof(int) * total_matrices);
+    int min = INT_MAX;
+
+    for (int i = 0; i < total_matrices; i++)
+    {
+        max_abs_values[i] = getMinMaxAbsoluteValue(mxs[i]);
+
+        if (min > max_abs_values[i])
+            min = max_abs_values[i];
+    }
+
+    for (int j = 0; j < total_matrices; j++)
+    {
+        if (max_abs_values[j] == min)
+            outputMatrix(mxs[j]);
+    }
+
+    free(max_abs_values);
 }
