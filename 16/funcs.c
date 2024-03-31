@@ -458,7 +458,7 @@ void printMatricesWithMaxRowsThatContainOnlyZeroes(matrix* mxs, int total_matric
 
 
 /* возвращает максимум абсолютных значений элементов матрицы */
-int getMinMaxAbsoluteValue(matrix mx)
+int getMaxAbsoluteValue(matrix mx)
 {
     int max_abs = 0;
 
@@ -481,7 +481,7 @@ void printMatrixWithMinMaxAbsoluteValues(matrix* mxs, int total_matrices)
 
     for (int i = 0; i < total_matrices; i++)
     {
-        max_abs_values[i] = getMinMaxAbsoluteValue(mxs[i]);
+        max_abs_values[i] = getMaxAbsoluteValue(mxs[i]);
 
         if (min > max_abs_values[i])
             min = max_abs_values[i];
@@ -494,4 +494,53 @@ void printMatrixWithMinMaxAbsoluteValues(matrix* mxs, int total_matrices)
     }
 
     free(max_abs_values);
+}
+
+
+/* подсчитывает количество элементов в матрице, слева от которых
+   только меньшие элементы, а справа - только большие */
+int countSpecialMatrixElems(matrix mx)
+{
+    int count = 0;
+
+    for (int i = 0; i < mx.rows_count; i++)
+    {
+        for (int j = 0; j < mx.cols_count; j++)
+        {
+            int l, r;
+
+            if (j - 1 >= 0)
+                l = j - 1;
+            else
+                l = j;
+
+            if (j + 1 < mx.cols_count)
+                r = j + 1;
+            else
+                r = j;
+
+            int possibly_special_elem = mx.values[i][j];
+
+            while (1)
+            {
+                if (mx.values[i][r] <= possibly_special_elem && r != j ||
+                    mx.values[i][l] >= possibly_special_elem && l != j)
+                    break;
+
+                if (l == 0 && r == mx.cols_count - 1)
+                {
+                    count++;
+                    break;
+                }
+
+                if (l - 1 >= 0)
+                    l--;
+
+                if (r + 1 < mx.cols_count)
+                    r++;
+            }
+        }
+    }
+
+    return count;
 }

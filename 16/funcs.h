@@ -83,9 +83,13 @@ int countRowsThatContainOnlyZeroes(matrix);
 void printMatricesWithMaxRowsThatContainOnlyZeroes(matrix*, int);
 
 /* возвращает максимум абсолютных значений элементов матрицы */
-int getMinMaxAbsoluteValue(matrix);
+int getMaxAbsoluteValue(matrix);
 
 /* выводит матрицы с наименьшей нормой */
 void printMatrixWithMinMaxAbsoluteValues(matrix*, int);
+
+/* подсчитывает количество элементов в матрице, слева от которых
+   только меньшие элементы, а справа - только большие */
+int countSpecialMatrixElems(matrix);
 
 #endif //INC_16_FUNCS_H
