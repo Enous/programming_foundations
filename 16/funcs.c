@@ -393,15 +393,63 @@ bool elemsInAllRowsAreSortedInNonDescendingOrder(matrix mx)
 
 
 /* подсчитывает количество матриц, строки которых упорядочены по неубыванию элементов */
-int countMatricesWithRowElemsSortedInNonDescendingOrder(matrix* mxs, int total_mxs)
+int countMatricesWithRowElemsSortedInNonDescendingOrder(matrix* mxs, int total_matrices)
 {
     int count = 0;
 
-    for (int i = 0; i < total_mxs; i++)
+    for (int i = 0; i < total_matrices; i++)
     {
         if (elemsInAllRowsAreSortedInNonDescendingOrder(mxs[i]))
             count++;
     }
 
     return count;
+}
+
+
+/* подсчитывает ряды матрицы, состоящие только из нулей */
+int countRowsThatContainOnlyZeroes(matrix mx)
+{
+    int count = 0;
+
+    for (int i = 0; i < mx.rows_count; i++)
+    {
+        bool only_zeroes = true;
+
+        for (int j = 0; j < mx.cols_count; j++)
+        {
+            if (mx.values[i][j] != 0 )
+            {
+                only_zeroes = false;
+                break;
+            }
+        }
+
+        if (only_zeroes)
+            count++;
+    }
+
+    return count;
+}
+
+
+/* выводит матрицы с наибольшим числом нулевых строк */
+void printMatrixWithMaxRowsThatContainOnlyZeroes(matrix* mxs, int total_matrices)
+{
+    int* zero_only_rows = malloc(sizeof(int) * total_matrices);
+    int max = 0;
+
+    for (int i = 0; i < total_matrices; i++)
+    {
+        zero_only_rows[i] = countRowsThatContainOnlyZeroes(mxs[i]);
+
+        if (max < zero_only_rows[i])
+            max = zero_only_rows[i];
+    }
+
+    for (int j = 0; j < total_matrices; j++)
+    {
+        if (zero_only_rows[j] == max)
+            outputMatrix(mxs[j]);
+    }
 }

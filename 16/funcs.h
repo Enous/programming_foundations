@@ -76,4 +76,10 @@ bool elemsInAllRowsAreSortedInNonDescendingOrder(matrix);
 /* подсчитывает количество матриц, строки которых упорядочены по неубыванию элементов */
 int countMatricesWithRowElemsSortedInNonDescendingOrder(matrix*, int);
 
+/* подсчитывает ряды матрицы, состоящие только из нулей */
+int countRowsThatContainOnlyZeroes(matrix);
+
+/* выводит матрицы с наибольшим числом нулевых строк */
+void printMatrixWithMaxRowsThatContainOnlyZeroes(matrix*, int);
+
 #endif //INC_16_FUNCS_H

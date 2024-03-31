@@ -663,36 +663,99 @@ void test_countMatricesWithRowElemsSortedInNonDescendingOrder()
 }
 
 
+void test_countRowsThatContainOnlyZeroes()
+{
+    int rows_count1 = 3;
+    int cols_count1 = 2;
+
+    matrix mx1 = createMatrixFromArray(
+            (int[]) {
+                     0, 0,
+                     0, 1,
+                     0, 0,
+            }, rows_count1, cols_count1);
+
+    int res = countRowsThatContainOnlyZeroes(mx1);
+    int ans = 2;
+
+    assert(res == ans);
+
+    freeMemMatrix(&mx1);
+}
+
+
 void test()
 {
     test_swapRowsWithMinAndMaxELems1();
     test_swapRowsWithMinAndMaxELems2();
+
     test_sortMatrixRowsByMaxRowElem();
+
     test_sortMatrixColsByMinColElem();
+
     test_raiseMatrixToTheSecondPowerIfSymmetric1();
     test_raiseMatrixToTheSecondPowerIfSymmetric2();
+
     test_transposeMatrixIfThereAreNoEqualRowElemSums1();
     test_transposeMatrixIfThereAreNoEqualRowElemSums2();
+
     test_twoSquareMatricesAreInversesOfEachOther();
+
     test_getSumOfPseudoDiagonalsMaxElems1();
     test_getSumOfPseudoDiagonalsMaxElems2();
     test_getSumOfPseudoDiagonalsMaxElems3();
+
     test_getMinElemInSelectedArea1();
     test_getMinElemInSelectedArea2();
     test_getMinElemInSelectedArea3();
+
     test_sortByDistances1();
     test_sortByDistances2();
+
     test_countRowsWithEqualElemSums();
+
     test_countSpecialElems1();
     test_countSpecialElems2();
+
     test_swapPenultimateRowWithFirstColWithMinElemInMatrix1();
     test_swapPenultimateRowWithFirstColWithMinElemInMatrix2();
     test_swapPenultimateRowWithFirstColWithMinElemInMatrix3();
+
     test_countMatricesWithRowElemsSortedInNonDescendingOrder();
+
+    test_countRowsThatContainOnlyZeroes();
 }
 
 
 int main()
 {
     test();
+
+    int rows_count1 = 3;
+    int cols_count1 = 2;
+    int total_mxs = 5;
+
+    matrix* mxs = createMatrixArrayFromArray(
+            (int[]) {0, 1,
+                     1, 0,
+                     0, 0,
+
+                     1, 1,
+                     2, 1,
+                     1, 1,
+
+                     0, 0,
+                     0, 0,
+                     4, 7,
+
+                     0, 0,
+                     0, 1,
+                     0, 0,
+
+                     0, 1,
+                     0, 2,
+                     0, 3
+            }, total_mxs, rows_count1, cols_count1);
+
+    printMatrixWithMaxRowsThatContainOnlyZeroes(mxs, total_mxs);
 }
