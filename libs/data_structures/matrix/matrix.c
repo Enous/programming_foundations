@@ -81,6 +81,8 @@ void outputMatrix(matrix mx)
 
         printf("\n");
     }
+
+    printf("\n");
 }
 
 
@@ -331,7 +333,7 @@ void transposeMatrix(matrix* mx)
 
         mx->values = realloc(mx->values, sizeof(int*) * mx->rows_count);
     }
-    else
+    else if (mx->rows_count < mx->cols_count)
     {
         mx->values = realloc(mx->values, sizeof(int*) * mx->cols_count);
 
@@ -348,6 +350,16 @@ void transposeMatrix(matrix* mx)
 
         for (int i = 0; i < mx->cols_count; i++)
             mx->values[i] = realloc(mx->values[i], sizeof(int) * mx->cols_count);
+    }
+    else
+    {
+        for (int i = 0; i < mx->cols_count; i++)
+        {
+            for (int j = i + 1; j < mx->cols_count; j++)
+                swap(&mx->values[i][j], &mx->values[j][i]);
+        }
+
+        swap(&mx->rows_count, &mx->cols_count);
     }
 }
 
@@ -424,3 +436,27 @@ matrix* createMatrixArrayFromArray(const int* values, size_t matrices_count, siz
 
     return mxs;
 }
+
+
+/* возвращает произведение матриц */
+matrix multiplyMatrices(matrix mx1, matrix mx2)
+{
+    matrix mx3 = getMemMatrix(mx1.rows_count, mx2.cols_count);
+
+    for (int i = 0; i < mx1.rows_count; i++)
+    {
+        for (int j = 0; j < mx1.rows_count; j++)
+        {
+            int elem = 0;
+
+            for (int k = 0; k < mx1.cols_count; k++)
+                elem += (mx1.values[i][k] * mx2.values[k][j]);
+
+            mx3.values[i][j] = elem;
+        }
+    }
+
+    return mx3;
+}
+
+

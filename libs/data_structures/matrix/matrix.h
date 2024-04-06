@@ -1,6 +1,8 @@
 #ifndef LIBS_MATRIX_H
 #define LIBS_MATRIX_H
 
+#include <stdbool.h>
+
 typedef struct matrix
 {
     int** values; // элементы матрицы
@@ -37,7 +39,7 @@ void inputMatrices(matrix*, int);
 /* вывод матрицы */
 void outputMatrix(matrix);
 
-/* вывод массива их matrices_count, хранящегося по адресу mxs */
+/* вывод массива из matrices_count матриц, хранящегося по адресу mxs */
 void outputMatrices(matrix*, int);
 
 /* обмен строк матрицы по индексам */
@@ -64,7 +66,6 @@ void swap(int*, int*);
 /* возвращает true, если матрица является квадратной,
    и false в противном случае */
 bool isSquareMatrix(matrix*);
-
 
 /* возвращает true, если две матрицы равны,
    и false в противном случае */
@@ -96,5 +97,8 @@ matrix createMatrixFromArray(const int*, size_t, size_t);
 /* возвращает указатель на нулевую матрицу массива из матриц, размещенных
    в динамической памяти, построенных из элементов данного массива */
 matrix* createMatrixArrayFromArray(const int*, size_t, size_t, size_t);
+
+/* возвращает произведение матриц */
+matrix multiplyMatrices(matrix, matrix);
 
 #endif //LIBS_MATRIX_H
