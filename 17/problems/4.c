@@ -25,4 +25,6 @@ void problem4()
     printf("Problem 4D: %c\n", *findLastNonSpaceChr(s1 + len1 - 1, s1));
 
     printf("Problem 4E: %d\n", *s1_space_pt == *findLastSpaceChr(s1 + len1 - 1, s1));
+
+    printf("\n");
 }
