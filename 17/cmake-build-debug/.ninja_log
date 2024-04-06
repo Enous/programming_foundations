@@ -1,0 +1,7 @@
+# ninja log v5
+14	222	7341036631958239	CMakeFiles/17.dir/test.c.obj	b6e72ad16c1595f7
+33	230	7341036632032393	CMakeFiles/17.dir/main.c.obj	ee0646f7b51fbeda
+24	233	7341036632032393	CMakeFiles/17.dir/problems/2-3.c.obj	8dc8803148d226bb
+1	235	7341036632032393	CMakeFiles/data_structures.dir/D_/uni/programming_foundations/libs/data_structures/string/string_.c.obj	401595d83319385f
+235	433	7341036634081533	libdata_structures.a	8398fc0ef5a3cfb2
+434	684	7341036636544372	17.exe	7389c33d831d523b

@@ -1,7 +1,9 @@
 #include <stdio.h>
 
+#include "string_.h"
+#include "problems.h"
+
 int main()
 {
-    printf("Hello, World!\n");
-    return 0;
+    problem2_3();
 }
