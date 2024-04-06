@@ -29,4 +29,6 @@ char* findLastNonSpaceChr(char*, const char*);
    не включая start */
 char* findLastSpaceChr(char*, const char*);
 
+int strcmp(const char* lhs, const char* rhs);
+
 #endif //LIBS_STRING__H

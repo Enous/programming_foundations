@@ -63,6 +63,9 @@ char* findLastNonSpaceChr(char* end, const char* start)
 }
 
 
+/* возвращает указатель на последний пробельный символ,
+   расположенный на ленте памяти между адресами start и end,
+   не включая start */
 char* findLastSpaceChr(char* end, const char* start)
 {
     while (!isspace(*end) && *start != '\0')
@@ -72,3 +75,12 @@ char* findLastSpaceChr(char* end, const char* start)
 }
 
 
+int strcmp(const char* lhs, const char* rhs)
+{
+    while (*lhs && *lhs == *rhs)
+    {
+        lhs++; rhs++;
+    }
+
+    return *lhs - *rhs;
+}
