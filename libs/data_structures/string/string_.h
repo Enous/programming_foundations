@@ -29,6 +29,27 @@ char* findLastNonSpaceChr(char*, const char*);
    не включая start */
 char* findLastSpaceChr(char*, const char*);
 
-int strcmp(const char* lhs, const char* rhs);
+int strcmp(const char*, const char*);
+
+int is_lowercase(int);
+
+/* записывает по адресу destination фрагмент памяти,
+   начиная с адреса source_start до source_end;
+   возвращает указатель на следующий свободный фрагмент памяти в
+   destination */
+char* copy(const char*, const char*, char*);
+
+/* записывает по адресу destination элементы из фрагмента памяти,
+   начиная с source_start и заканчивая source_end,
+   удовлетворяющие функции-предикату f;
+   возвращает указатель на следующий свободный для записи фрагмент в памяти */
+char* copyBasedOnCondition(char*, const char*, char*, int (*)(int));
+
+/* записывает по адресу destination элементы из фрагмента памяти,
+   начиная с source_start и заканчивая source_end,
+   удовлетворяющие функции-предикату;
+   возвращает указатель на следующий свободный для записи фрагмент в памяти */
+char* copyReversedBasedOnCondition(char*, const char*,
+                                   char*, int (*)(int));
 
 #endif //LIBS_STRING__H

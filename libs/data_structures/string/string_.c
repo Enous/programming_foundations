@@ -1,5 +1,7 @@
 #include <stdio.h>
+#include <stdlib.h>
 #include <ctype.h>
+#include <memory.h>
 
 #include "string_.h"
 
@@ -78,9 +80,85 @@ char* findLastSpaceChr(char* end, const char* start)
 int strcmp(const char* lhs, const char* rhs)
 {
     while (*lhs && *lhs == *rhs)
-    {
-        lhs++; rhs++;
-    }
+        lhs++, rhs++;
 
     return *lhs - *rhs;
+}
+
+
+/* записывает по адресу destination фрагмент памяти,
+   начиная с адреса source_start до source_end;
+   возвращает указатель на следующий свободный фрагмент памяти в
+   destination */
+char* copy(const char* source_start, const char* source_end, char* destination)
+{
+    size_t len = source_end - source_start;
+
+    memcpy(destination, source_start, sizeof(char) * len);
+
+    return destination + sizeof(char) * len;
+}
+
+
+/* возвращает 1, если латинская буква прописная, и 0 в противном случае */
+int is_lowercase(int chr)
+{
+    return chr >= 0x61 && chr <= 0x7a;
+}
+
+
+/* записывает по адресу destination элементы из фрагмента памяти,
+   начиная с source_start и заканчивая source_end,
+   удовлетворяющие функции-предикату;
+   возвращает указатель на следующий свободный для записи фрагмент в памяти */
+char* copyBasedOnCondition(char* source_start, const char* source_end, char* destination, int (*condition)(int))
+{
+    char* destination_end = destination;
+
+    while (*source_start != *source_end)
+    {
+        if (condition(*(source_start)))
+        {
+            memcpy(destination_end, source_start, sizeof(char));
+            destination_end++;
+        }
+
+        source_start++;
+    }
+
+    *destination_end = '\0';
+    size_t len = destination_end - destination;
+
+    destination = realloc(destination, sizeof(char) * len);
+
+    return destination;
+}
+
+
+/* записывает по адресу destination элементы из фрагмента памяти,
+   начиная с source_end и заканчивая source_start,
+   удовлетворяющие функции-предикату;
+   возвращает указатель на следующий свободный для записи фрагмент в памяти */
+char* copyReversedBasedOnCondition(char* source_end, const char* source_start,
+                    char* destination, int (*condition)(int))
+{
+    char* destination_end = destination;
+
+    while (*source_end != *source_start)
+    {
+        if (condition(*(source_end)))
+        {
+            memcpy(destination_end, source_end, sizeof(char));
+            destination_end++;
+        }
+
+        source_end--;
+    }
+
+    *destination_end = '\0';
+    size_t len = destination_end - destination;
+
+    destination = realloc(destination, sizeof(char) * len);
+
+    return destination;
 }
