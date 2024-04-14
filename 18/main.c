@@ -24,9 +24,9 @@ void assertString(const char *expected, char *got,
 
 void test_removeExtraSpaces()
 {
-    char s[] = "Hello,   World!  ";
+    char s[] = "Just because you're  correct   doesn't mean you're   right!";
     removeExtraSpaces(s);
-    ASSERT_STRING("Hello, World!", s);
+    ASSERT_STRING("Just because you're correct doesn't mean you're right!", s);
 }
 
 
