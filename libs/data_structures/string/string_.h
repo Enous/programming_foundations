@@ -1,6 +1,16 @@
 #ifndef LIBS_STRING__H
 #define LIBS_STRING__H
 
+#define MAX_STRING_SIZE 100
+
+static char stringBuffer[MAX_STRING_SIZE + 1];
+
+typedef struct Word
+{
+    char *beginning; // позиция начала слова
+    char *end; // позиция первого символа после последнего символа слова
+} Word;
+
 /* возвращает кол-во символов в строке, не считая нуль-символ */
 size_t get_strlen(const char*);
 
@@ -46,10 +56,23 @@ char* copy(const char*, const char*, char*);
 char* copyBasedOnCondition(char*, const char*, char*, int (*)(int));
 
 /* записывает по адресу destination элементы из фрагмента памяти,
-   начиная с source_start и заканчивая source_end,
+   начиная с source_end и заканчивая source_start,
    удовлетворяющие функции-предикату;
    возвращает указатель на следующий свободный для записи фрагмент в памяти */
 char* copyReversedBasedOnCondition(char*, const char*,
                                    char*, int (*)(int));
+
+/* возвращает указатель на последний символ в строке */
+char* getEndOfString(char*);
+
+/* сокращает количество пробелов между словами
+   данного предложения до одного */
+void removeExtraSpaces(char*);
+
+int getWord(char*, Word*);
+
+/* переносит цифры каждого слова были в конец слова
+   без изменения порядка следования их в слове, а буквы – в начало */
+void moveDigitsToWordEnd(Word);
 
 #endif //LIBS_STRING__H

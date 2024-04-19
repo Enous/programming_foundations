@@ -34,7 +34,7 @@ char* find(char* start, char* end, int code)
    не включая end */
 char* findNonSpaceChr(char* start)
 {
-    while (!isspace(*(start + 1)) && *start != '\0')
+    while (isspace(*start) && *start != '\0')
         start++;
 
     return start;
@@ -58,7 +58,7 @@ char* findSpaceChr(char* start)
    не включая start */
 char* findLastNonSpaceChr(char* end, const char* start)
 {
-    while (isspace(*(end)) && *end != *start)
+    while (isspace(*end) && *end != *start)
         end--;
 
     return end;
@@ -96,7 +96,7 @@ char* copy(const char* source_start, const char* source_end, char* destination)
 
     memcpy(destination, source_start, sizeof(char) * len);
 
-    return destination + sizeof(char) * len;
+    return destination + sizeof(char) * (len + 1);
 }
 
 
@@ -113,23 +113,16 @@ int is_lowercase(int chr)
    возвращает указатель на следующий свободный для записи фрагмент в памяти */
 char* copyBasedOnCondition(char* source_start, const char* source_end, char* destination, int (*condition)(int))
 {
-    char* destination_end = destination;
-
     while (*source_start != *source_end)
     {
         if (condition(*(source_start)))
         {
-            memcpy(destination_end, source_start, sizeof(char));
-            destination_end++;
+            memcpy(destination, source_start, sizeof(char));
+            destination++;
         }
 
         source_start++;
     }
-
-    *destination_end = '\0';
-    size_t len = destination_end - destination;
-
-    destination = realloc(destination, sizeof(char) * len);
 
     return destination;
 }
@@ -142,23 +135,95 @@ char* copyBasedOnCondition(char* source_start, const char* source_end, char* des
 char* copyReversedBasedOnCondition(char* source_end, const char* source_start,
                     char* destination, int (*condition)(int))
 {
-    char* destination_end = destination;
-
     while (*source_end != *source_start)
     {
         if (condition(*(source_end)))
         {
-            memcpy(destination_end, source_end, sizeof(char));
-            destination_end++;
+            memcpy(destination, source_end, sizeof(char));
+            destination++;
         }
 
         source_end--;
     }
 
-    *destination_end = '\0';
-    size_t len = destination_end - destination;
-
-    destination = realloc(destination, sizeof(char) * len);
-
     return destination;
+}
+
+
+/* возвращает указатель на последний символ в строке */
+char* getEndOfString(char* s)
+{
+    while (*s != '\0')
+        s++;
+
+    return s;
+}
+
+
+/* сокращает количество пробелов между словами
+   данного предложения до одного */
+void removeExtraSpaces(char* s)
+{
+    char* endSource = getEndOfString(s);
+    int curr_space_count = 0;
+    char *destination = s;
+    char* destination_end = destination;
+
+    while (*s != *endSource)
+    {
+        if (*s == ' ')
+            curr_space_count++;
+        else
+        {
+            if (curr_space_count >= 1)
+            {
+                *destination_end = ' ';
+                destination_end++;
+                curr_space_count = 0;
+            }
+
+            *destination_end = *s;
+            destination_end++;
+        }
+
+        s++;
+    }
+
+    if (curr_space_count >= 1)
+    {
+        *destination_end = ' ';
+        destination_end++;
+        curr_space_count = 0;
+    }
+
+    *destination_end = '\0';
+}
+
+
+int getWord(char* start, Word* word)
+{
+    word->beginning = findNonSpaceChr(start);
+
+    if (*word->beginning == '\0')
+        return 0;
+
+    word->end = findSpaceChr(word->beginning);
+
+    return 1;
+}
+
+
+/* переносит цифры каждого слова были в конец слова
+   без изменения порядка следования их в слове, а буквы – в начало */
+void moveDigitsToWordEnd(Word word)
+{
+    char* endStringBuffer = copy(word.beginning, word.end,
+                                 stringBuffer);
+
+    char *recPosition = copyBasedOnCondition(stringBuffer,
+                                             endStringBuffer - 1,
+                                      word.beginning, isalpha);
+
+    copyBasedOnCondition(stringBuffer, endStringBuffer,
+                         recPosition, isdigit);
 }
