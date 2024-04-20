@@ -7,7 +7,7 @@
 #define ASSERT_STRING(expected, got) assertString(expected, got, \
 __FILE__, __FUNCTION__, __LINE__)
 
-#define ASSERT_BOOL(expected, got) assertBool(expected, got, \
+#define ASSERT(expected, got) assert(expected, got, \
 __FILE__, __FUNCTION__, __LINE__)
 
 void assertString(const char *expected, char *got,
@@ -26,7 +26,7 @@ void assertString(const char *expected, char *got,
 }
 
 
-void assertBool(const bool expected, bool got,
+void assert(const bool expected, bool got,
                   char const *fileName, char const *funcName,
                   int line)
 {
@@ -225,7 +225,7 @@ void test_wordsAreInLexicographicOrder1()
     bool res = wordsAreInLexicographicOrder(s);
     bool ans = true;
 
-    ASSERT_BOOL(ans, res);
+    ASSERT(ans, res);
 }
 
 
@@ -236,7 +236,7 @@ void test_wordsAreInLexicographicOrder2()
     bool res = wordsAreInLexicographicOrder(s);
     bool ans = true;
 
-    ASSERT_BOOL(ans, res);
+    ASSERT(ans, res);
 }
 
 
@@ -247,7 +247,7 @@ void test_wordsAreInLexicographicOrder3()
     bool res = wordsAreInLexicographicOrder(s);
     bool ans = false;
 
-    ASSERT_BOOL(ans, res);
+    ASSERT(ans, res);
 }
 
 
@@ -258,7 +258,7 @@ void test_wordsAreInLexicographicOrder4()
     bool res = wordsAreInLexicographicOrder(s);
     bool ans = true;
 
-    ASSERT_BOOL(ans, res);
+    ASSERT(ans, res);
 }
 
 
@@ -269,7 +269,40 @@ void test_wordsAreInLexicographicOrder5()
     bool res = wordsAreInLexicographicOrder(s);
     bool ans = true;
 
-    ASSERT_BOOL(ans, res);
+    ASSERT(ans, res);
+}
+
+
+void test_countPalindromeWords1()
+{
+    char s[] = "radar string level";
+
+    int res = countPalindromeWords(s);
+    int ans = 2;
+
+    ASSERT(ans, res);
+}
+
+
+void test_countPalindromeWords2()
+{
+    char s[] = "   noon string ";
+
+    int res = countPalindromeWords(s);
+    int ans = 1;
+
+    ASSERT(ans, res);
+}
+
+
+void test_countPalindromeWords3()
+{
+    char s[] = "  Just because you're  correct   doesn't mean you're   right";
+
+    int res = countPalindromeWords(s);
+    int ans = 0;
+
+    ASSERT(ans, res);
 }
 
 
@@ -298,14 +331,14 @@ void test()
     test_wordsAreInLexicographicOrder3();
     test_wordsAreInLexicographicOrder4();
     test_wordsAreInLexicographicOrder5();
+
+    test_countPalindromeWords1();
+    test_countPalindromeWords2();
+    test_countPalindromeWords3();
 }
 
 
 int main()
 {
     test();
-
-    char s[] = "  Just because you're  correct   doesn't mean you're   right";
-
-    printWordsInReverseOrder(s);
 }

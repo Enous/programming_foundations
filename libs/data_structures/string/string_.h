@@ -96,4 +96,7 @@ int getWordStartingFromEnd(char*, char*, Word*);
 /* выводит слова в предложении в обратном порядке */
 void printWordsInReverseOrder(char*);
 
+/* возвращает количество слов-палиндромов в строке (слова разделены запятыми) */
+int countPalindromeWords(char* s);
+
 #endif //LIBS_STRING__H

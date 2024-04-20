@@ -382,11 +382,10 @@ bool wordsAreInLexicographicOrder(char* s)
 int getWordStartingFromEnd(char* start, char* end, Word* word)
 {
     word->end = findLastNonSpaceChr(end, start);
-
-    if (*word->end == '\0' || word->end == word->beginning)
-        return 0;
-
     word->beginning = findLastSpaceChr(word->end, start);
+
+    if (word->end == word->beginning)
+        return 0;
 
     return 1;
 }
@@ -397,12 +396,12 @@ void printWordsInReverseOrder(char* s)
 {
     Word w;
 
-    char* start = s;
-    char* end = s + get_strlen(s);
+    char *start = s;
+    char *end = s + get_strlen(s);
 
     while (getWordStartingFromEnd(start, end, &w))
     {
-        char* w_beginning = w.beginning;
+        char *w_beginning = w.beginning;
 
         while (!isspace(*w_beginning) && w_beginning != w.end + 1)
         {
@@ -415,4 +414,44 @@ void printWordsInReverseOrder(char* s)
         size_t shift = end - w.beginning;
         end -= shift;
     }
+}
+
+
+/* возвращает количество слов-палиндромов в строке (слова разделены запятыми) */
+int countPalindromeWords(char* s)
+{
+    Word w;
+
+    char *start = s;
+    char *end = s + get_strlen(s);
+
+    int count = 0;
+
+    while (getWordStartingFromEnd(start, end, &w))
+    {
+        char* w_beginning = w.beginning;
+        char* w_end = w.end;
+
+        bool is_palindrome = true;
+
+        while (w_beginning <= w_end)
+        {
+            if (*w_beginning != *w_end)
+            {
+                is_palindrome = false;
+                break;
+            }
+
+            w_beginning++;
+            w_end--;
+        }
+
+        if (is_palindrome)
+            count++;
+
+        size_t shift = end - w.beginning;
+        end -= shift;
+    }
+
+    return count;
 }
