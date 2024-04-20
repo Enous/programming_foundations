@@ -90,4 +90,10 @@ int wordsAreEqual(Word, Word);
    и false в противном случае */
 bool wordsAreInLexicographicOrder(char*);
 
+/* возвращает 1, если слово найдено (начиная с конца строки), и 0 в противном случае */
+int getWordStartingFromEnd(char*, char*, Word*);
+
+/* выводит слова в предложении в обратном порядке */
+void printWordsInReverseOrder(char*);
+
 #endif //LIBS_STRING__H

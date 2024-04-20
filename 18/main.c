@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <memory.h>
+#include <ctype.h>
 
 #include "string_.h"
 
@@ -44,7 +45,9 @@ void assertBool(const bool expected, bool got,
 void test_removeExtraSpaces1()
 {
     char s[] = "Just because you're  correct   doesn't mean you're   right!";
+
     removeExtraSpaces(s);
+
     ASSERT_STRING("Just because you're correct doesn't mean you're right!", s);
 }
 
@@ -52,7 +55,9 @@ void test_removeExtraSpaces1()
 void test_removeExtraSpaces2()
 {
     char s[] = "   Hello,  World!  ";
+
     removeExtraSpaces(s);
+
     ASSERT_STRING(" Hello, World! ", s);
 }
 
@@ -60,7 +65,9 @@ void test_removeExtraSpaces2()
 void test_removeExtraSpaces3()
 {
     char s[] = "";
+
     removeExtraSpaces(s);
+
     ASSERT_STRING("", s);
 }
 
@@ -119,8 +126,6 @@ void test_moveDigitsToEnd3()
 void test_replaceDigitsWithDigitNumOfSpaces1()
 {
     char s[] = "H1e2l3l4o";
-
-    printf("%c", *(s + get_strlen(s)));
 
     replaceDigitsWithDigitNumOfSpaces(s);
 
@@ -299,4 +304,8 @@ void test()
 int main()
 {
     test();
+
+    char s[] = "  Just because you're  correct   doesn't mean you're   right";
+
+    printWordsInReverseOrder(s);
 }

@@ -58,8 +58,13 @@ char* findSpaceChr(char* start)
    не включая start */
 char* findLastNonSpaceChr(char* end, const char* start)
 {
-    while (isspace(*end) && *end != *start)
+    while (end != start )
+    {
         end--;
+
+        if (!isspace(*end) && *end != '\0')
+            break;
+    }
 
     return end;
 }
@@ -70,7 +75,7 @@ char* findLastNonSpaceChr(char* end, const char* start)
    не включая start */
 char* findLastSpaceChr(char* end, const char* start)
 {
-    while (!isspace(*end) && *start != '\0')
+    while (!isspace(*(end - 1)) && end != start)
         end--;
 
     return end;
@@ -241,7 +246,7 @@ void replaceDigitsWithDigitNumOfSpaces(char* s)
     char* endStringBuffer0 = copy(s, s + len,
                                  stringBuffer0);
 
-    while (*stringBuffer0 != *endStringBuffer0)
+    while (stringBuffer0 != endStringBuffer0)
     {
         if (isdigit(*stringBuffer0))
         {
@@ -274,7 +279,7 @@ int wordsAreEqual(Word w1, Word w2)
     char* start1 = w1.beginning;
     char* start2 = w2.beginning;
 
-    while (*start1 != *w1.end && *start2 != *w2.end)
+    while (start1 != w1.end && start2 != w2.end)
     {
         if (*start1 - *start2 != 0)
             return *start1 - *start2;
@@ -314,7 +319,7 @@ void replace(char* src, char* w1, char* w2)
 
     char* read_ptr_end = getEndOfString(read_ptr);
 
-    while (*read_ptr != *read_ptr_end)
+    while (read_ptr != read_ptr_end)
     {
         Word w;
         getWord(read_ptr, &w);
@@ -370,4 +375,44 @@ bool wordsAreInLexicographicOrder(char* s)
     }
 
     return true;
+}
+
+
+/* возвращает 1, если слово найдено (начиная с конца строки), и 0 в противном случае */
+int getWordStartingFromEnd(char* start, char* end, Word* word)
+{
+    word->end = findLastNonSpaceChr(end, start);
+
+    if (*word->end == '\0' || word->end == word->beginning)
+        return 0;
+
+    word->beginning = findLastSpaceChr(word->end, start);
+
+    return 1;
+}
+
+
+/* выводит слова в предложении в обратном порядке */
+void printWordsInReverseOrder(char* s)
+{
+    Word w;
+
+    char* start = s;
+    char* end = s + get_strlen(s);
+
+    while (getWordStartingFromEnd(start, end, &w))
+    {
+        char* w_beginning = w.beginning;
+
+        while (!isspace(*w_beginning) && w_beginning != w.end + 1)
+        {
+            printf("%c", *w_beginning);
+            w_beginning++;
+        }
+
+        printf("\n");
+
+        size_t shift = end - w.beginning;
+        end -= shift;
+    }
 }
