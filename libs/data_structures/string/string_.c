@@ -266,21 +266,28 @@ void replaceDigitsWithDigitNumOfSpaces(char* s)
 }
 
 
+/* возвращает 0, если w1 и w2 равны,
+   отрицательное значение, если w1 располагается до w2 в лексикографическом порядке,
+   иначе - положительное значение */
 int wordsAreEqual(Word w1, Word w2)
 {
     char* start1 = w1.beginning;
     char* start2 = w2.beginning;
 
-    while (*start1 != *w1.end && *start2 != *w2.end && *w1.beginning == *w2.beginning)
-        start1++, start2++;
+    while (*start1 != *w1.end && *start2 != *w2.end)
+    {
+        if (*start1 - *start2 != 0)
+            return *start1 - *start2;
 
-    if ((isspace(*w1.end) || *w1.end == '\0') && (isspace(*w2.end) || *w2.end == '\0'))
-        return 0;
+        start1++;
+        start2++;
+    }
 
-    return *w1.end - *w2.end;
+    return 0;
 }
 
 
+/* заменяет все вхождения слова 𝑤1 на слово 𝑤2 */
 void replace(char* src, char* w1, char* w2)
 {
     size_t w1_len = get_strlen(w1);
@@ -322,15 +329,10 @@ void replace(char* src, char* w1, char* w2)
         size_t shift_read, shift_rec;
         shift_read = shift_rec = w.end - read_ptr;
 
-        if (*w.beginning == *word1.beginning)
+        if (!wordsAreEqual(w, word1))
         {
-            if (!wordsAreEqual(w, word1))
-            {
                 memcpy(rec_ptr, word2.beginning, sizeof(char) * w2_len);
                 shift_rec = w2_len;
-            }
-            else
-                memcpy(rec_ptr, read_ptr,sizeof(char) * shift_rec);
         }
         else
             memcpy(rec_ptr, read_ptr,sizeof(char) * shift_rec);
@@ -340,4 +342,32 @@ void replace(char* src, char* w1, char* w2)
     }
 
     *rec_ptr = '\0';
+}
+
+
+/* возвращает true, если слова данного предложения расположены в лексикографическом порядке,
+   и false в противном случае */
+bool wordsAreInLexicographicOrder(char* s)
+{
+    Word prev_w, curr_w;
+
+    char* start = s;
+
+    if (getWord(start, &prev_w))
+    {
+        start = prev_w.end;
+
+        while (getWord(start, &curr_w))
+        {
+            int res = wordsAreEqual(prev_w, curr_w);
+
+            if (res > 0)
+                return false;
+
+            start = curr_w.end;
+            prev_w = curr_w;
+        }
+    }
+
+    return true;
 }

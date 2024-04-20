@@ -6,6 +6,8 @@
 #define ASSERT_STRING(expected, got) assertString(expected, got, \
 __FILE__, __FUNCTION__, __LINE__)
 
+#define ASSERT_BOOL(expected, got) assertBool(expected, got, \
+__FILE__, __FUNCTION__, __LINE__)
 
 void assertString(const char *expected, char *got,
                   char const *fileName, char const *funcName,
@@ -17,6 +19,22 @@ void assertString(const char *expected, char *got,
         fprintf(stderr, "%s - failed on line %d\n", funcName, line);
         fprintf(stderr, "Expected: \"%s\"\n", expected);
         fprintf(stderr, "Got: \"%s\"\n\n", got);
+    }
+    else
+        fprintf(stderr, "%s - OK\n", funcName);
+}
+
+
+void assertBool(const bool expected, bool got,
+                  char const *fileName, char const *funcName,
+                  int line)
+{
+    if (expected != got)
+    {
+        fprintf(stderr, "File %s\n", fileName);
+        fprintf(stderr, "%s - failed on line %d\n", funcName, line);
+        fprintf(stderr, "Expected: \"%d\"\n", expected);
+        fprintf(stderr, "Got: \"%d\"\n\n", got);
     }
     else
         fprintf(stderr, "%s - OK\n", funcName);
@@ -57,9 +75,6 @@ void test_moveDigitsToEnd1()
     {
         moveDigitsToWordEnd(w);
 
-        while (*w.end == ' ')
-            w.end++;
-
         start = w.end;
     }
 
@@ -76,9 +91,6 @@ void test_moveDigitsToEnd2()
     while (getWord(start, &w))
     {
         moveDigitsToWordEnd(w);
-
-        while (*w.end == ' ')
-            w.end++;
 
         start = w.end;
     }
@@ -97,9 +109,6 @@ void test_moveDigitsToEnd3()
     {
         moveDigitsToWordEnd(w);
 
-        while (*w.end == ' ')
-            w.end++;
-
         start = w.end;
     }
 
@@ -111,7 +120,7 @@ void test_replaceDigitsWithDigitNumOfSpaces1()
 {
     char s[] = "H1e2l3l4o";
 
-    printf("%c", *(s + 9));
+    printf("%c", *(s + get_strlen(s)));
 
     replaceDigitsWithDigitNumOfSpaces(s);
 
@@ -204,6 +213,61 @@ void test_replace5()
 }
 
 
+void test_wordsAreInLexicographicOrder1()
+{
+    char s[] = "abcd acde aefg";
+
+    bool res = wordsAreInLexicographicOrder(s);
+    bool ans = true;
+
+    ASSERT_BOOL(ans, res);
+}
+
+
+void test_wordsAreInLexicographicOrder2()
+{
+    char s[] = "apostrophe arbitrary assertion";
+
+    bool res = wordsAreInLexicographicOrder(s);
+    bool ans = true;
+
+    ASSERT_BOOL(ans, res);
+}
+
+
+void test_wordsAreInLexicographicOrder3()
+{
+    char s[] = "apostrophe assertion arbitrary";
+
+    bool res = wordsAreInLexicographicOrder(s);
+    bool ans = false;
+
+    ASSERT_BOOL(ans, res);
+}
+
+
+void test_wordsAreInLexicographicOrder4()
+{
+    char s[] = "";
+
+    bool res = wordsAreInLexicographicOrder(s);
+    bool ans = true;
+
+    ASSERT_BOOL(ans, res);
+}
+
+
+void test_wordsAreInLexicographicOrder5()
+{
+    char s[] = "string string string";
+
+    bool res = wordsAreInLexicographicOrder(s);
+    bool ans = true;
+
+    ASSERT_BOOL(ans, res);
+}
+
+
 void test()
 {
     test_removeExtraSpaces1();
@@ -223,6 +287,12 @@ void test()
     test_replace3();
     test_replace4();
     test_replace5();
+
+    test_wordsAreInLexicographicOrder1();
+    test_wordsAreInLexicographicOrder2();
+    test_wordsAreInLexicographicOrder3();
+    test_wordsAreInLexicographicOrder4();
+    test_wordsAreInLexicographicOrder5();
 }
 
 
