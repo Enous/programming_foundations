@@ -107,14 +107,51 @@ void test_moveDigitsToEnd3()
 }
 
 
+void test_replaceDigitsWithWithDigitNumOfSpaces1()
+{
+    char s[MAX_STRING_SIZE] = "H1e2l3l4o";
+
+    printf("%c", *(s + 9));
+
+    replaceDigitsWithWithDigitNumOfSpaces(s);
+
+    ASSERT_STRING("H e  l   l    o", s);
+}
+
+
+void test_replaceDigitsWithWithDigitNumOfSpaces2()
+{
+    char s[MAX_STRING_SIZE] = "12Hell34o";
+
+    replaceDigitsWithWithDigitNumOfSpaces(s);
+
+    ASSERT_STRING("   Hell       o", s);
+}
+
+
+void test_replaceDigitsWithWithDigitNumOfSpaces3()
+{
+    char s[MAX_STRING_SIZE] = "";
+
+    replaceDigitsWithWithDigitNumOfSpaces(s);
+
+    ASSERT_STRING("", s);
+}
+
+
 void test()
 {
     test_removeExtraSpaces1();
     test_removeExtraSpaces2();
     test_removeExtraSpaces3();
+
     test_moveDigitsToEnd1();
     test_moveDigitsToEnd2();
     test_moveDigitsToEnd3();
+
+    test_replaceDigitsWithWithDigitNumOfSpaces1();
+    test_replaceDigitsWithWithDigitNumOfSpaces2();
+    test_replaceDigitsWithWithDigitNumOfSpaces3();
 }
 
 

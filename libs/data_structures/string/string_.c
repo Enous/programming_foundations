@@ -96,7 +96,7 @@ char* copy(const char* source_start, const char* source_end, char* destination)
 
     memcpy(destination, source_start, sizeof(char) * len);
 
-    return destination + sizeof(char) * (len + 1);
+    return destination + sizeof(char) * len;
 }
 
 
@@ -220,10 +220,45 @@ void moveDigitsToWordEnd(Word word)
     char* endStringBuffer = copy(word.beginning, word.end,
                                  stringBuffer);
 
-    char *recPosition = copyBasedOnCondition(stringBuffer,
-                                             endStringBuffer - 1,
+    char* letters_moved_to_end_w = copyBasedOnCondition(stringBuffer,
+                                             endStringBuffer,
                                       word.beginning, isalpha);
 
     copyBasedOnCondition(stringBuffer, endStringBuffer,
-                         recPosition, isdigit);
+                         letters_moved_to_end_w, isdigit);
+}
+
+
+/* заменяет каждую цифру в строке соответствующим ей числом пробелов */
+void replaceDigitsWithWithDigitNumOfSpaces(char* s)
+{
+    size_t len = get_strlen(s);
+
+    char* stringBuffer0 = malloc(sizeof(char) * len);
+
+    char* endStringBuffer0 = copy(s, s + len,
+                                 stringBuffer0);
+
+    while (*stringBuffer0 != *endStringBuffer0)
+    {
+        if (isdigit(*stringBuffer0))
+        {
+            size_t total_spaces = *stringBuffer0 - '0';
+
+            for (size_t i = 0; i < total_spaces; i++)
+            {
+                *s = ' ';
+                s++;
+            }
+        }
+        else
+        {
+            memcpy(s, stringBuffer0, sizeof(char));
+            s++;
+        }
+
+        stringBuffer0++;
+    }
+
+    *s = '\0';
 }

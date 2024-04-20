@@ -75,4 +75,9 @@ int getWord(char*, Word*);
    без изменения порядка следования их в слове, а буквы – в начало */
 void moveDigitsToWordEnd(Word);
 
+/* заменяет каждую цифру в строке соответствующим ей числом пробелов */
+void replaceDigitsWithWithDigitNumOfSpaces(char*);
+
+
+
 #endif //LIBS_STRING__H
