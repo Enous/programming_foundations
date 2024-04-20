@@ -3,8 +3,6 @@
 
 #define MAX_STRING_SIZE 100
 
-static char stringBuffer[MAX_STRING_SIZE + 1];
-
 typedef struct Word
 {
     char *beginning; // позиция начала слова
@@ -76,8 +74,10 @@ int getWord(char*, Word*);
 void moveDigitsToWordEnd(Word);
 
 /* заменяет каждую цифру в строке соответствующим ей числом пробелов */
-void replaceDigitsWithWithDigitNumOfSpaces(char*);
+void replaceDigitsWithDigitNumOfSpaces(char*);
 
+void replace(char*, char*, char*);
 
+int wordsAreEqual(Word, Word);
 
 #endif //LIBS_STRING__H

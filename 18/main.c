@@ -107,33 +107,98 @@ void test_moveDigitsToEnd3()
 }
 
 
-void test_replaceDigitsWithWithDigitNumOfSpaces1()
+void test_replaceDigitsWithDigitNumOfSpaces1()
 {
-    char s[MAX_STRING_SIZE] = "H1e2l3l4o";
+    char s[] = "H1e2l3l4o";
 
     printf("%c", *(s + 9));
 
-    replaceDigitsWithWithDigitNumOfSpaces(s);
+    replaceDigitsWithDigitNumOfSpaces(s);
 
     ASSERT_STRING("H e  l   l    o", s);
 }
 
 
-void test_replaceDigitsWithWithDigitNumOfSpaces2()
+void test_replaceDigitsWithDigitNumOfSpaces2()
 {
-    char s[MAX_STRING_SIZE] = "12Hell34o";
+    char s[] = "12Hell34o";
 
-    replaceDigitsWithWithDigitNumOfSpaces(s);
+    replaceDigitsWithDigitNumOfSpaces(s);
 
     ASSERT_STRING("   Hell       o", s);
 }
 
 
-void test_replaceDigitsWithWithDigitNumOfSpaces3()
+void test_replaceDigitsWithDigitNumOfSpaces3()
 {
-    char s[MAX_STRING_SIZE] = "";
+    char s[] = "";
 
-    replaceDigitsWithWithDigitNumOfSpaces(s);
+    replaceDigitsWithDigitNumOfSpaces(s);
+
+    ASSERT_STRING("", s);
+}
+
+
+void test_replace1()
+{
+    char s[] = "Hell   o World";
+
+    char w1[] = "Hell";
+    char w2[] = "Heaven";
+
+    replace(s, w1, w2);
+
+    ASSERT_STRING("Heaven   o World", s);
+}
+
+
+void test_replace2()
+{
+    char s[] = "  Just because you're  correct   doesn't mean you're   right";
+
+    char w1[] = "right";
+    char w2[] = "correct";
+
+    replace(s, w1, w2);
+
+    ASSERT_STRING("  Just because you're  correct   doesn't mean you're   correct", s);
+}
+
+
+void test_replace3()
+{
+    char s[] = "  Just because you're  correct   doesn't mean you're   right";
+
+    char w1[] = "correct";
+    char w2[] = "right";
+
+    replace(s, w1, w2);
+
+    ASSERT_STRING("  Just because you're  right   doesn't mean you're   right", s);
+}
+
+
+void test_replace4()
+{
+    char s[] = "  Just because you're  correct   doesn't mean you're   right";
+
+    char w1[] = "you're";
+    char w2[] = "I'm";
+
+    replace(s, w1, w2);
+
+    ASSERT_STRING("  Just because I'm  correct   doesn't mean I'm   right", s);
+}
+
+
+void test_replace5()
+{
+    char s[] = "";
+
+    char w1[] = "right";
+    char w2[] = "correct";
+
+    replace(s, w1, w2);
 
     ASSERT_STRING("", s);
 }
@@ -149,9 +214,15 @@ void test()
     test_moveDigitsToEnd2();
     test_moveDigitsToEnd3();
 
-    test_replaceDigitsWithWithDigitNumOfSpaces1();
-    test_replaceDigitsWithWithDigitNumOfSpaces2();
-    test_replaceDigitsWithWithDigitNumOfSpaces3();
+    test_replaceDigitsWithDigitNumOfSpaces1();
+    test_replaceDigitsWithDigitNumOfSpaces2();
+    test_replaceDigitsWithDigitNumOfSpaces3();
+
+    test_replace1();
+    test_replace2();
+    test_replace3();
+    test_replace4();
+    test_replace5();
 }
 
 

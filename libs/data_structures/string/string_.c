@@ -217,6 +217,8 @@ int getWord(char* start, Word* word)
    без изменения порядка следования их в слове, а буквы – в начало */
 void moveDigitsToWordEnd(Word word)
 {
+    char stringBuffer[MAX_STRING_SIZE + 1];
+
     char* endStringBuffer = copy(word.beginning, word.end,
                                  stringBuffer);
 
@@ -230,7 +232,7 @@ void moveDigitsToWordEnd(Word word)
 
 
 /* заменяет каждую цифру в строке соответствующим ей числом пробелов */
-void replaceDigitsWithWithDigitNumOfSpaces(char* s)
+void replaceDigitsWithDigitNumOfSpaces(char* s)
 {
     size_t len = get_strlen(s);
 
@@ -261,4 +263,81 @@ void replaceDigitsWithWithDigitNumOfSpaces(char* s)
     }
 
     *s = '\0';
+}
+
+
+int wordsAreEqual(Word w1, Word w2)
+{
+    char* start1 = w1.beginning;
+    char* start2 = w2.beginning;
+
+    while (*start1 != *w1.end && *start2 != *w2.end && *w1.beginning == *w2.beginning)
+        start1++, start2++;
+
+    if ((isspace(*w1.end) || *w1.end == '\0') && (isspace(*w2.end) || *w2.end == '\0'))
+        return 0;
+
+    return *w1.end - *w2.end;
+}
+
+
+void replace(char* src, char* w1, char* w2)
+{
+    size_t w1_len = get_strlen(w1);
+    size_t w2_len = get_strlen(w2);
+
+    char stringBuffer[MAX_STRING_SIZE + 1];
+
+    Word word1 = {w1, w1 + w1_len};
+    Word word2 = {w2, w2 + w2_len};
+
+    char *read_ptr, *rec_ptr;
+
+    if (w1_len >= w2_len)
+    {
+        read_ptr = src;
+        rec_ptr = src;
+    }
+    else
+    {
+        copy(src, src + get_strlen(src) + 1, stringBuffer);
+        read_ptr = stringBuffer;
+        rec_ptr = src;
+    }
+
+    char* read_ptr_end = getEndOfString(read_ptr);
+
+    while (*read_ptr != *read_ptr_end)
+    {
+        Word w;
+        getWord(read_ptr, &w);
+
+        size_t shift = w.beginning - read_ptr;
+
+        memcpy(rec_ptr, read_ptr, sizeof(char) * shift);
+
+        read_ptr += shift;
+        rec_ptr += shift;
+
+        size_t shift_read, shift_rec;
+        shift_read = shift_rec = w.end - read_ptr;
+
+        if (*w.beginning == *word1.beginning)
+        {
+            if (!wordsAreEqual(w, word1))
+            {
+                memcpy(rec_ptr, word2.beginning, sizeof(char) * w2_len);
+                shift_rec = w2_len;
+            }
+            else
+                memcpy(rec_ptr, read_ptr,sizeof(char) * shift_rec);
+        }
+        else
+            memcpy(rec_ptr, read_ptr,sizeof(char) * shift_rec);
+
+        read_ptr += shift_read;
+        rec_ptr += shift_rec;
+    }
+
+    *rec_ptr = '\0';
 }
