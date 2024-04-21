@@ -503,6 +503,39 @@ void test_stringHasSameWords3()
 }
 
 
+void test_stringHasAnagrams1()
+{
+    char s[] = "race silent listen";
+
+    bool res = stringHasAnagrams(s);
+    bool ans = true;
+
+    ASSERT(ans, res);
+}
+
+
+void test_stringHasAnagrams2()
+{
+    char s[] = "final";
+
+    bool res = stringHasAnagrams(s);
+    bool ans = false;
+
+    ASSERT(ans, res);
+}
+
+
+void test_stringHasAnagrams3()
+{
+    char s[] = "";
+
+    bool res = stringHasAnagrams(s);
+    bool ans = false;
+
+    ASSERT(ans, res);
+}
+
+
 void test()
 {
     test_removeExtraSpaces1();
@@ -551,6 +584,10 @@ void test()
     test_stringHasSameWords1();
     test_stringHasSameWords2();
     test_stringHasSameWords3();
+
+    test_stringHasAnagrams1();
+    test_stringHasAnagrams2();
+    test_stringHasAnagrams3();
 }
 
 
