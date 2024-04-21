@@ -768,6 +768,54 @@ void test_addWordsToStrWithLesserWordCount5()
 }
 
 
+void test_stringContainsEveryLetterOfW1()
+{
+    char s1[] = "Just because you're correct doesn't mean you're right";
+    char s2[] = "uer";
+
+    bool res = stringContainsEveryLetterOfW(s1, s2);
+    bool ans = true;
+
+    ASSERT(ans, res);
+}
+
+
+void test_stringContainsEveryLetterOfW2()
+{
+    char s1[] = "Just because you're correct doesn't mean you're right";
+    char s2[] = "uel";
+
+    bool res = stringContainsEveryLetterOfW(s1, s2);
+    bool ans = false;
+
+    ASSERT(ans, res);
+}
+
+
+void test_stringContainsEveryLetterOfW3()
+{
+    char s1[] = "Just because you're correct doesn't mean you're right";
+    char s2[] = "";
+
+    bool res = stringContainsEveryLetterOfW(s1, s2);
+    bool ans = true;
+
+    ASSERT(ans, res);
+}
+
+
+void test_stringContainsEveryLetterOfW4()
+{
+    char s1[] = "";
+    char s2[] = "";
+
+    bool res = stringContainsEveryLetterOfW(s1, s2);
+    bool ans = true;
+
+    ASSERT(ans, res);
+}
+
+
 void test()
 {
     test_removeExtraSpaces1();
@@ -841,6 +889,11 @@ void test()
     test_addWordsToStrWithLesserWordCount3();
     test_addWordsToStrWithLesserWordCount4();
     test_addWordsToStrWithLesserWordCount5();
+
+    test_stringContainsEveryLetterOfW1();
+    test_stringContainsEveryLetterOfW2();
+    test_stringContainsEveryLetterOfW3();
+    test_stringContainsEveryLetterOfW4();
 }
 
 

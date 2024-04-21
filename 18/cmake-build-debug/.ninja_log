@@ -65,3 +65,10 @@
 142	260	7354185605938515	18.exe	a6533b4064ff593f
 1	119	7354185657988913	CMakeFiles/18.dir/main.c.obj	ced6b5e83dc09d3
 119	214	7354185658928881	18.exe	a6533b4064ff593f
+29	226	7354253401524834	CMakeFiles/18.dir/main.c.obj	ced6b5e83dc09d3
+2	128	7354253528199460	CMakeFiles/data_structures.dir/D_/uni/programming_foundations/libs/data_structures/string/string_.c.obj	b0953042bfaec3f7
+129	235	7354253529239404	libdata_structures.a	8398fc0ef5a3cfb2
+235	390	7354253530795407	18.exe	a6533b4064ff593f
+1	121	7354254151730825	CMakeFiles/data_structures.dir/D_/uni/programming_foundations/libs/data_structures/string/string_.c.obj	b0953042bfaec3f7
+122	204	7354254152584346	libdata_structures.a	8398fc0ef5a3cfb2
+204	346	7354254153848895	18.exe	a6533b4064ff593f
