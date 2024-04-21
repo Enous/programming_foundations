@@ -378,7 +378,7 @@ void test_reverseWordOrder1()
 
     reverseWordOrder(s);
 
-    ASSERT("Just", s);
+    ASSERT_STRING("Just", s);
 }
 
 
@@ -388,7 +388,7 @@ void test_reverseWordOrder2()
 
     reverseWordOrder(s);
 
-    ASSERT("right you're mean doesn't correct you're because Just", s);
+    ASSERT_STRING("right you're mean doesn't correct you're because Just", s);
 }
 
 
@@ -398,7 +398,75 @@ void test_reverseWordOrder3()
 
     reverseWordOrder(s);
 
-    ASSERT("", s);
+    ASSERT_STRING("", s);
+}
+
+
+void test_findLastS1WordThatS2Has1()
+{
+    char s1[] = "  Just because you're  correct   doesn't mean you're   right";
+    char s2[] = "because you're correct";
+
+    Word w = findLastS1WordThatS2Has(s1, s2);
+
+    char* s3 = malloc(sizeof(char) * ((w.end - w.beginning) + 1));
+
+    wordToStr(w, s3);
+
+    ASSERT_STRING("you're", s3);
+
+    free(s3);
+}
+
+
+void test_findLastS1WordThatS2Has2()
+{
+    char s1[] = "  Just because you're  correct   doesn't mean you're   right";
+    char s2[] = "";
+
+    Word w = findLastS1WordThatS2Has(s1, s2);
+
+    char* s3 = malloc(sizeof(char) * ((w.end - w.beginning) + 1));
+
+    wordToStr(w, s3);
+
+    ASSERT_STRING("", s3);
+
+    free(s3);
+}
+
+
+void test_findLastS1WordThatS2Has3()
+{
+    char s1[] = "";
+    char s2[] = "  Just because you're  correct   doesn't mean you're   right";
+
+    Word w = findLastS1WordThatS2Has(s1, s2);
+
+    char* s3 = malloc(sizeof(char) * ((w.end - w.beginning) + 1));
+
+    wordToStr(w, s3);
+
+    ASSERT_STRING("", s3);
+
+    free(s3);
+}
+
+
+void test_findLastS1WordThatS2Has4()
+{
+    char s1[] = "";
+    char s2[] = "";
+
+    Word w = findLastS1WordThatS2Has(s1, s2);
+
+    char* s3 = malloc(sizeof(char) * ((w.end - w.beginning) + 1));
+
+    wordToStr(w, s3);
+
+    ASSERT_STRING("", s3);
+
+    free(s3);
 }
 
 
@@ -441,6 +509,11 @@ void test()
     test_reverseWordOrder1();
     test_reverseWordOrder2();
     test_reverseWordOrder3();
+
+    test_findLastS1WordThatS2Has1();
+    test_findLastS1WordThatS2Has2();
+    test_findLastS1WordThatS2Has3();
+    test_findLastS1WordThatS2Has4();
 }
 
 
