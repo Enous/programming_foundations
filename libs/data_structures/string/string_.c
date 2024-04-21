@@ -241,16 +241,18 @@ void replaceDigitsWithDigitNumOfSpaces(char* s)
 {
     size_t len = get_strlen(s);
 
-    char* stringBuffer0 = malloc(sizeof(char) * len);
+    char stringBuffer[MAX_STRING_SIZE];
 
     char* endStringBuffer0 = copy(s, s + len,
-                                 stringBuffer0);
+                                 stringBuffer);
 
-    while (stringBuffer0 != endStringBuffer0)
+    char* read_ptr = stringBuffer;
+
+    while (read_ptr != endStringBuffer0)
     {
-        if (isdigit(*stringBuffer0))
+        if (isdigit(*read_ptr))
         {
-            size_t total_spaces = *stringBuffer0 - '0';
+            size_t total_spaces = *read_ptr - '0';
 
             for (size_t i = 0; i < total_spaces; i++)
             {
@@ -260,11 +262,11 @@ void replaceDigitsWithDigitNumOfSpaces(char* s)
         }
         else
         {
-            memcpy(s, stringBuffer0, sizeof(char));
+            memcpy(s, read_ptr, sizeof(char));
             s++;
         }
 
-        stringBuffer0++;
+        read_ptr++;
     }
 
     *s = '\0';
@@ -417,7 +419,7 @@ void printWordsInReverseOrder(char* s)
 }
 
 
-/* возвращает количество слов-палиндромов в строке (слова разделены запятыми) */
+/* возвращает количество слов-палиндромов в строке */
 int countPalindromeWords(char* s)
 {
     Word w;
@@ -454,4 +456,66 @@ int countPalindromeWords(char* s)
     }
 
     return count;
+}
+
+
+/* возвращает указатель на строку, в которой чередуются слова данных слов;
+   если в одной из строк число слов больше, чем в другой, то оставшиеся
+   слова этой строки записываются в конец итоговой строки */
+char* mixStrings(char* s1, char* s2)
+{
+    Word w1, w2;
+
+    size_t str_len = get_strlen(s1) + get_strlen(s2);
+    char* s3 = malloc(sizeof(char) * str_len);
+    char* ptr = s3;
+
+    bool w1IsFound, w2IsFound;
+
+    char* start1 = s1;
+    char* start2 = s2;
+
+    bool turn = false;
+
+    while ((w1IsFound = getWord(start1, &w1)),
+            (w2IsFound = getWord(start2, &w2)),
+            w1IsFound || w2IsFound)
+    {
+        size_t len;
+        char* src;
+
+        if (w1IsFound && !turn)
+        {
+            len = w1.end - w1.beginning;
+            src = w1.beginning;
+        }
+        else
+        {
+            len = w2.end - w2.beginning;
+            src = w2.beginning;
+        }
+
+        memcpy(ptr, src, sizeof(char) * len);
+
+        src += len;
+        ptr += len;
+
+        *ptr = ' ';
+        ptr++;
+
+        if (w1IsFound && !turn)
+            start1 = w1.end;
+        else
+            start2 = w2.end;
+
+        if (w1IsFound && w2IsFound)
+            turn = !turn;
+    }
+
+    if (*(ptr - 1) == ' ')
+        *(ptr - 1) = '\0';
+    else
+        *ptr = '\0';
+
+    return s3;
 }

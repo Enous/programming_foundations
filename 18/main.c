@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <memory.h>
+#include <stdlib.h>
 #include <ctype.h>
 
 #include "string_.h"
@@ -306,6 +307,71 @@ void test_countPalindromeWords3()
 }
 
 
+void test_mixStrings1()
+{
+    char s1[] = "  Just you're  doesn't    you're  ";
+    char s2[] = " because   correct mean  right   ";
+
+    char* res = mixStrings(s1, s2);
+
+    ASSERT_STRING("Just because you're correct doesn't mean you're right", res);
+
+    free(res);
+}
+
+
+void test_mixStrings2()
+{
+    char s1[] = "  Just you're  doesn't    you're  ";
+    char s2[] = " because";
+
+    char* res = mixStrings(s1, s2);
+
+    ASSERT_STRING("Just because you're doesn't you're", res);
+
+    free(res);
+}
+
+
+void test_mixStrings3()
+{
+    char s1[] = "";
+    char s2[] = " because   correct mean  right   ";
+
+    char* res = mixStrings(s1, s2);
+
+    ASSERT_STRING("because correct mean right", res);
+
+    free(res);
+}
+
+
+void test_mixStrings4()
+{
+    char s1[] = "  Just you're  doesn't    you're  ";
+    char s2[] = "";
+
+    char* res = mixStrings(s1, s2);
+
+    ASSERT_STRING("Just you're doesn't you're", res);
+
+    free(res);
+}
+
+
+void test_mixStrings5()
+{
+    char s1[] = "";
+    char s2[] = "";
+
+    char* res = mixStrings(s1, s2);
+
+    ASSERT_STRING("", res);
+
+    free(res);
+}
+
+
 void test()
 {
     test_removeExtraSpaces1();
@@ -335,6 +401,12 @@ void test()
     test_countPalindromeWords1();
     test_countPalindromeWords2();
     test_countPalindromeWords3();
+
+    test_mixStrings1();
+    test_mixStrings2();
+    test_mixStrings3();
+    test_mixStrings4();
+    test_mixStrings5();
 }
 
 
