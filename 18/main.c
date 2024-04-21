@@ -590,6 +590,74 @@ void test_getStringWithoutWordsNotLikeLastWord4()
 }
 
 
+void test_findFirstS1WordThatPrecedesS1WordThatS2Has1()
+{
+    char s1[] = "Just because you're correct doesn't mean you're right";
+    char s2[] = "because you're correct";
+
+    Word w = findFirstS1WordThatPrecedesS1WordThatS2Has(s1, s2);
+
+    char* s3 = malloc(sizeof(char) * ((w.end - w.beginning) + 1));
+
+    wordToStr(w, s3);
+
+    ASSERT_STRING("Just", s3);
+
+    free(s3);
+}
+
+
+void test_findFirstS1WordThatPrecedesS1WordThatS2Has2()
+{
+    char s1[] = "Just because you're correct doesn't mean you're right";
+    char s2[] = "because you're Just";
+
+    Word w = findFirstS1WordThatPrecedesS1WordThatS2Has(s1, s2);
+
+    char* s3 = malloc(sizeof(char) * ((w.end - w.beginning) + 1));
+
+    wordToStr(w, s3);
+
+    ASSERT_STRING("", s3);
+
+    free(s3);
+}
+
+
+void test_findFirstS1WordThatPrecedesS1WordThatS2Has3()
+{
+    char s1[] = "Just because you're correct doesn't mean you're right";
+    char s2[] = "thgir er'uoy naem t'nseod tcerroc er'uoy esuaceb tsuJ";
+
+    Word w = findFirstS1WordThatPrecedesS1WordThatS2Has(s1, s2);
+
+    char* s3 = malloc(sizeof(char) * ((w.end - w.beginning) + 1));
+
+    wordToStr(w, s3);
+
+    ASSERT_STRING("", s3);
+
+    free(s3);
+}
+
+
+void test_findFirstS1WordThatPrecedesS1WordThatS2Has4()
+{
+    char s1[] = "";
+    char s2[] = "";
+
+    Word w = findFirstS1WordThatPrecedesS1WordThatS2Has(s1, s2);
+
+    char* s3 = malloc(sizeof(char) * ((w.end - w.beginning) + 1));
+
+    wordToStr(w, s3);
+
+    ASSERT_STRING("", s3);
+
+    free(s3);
+}
+
+
 void test()
 {
     test_removeExtraSpaces1();
@@ -647,6 +715,11 @@ void test()
     test_getStringWithoutWordsNotLikeLastWord2();
     test_getStringWithoutWordsNotLikeLastWord3();
     test_getStringWithoutWordsNotLikeLastWord4();
+
+    test_findFirstS1WordThatPrecedesS1WordThatS2Has1();
+    test_findFirstS1WordThatPrecedesS1WordThatS2Has2();
+    test_findFirstS1WordThatPrecedesS1WordThatS2Has3();
+    test_findFirstS1WordThatPrecedesS1WordThatS2Has4();
 }
 
 
