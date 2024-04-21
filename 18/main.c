@@ -536,6 +536,60 @@ void test_stringHasAnagrams3()
 }
 
 
+void test_getStringWithoutWordsNotLikeLastWord1()
+{
+    char s1[] = "Just because you're right doesn't mean you're right";
+
+    char* s2;
+
+    s2 = getStringWithoutWordsNotLikeLastWord(s1);
+
+    ASSERT_STRING("Just because you're doesn't mean you're", s2);
+
+    free(s2);
+}
+
+
+void test_getStringWithoutWordsNotLikeLastWord2()
+{
+    char s1[] = "Just because you're correct doesn't mean you're right";
+
+    char* s2;
+
+    s2 = getStringWithoutWordsNotLikeLastWord(s1);
+
+    ASSERT_STRING("Just because you're correct doesn't mean you're", s2);
+
+    free(s2);
+}
+
+
+void test_getStringWithoutWordsNotLikeLastWord3()
+{
+    char s1[] = "right";
+
+    char* s2;
+
+    s2 = getStringWithoutWordsNotLikeLastWord(s1);
+
+    ASSERT_STRING("", s2);
+
+    free(s2);
+}
+
+
+void test_getStringWithoutWordsNotLikeLastWord4()
+{
+    char s1[] = "";
+
+    char *s2;
+
+    s2 = getStringWithoutWordsNotLikeLastWord(s1);
+
+    ASSERT_STRING("", s2);
+}
+
+
 void test()
 {
     test_removeExtraSpaces1();
@@ -588,6 +642,11 @@ void test()
     test_stringHasAnagrams1();
     test_stringHasAnagrams2();
     test_stringHasAnagrams3();
+
+    test_getStringWithoutWordsNotLikeLastWord1();
+    test_getStringWithoutWordsNotLikeLastWord2();
+    test_getStringWithoutWordsNotLikeLastWord3();
+    test_getStringWithoutWordsNotLikeLastWord4();
 }
 
 
