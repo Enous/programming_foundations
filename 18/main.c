@@ -470,6 +470,39 @@ void test_findLastS1WordThatS2Has4()
 }
 
 
+void test_stringHasSameWords1()
+{
+    char s[] = "Just because you're correct doesn't mean you're right";
+
+    bool res = stringHasSameWords(s);
+    bool ans = true;
+
+    ASSERT(ans, res);
+}
+
+
+void test_stringHasSameWords2()
+{
+    char s[] = "Just because you're correct doesn't mean I'm right";
+
+    bool res = stringHasSameWords(s);
+    bool ans = false;
+
+    ASSERT(ans, res);
+}
+
+
+void test_stringHasSameWords3()
+{
+    char s[] = "";
+
+    bool res = stringHasSameWords(s);
+    bool ans = false;
+
+    ASSERT(ans, res);
+}
+
+
 void test()
 {
     test_removeExtraSpaces1();
@@ -514,6 +547,10 @@ void test()
     test_findLastS1WordThatS2Has2();
     test_findLastS1WordThatS2Has3();
     test_findLastS1WordThatS2Has4();
+
+    test_stringHasSameWords1();
+    test_stringHasSameWords2();
+    test_stringHasSameWords3();
 }
 
 
