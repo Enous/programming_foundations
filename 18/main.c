@@ -658,6 +658,46 @@ void test_findFirstS1WordThatPrecedesS1WordThatS2Has4()
 }
 
 
+void test_deletePalindromes1()
+{
+    char s[] = "radar string level";
+
+    deletePalindromes(s);
+
+    ASSERT_STRING("string", s);
+}
+
+
+void test_deletePalindromes2()
+{
+    char s[] = "radar madam level";
+
+    deletePalindromes(s);
+
+    ASSERT_STRING("", s);
+}
+
+
+void test_deletePalindromes3()
+{
+    char s[] = "Just because you're correct doesn't mean you're right";
+
+    deletePalindromes(s);
+
+    ASSERT_STRING("Just because you're correct doesn't mean you're right", s);
+}
+
+
+void test_deletePalindromes4()
+{
+    char s[] = "";
+
+    deletePalindromes(s);
+
+    ASSERT_STRING("", s);
+}
+
+
 void test()
 {
     test_removeExtraSpaces1();
@@ -720,6 +760,11 @@ void test()
     test_findFirstS1WordThatPrecedesS1WordThatS2Has2();
     test_findFirstS1WordThatPrecedesS1WordThatS2Has3();
     test_findFirstS1WordThatPrecedesS1WordThatS2Has4();
+
+    test_deletePalindromes1();
+    test_deletePalindromes2();
+    test_deletePalindromes3();
+    test_deletePalindromes4();
 }
 
 
