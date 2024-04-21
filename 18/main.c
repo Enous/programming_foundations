@@ -372,6 +372,36 @@ void test_mixStrings5()
 }
 
 
+void test_reverseWordOrder1()
+{
+    char s[] = "  Just ";
+
+    reverseWordOrder(s);
+
+    ASSERT("Just", s);
+}
+
+
+void test_reverseWordOrder2()
+{
+    char s[] = "  Just because you're  correct   doesn't mean you're   right";
+
+    reverseWordOrder(s);
+
+    ASSERT("right you're mean doesn't correct you're because Just", s);
+}
+
+
+void test_reverseWordOrder3()
+{
+    char s[] = "";
+
+    reverseWordOrder(s);
+
+    ASSERT("", s);
+}
+
+
 void test()
 {
     test_removeExtraSpaces1();
@@ -407,6 +437,10 @@ void test()
     test_mixStrings3();
     test_mixStrings4();
     test_mixStrings5();
+
+    test_reverseWordOrder1();
+    test_reverseWordOrder2();
+    test_reverseWordOrder3();
 }
 
 
