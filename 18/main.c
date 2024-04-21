@@ -698,6 +698,76 @@ void test_deletePalindromes4()
 }
 
 
+void test_addWordsToStrWithLesserWordCount1()
+{
+    char s1[] = "Just because you're correct";
+    int n1 = 4;
+
+    char s2[] = "Just because you're correct doesn't mean you're right";
+    int n2 = 8;
+
+    addWordsToStrWithLesserWordCount(s1, n1, s2, n2);
+
+    ASSERT_STRING("Just because you're correct doesn't mean you're right", s1);
+}
+
+
+void test_addWordsToStrWithLesserWordCount2()
+{
+    char s1[] = "Just because you're correct doesn't mean you're right";
+    int n1 = 8;
+
+    char s2[] = "Just because you're correct";
+    int n2 = 4;
+
+    addWordsToStrWithLesserWordCount(s1, n1, s2, n2);
+
+    ASSERT_STRING("Just because you're correct doesn't mean you're right", s2);
+}
+
+
+void test_addWordsToStrWithLesserWordCount3()
+{
+    char s1[] = "Just because you're correct";
+    int n1 = 4;
+
+    char s2[] = "Just because you're correct";
+    int n2 = 4;
+
+    addWordsToStrWithLesserWordCount(s1, n1, s2, n2);
+
+    ASSERT_STRING("Just because you're correct", s1);
+}
+
+
+void test_addWordsToStrWithLesserWordCount4()
+{
+    char s1[MAX_STRING_SIZE] = "";
+    int n1 = 0;
+
+    char s2[] = "Just because you're correct doesn't mean you're right";
+    int n2 = 8;
+
+    addWordsToStrWithLesserWordCount(s1, n1, s2, n2);
+
+    ASSERT_STRING("Just because you're correct doesn't mean you're right", s1);
+}
+
+
+void test_addWordsToStrWithLesserWordCount5()
+{
+    char s1[] = "";
+    int n1 = 0;
+
+    char s2[] = "";
+    int n2 = 0;
+
+    addWordsToStrWithLesserWordCount(s1, n1, s2, n2);
+
+    ASSERT_STRING("", s1);
+}
+
+
 void test()
 {
     test_removeExtraSpaces1();
@@ -765,6 +835,12 @@ void test()
     test_deletePalindromes2();
     test_deletePalindromes3();
     test_deletePalindromes4();
+
+    test_addWordsToStrWithLesserWordCount1();
+    test_addWordsToStrWithLesserWordCount2();
+    test_addWordsToStrWithLesserWordCount3();
+    test_addWordsToStrWithLesserWordCount4();
+    test_addWordsToStrWithLesserWordCount5();
 }
 
 
