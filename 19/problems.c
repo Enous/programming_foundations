@@ -1,10 +1,12 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <math.h>
 
 #include "problems.h"
 #include "matrix.h"
 
+/* транспонирует матрицу в файле */
 void ftranspose(FILE* f, char* fname)
 {
     f = fopen(fname, "r");
@@ -16,9 +18,7 @@ void ftranspose(FILE* f, char* fname)
 
     while (fgets(buffer, sizeof(buffer), f))
     {
-        char* buffer_ptr = buffer;
-
-        char* token = strtok(buffer_ptr, " ");
+        char* token = strtok(buffer, " ");
 
         char* chr_order = token;
         char* chr_order_ptr = chr_order;
@@ -73,6 +73,40 @@ void ftranspose(FILE* f, char* fname)
             fprintf(f, "%s\n", str_arr[k]);
         else
             fprintf(f, "%s", str_arr[k]);
+    }
+
+    fclose(f);
+}
+
+
+/* представляет каждое вещественное число в файле
+   в форме с плавающей точкой */
+void fileFixedToFloating(FILE* f, char* fname)
+{
+    f = fopen(fname, "r");
+
+    char buffer[MAX_STR_SIZE];
+    double res_arr[MAX_SIZE];
+
+    int j = 0;
+
+    while (fgets(buffer, sizeof(buffer), f))
+    {
+        res_arr[j++] = ceil(atof(buffer) * 100) / 100;
+
+        *buffer = '\0';
+    }
+
+    fclose(f);
+
+    f = fopen(fname, "w");
+
+    for (int k = 0; k < j; k++)
+    {
+        if (k < j - 1)
+            fprintf(f, "%.2f\n", res_arr[k]);
+        else
+            fprintf(f, "%.2f", res_arr[k]);
     }
 
     fclose(f);

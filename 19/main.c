@@ -63,9 +63,47 @@ void test_ftranspose()
 }
 
 
+void test_fileFixedToFloating()
+{
+    char fname[] = "problem_2.txt";
+
+    FILE* f = fopen(fname, "w");
+
+    fprintf(f, "%s\n", "0.000000");
+    fprintf(f, "%s\n", "3.000000");
+    fprintf(f, "%s\n", "4.578000");
+    fprintf(f, "%s\n", "-10.321111");
+    fprintf(f, "%s", "");
+
+    fclose(f);
+
+    fileFixedToFloating(f, fname);
+
+    f = fopen(fname, "r");
+
+    int size = 4;
+    char arr[4][MAX_STR_SIZE] = {"0.00\n",
+                                 "3.00\n",
+                                 "4.58\n",
+                                 "-10.32"};
+
+    int i = 0;
+
+    char buffer[MAX_STR_SIZE];
+
+    while (fgets(buffer, sizeof(buffer), f) || i < size)
+    {
+        ASSERT_STRING(arr[i], buffer, i + 1);
+        i++;
+        *buffer = '\0';
+    }
+}
+
+
 void test()
 {
     test_ftranspose();
+    test_fileFixedToFloating();
 }
 
 int main()
