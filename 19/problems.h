@@ -22,4 +22,8 @@ void fsolve(FILE* f, char* fname);
    которые содержат данную последовательность символов */
 void fsaveWordsWithSequence(FILE*, char*, char*);
 
+/* преобразовывает файл, оставляя в каждой строке
+   только самое длинное слово */
+void fsaveOnlyLongestWordInEveryLine(FILE*, char*);
+
 #endif //INC_19_PROBLEMS_H

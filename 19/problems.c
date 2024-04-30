@@ -221,3 +221,68 @@ void fsaveWordsWithSequence(FILE* f, char* fname, char* sequence)
 
     fclose(f);
 }
+
+
+/* преобразовывает файл, оставляя в каждой строке
+   только самое длинное слово */
+void fsaveOnlyLongestWordInEveryLine(FILE* f, char* fname)
+{
+    f = fopen(fname, "r");
+
+    char buffer[MAX_STR_SIZE];
+    char res[MAX_SIZE][MAX_STR_SIZE];
+
+    int j = 0;
+
+    while (fgets(buffer, sizeof(buffer), f))
+    {
+        char* buffer_ptr = buffer;
+
+        Word w;
+        getWord(buffer_ptr, &w);
+
+        char longest_word[MAX_WORD_LEN];
+        wordToStr(w, longest_word);
+
+        int max_len = w.end - w.beginning;
+
+        buffer_ptr = w.end;
+
+        while (getWord(buffer_ptr, &w))
+        {
+            int w_len = w.end - w.beginning;
+
+            if (w_len > max_len)
+            {
+                max_len = w_len;
+                wordToStr(w, longest_word);
+            }
+
+            buffer_ptr = w.end;
+        }
+
+        *(longest_word + max_len) = '\0';
+        strcpy(res[j++], longest_word);
+
+        *buffer = '\0';
+    }
+
+    fclose(f);
+
+    f = fopen(fname, "w");
+
+    if (j == 0)
+        fprintf(f, "%s", "");
+    else
+    {
+        for (int k = 0; k < j; k++)
+        {
+            if (k < j - 1)
+                fprintf(f, "%s\n", res[k]);
+            else
+                fprintf(f, "%s", res[k]);
+        }
+    }
+
+    fclose(f);
+}

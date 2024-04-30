@@ -45,7 +45,7 @@ void test_ftranspose()
     f = fopen(fname, "r");
 
     int size = 4;
-    char arr[4][MAX_STR_SIZE] = {"4 1 5 9 13 2 6 10 14 3 7 11 15 4 8 12 16\n",
+    char ans[4][MAX_STR_SIZE] = {"4 1 5 9 13 2 6 10 14 3 7 11 15 4 8 12 16\n",
                                  "2 4 2 3 1\n",
                                  "3 3 2 3 1 4 1 3 8 7",
                                  ""};
@@ -56,7 +56,7 @@ void test_ftranspose()
 
     while (fgets(buffer, sizeof(buffer), f) || i < size)
     {
-        ASSERT_STRING(arr[i], buffer, i + 1);
+        ASSERT_STRING(ans[i], buffer, i + 1);
         i++;
         *buffer = '\0';
     }
@@ -82,7 +82,7 @@ void test_fileFixedToFloating()
     f = fopen(fname, "r");
 
     int size = 4;
-    char arr[4][MAX_STR_SIZE] = {"0.00\n",
+    char ans[4][MAX_STR_SIZE] = {"0.00\n",
                                  "3.00\n",
                                  "4.58\n",
                                  "-10.32"};
@@ -93,7 +93,7 @@ void test_fileFixedToFloating()
 
     while (fgets(buffer, sizeof(buffer), f) || i < size)
     {
-        ASSERT_STRING(arr[i], buffer, i + 1);
+        ASSERT_STRING(ans[i], buffer, i + 1);
         i++;
         *buffer = '\0';
     }
@@ -119,7 +119,7 @@ void test_fileSolveMathProblem()
     f = fopen(fname, "r");
 
     int size = 4;
-    char arr[4][MAX_STR_SIZE] = {"0.00\n",
+    char ans[4][MAX_STR_SIZE] = {"0.00\n",
                                  "3.00\n",
                                  "4.58\n",
                                  "-10.32"};
@@ -130,7 +130,7 @@ void test_fileSolveMathProblem()
 
     while (fgets(buffer, sizeof(buffer), f) || i < size)
     {
-        ASSERT_STRING(arr[i], buffer, i + 1);
+        ASSERT_STRING(ans[i], buffer, i + 1);
         i++;
         *buffer = '\0';
     }
@@ -151,17 +151,17 @@ void test_fsolve()
 
     f = fopen(fname, "r");
 
-    char arr[MAX_STR_SIZE] = {"12"};
+    char ans[MAX_STR_SIZE] = {"12"};
     char buffer[MAX_STR_SIZE];
     int i = 0;
 
     fgets(buffer, sizeof(buffer), f);
 
-    ASSERT_STRING(arr, buffer, i + 1);
+    ASSERT_STRING(ans, buffer, i + 1);
 
     i++;
     *buffer = '\0';
-    *arr = '\0';
+    *ans = '\0';
 }
 
 
@@ -192,6 +192,8 @@ void test_fsaveWordsWithSequence()
     *ans = '\0';
     *sequence = '\0';
 
+    memcpy(fname, "problem_4-2", 11);
+
     f = fopen(fname, "w");
     fprintf(f, "%s", "");
     fclose(f);
@@ -210,11 +212,49 @@ void test_fsaveWordsWithSequence()
 }
 
 
+void test_fsaveOnlyLongestWordInEveryLine()
+{
+    char fname[] = "problem_5.txt";
+
+    FILE* f = fopen(fname, "w");
+
+    fprintf(f, "%s\n", "asfe 1safj 8gfhslke 3smdf 00 ker");
+    fprintf(f, "%s\n", "ohongeww lbl i");
+    fprintf(f, "%s", "@#$%&! &$#$ $%$%#$@!&");
+
+    fclose(f);
+
+    fsaveOnlyLongestWordInEveryLine(f, fname);
+
+    f = fopen(fname, "r");
+
+    int size = 3;
+    char ans[3][MAX_STR_SIZE] = {"8gfhslke\n",
+                                 "ohongeww\n",
+                                 "$%$%#$@!&"};
+
+    int i = 0;
+
+    char buffer[MAX_STR_SIZE];
+
+    while (fgets(buffer, sizeof(buffer), f) || i < size)
+    {
+        ASSERT_STRING(ans[i], buffer, i + 1);
+        i++;
+        *buffer = '\0';
+    }
+
+    i++;
+    *buffer = '\0';
+}
+
+
 void test()
 {
     test_ftranspose();
     test_fileFixedToFloating();
     test_fsaveWordsWithSequence();
+    test_fsaveOnlyLongestWordInEveryLine();
 }
 
 int main()
