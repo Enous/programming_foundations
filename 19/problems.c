@@ -2,9 +2,11 @@
 #include <stdlib.h>
 #include <string.h>
 #include <math.h>
+#include <ctype.h>
 
 #include "problems.h"
 #include "matrix.h"
+#include "string_.h"
 
 /* транспонирует матрицу в файле */
 void ftranspose(FILE* f, char* fname)
@@ -67,12 +69,17 @@ void ftranspose(FILE* f, char* fname)
 
     f = fopen(fname, "w");
 
-    for (int k = 0; k < j; k++)
+    if (j == 0)
+        fprintf(f, "%s", "");
+    else
     {
-        if (k < j - 1)
-            fprintf(f, "%s\n", str_arr[k]);
-        else
-            fprintf(f, "%s", str_arr[k]);
+        for (int k = 0; k < j; k++)
+        {
+            if (k < j - 1)
+                fprintf(f, "%s\n", str_arr[k]);
+            else
+                fprintf(f, "%s", str_arr[k]);
+        }
     }
 
     fclose(f);
@@ -101,13 +108,116 @@ void fileFixedToFloating(FILE* f, char* fname)
 
     f = fopen(fname, "w");
 
-    for (int k = 0; k < j; k++)
+    if (j == 0)
+        fprintf(f, "%s", "");
+    else
     {
-        if (k < j - 1)
-            fprintf(f, "%.2f\n", res_arr[k]);
-        else
-            fprintf(f, "%.2f", res_arr[k]);
+        for (int k = 0; k < j; k++)
+        {
+            if (k < j - 1)
+                fprintf(f, "%.2f\n", res_arr[k]);
+            else
+                fprintf(f, "%.2f", res_arr[k]);
+        }
     }
+
+    fclose(f);
+}
+
+
+/* решает выражение из 2-3 операндов, находящееся в файле,
+   и записывает в конец данного файла результат */
+void fsolve(FILE* f, char* fname)
+{
+    f = fopen(fname, "r");
+
+    char buffer[MAX_STR_SIZE];
+    double nums[MAX_SIZE];
+
+    int j = 0;
+    char operator;
+    float res = 0;
+
+    char* token = strtok(buffer, " ");
+
+    while (token)
+    {
+        if (isdigit(*buffer) && (operator == '*' || operator == '/'))
+            nums[j++] = *buffer - '0';
+        else if (*buffer == '+' || *buffer == '-')
+        {
+            operator = *buffer;
+        }
+        else if (*buffer == '*' || *buffer == '/')
+        {
+
+        }
+
+        token = strtok(NULL, " ");
+    }
+}
+
+
+/* сохраняет в файле только те слова,
+   которые содержат данную последовательность символов */
+void fsaveWordsWithSequence(FILE* f, char* fname, char* sequence)
+{
+    f = fopen(fname, "r");
+
+    char buffer[MAX_STR_SIZE];
+    fgets(buffer, sizeof(buffer), f);
+    char* buffer_ptr = buffer;
+
+    char res[MAX_STR_SIZE];
+    char* res_ptr = res;
+
+    int sequence_len = strlen(sequence);
+
+    Word w;
+
+    while (getWord(buffer_ptr, &w))
+    {
+        bool contains_sequence = false;
+
+        char* ptr = w.beginning;
+
+        while (ptr != w.end)
+        {
+            if (*ptr == *sequence && (w.end - ptr >= sequence_len))
+            {
+                if (!wordsAreEqual((Word) {ptr, ptr + sequence_len},
+                                                  (Word) {sequence, sequence + sequence_len}))
+                {
+                    contains_sequence = true;
+                    break;
+                }
+            }
+
+            ptr++;
+        }
+
+        if (contains_sequence)
+        {
+            int word_len = w.end - w.beginning;
+            memcpy(res_ptr, w.beginning, word_len);
+            res_ptr += word_len;
+            *res_ptr = ' ';
+            res_ptr++;
+        }
+
+        buffer_ptr = w.end;
+    }
+
+    if (*(res_ptr - 1) == ' ' && *res_ptr != '\0')
+        *(res_ptr - 1) = '\0';
+    else if (*res_ptr != '\0')
+        *res_ptr = '\0';
+
+    fclose(f);
+
+    f = fopen(fname, "w");
+
+    fprintf(f, "%s", res);
 
     fclose(f);
 }
