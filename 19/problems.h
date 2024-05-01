@@ -26,4 +26,10 @@ void fsaveWordsWithSequence(FILE*, char*, char*);
    только самое длинное слово */
 void fsaveOnlyLongestWordInEveryLine(FILE*, char*);
 
+/* преобразовывает файл таким образом, чтобы сначала были
+   целые положительные числа, а затем отрицательные;
+   порядок следования как положительных,
+   так и отрицательных чисел сохраняется */
+void fsortPosAndNeg(FILE*, char*);
+
 #endif //INC_19_PROBLEMS_H

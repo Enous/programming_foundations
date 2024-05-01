@@ -100,43 +100,6 @@ void test_fileFixedToFloating()
 }
 
 
-void test_fileSolveMathProblem()
-{
-    char fname[] = "problem_2.txt";
-
-    FILE* f = fopen(fname, "w");
-
-    fprintf(f, "%s\n", "3+9");
-    fprintf(f, "%s\n", "4-4");
-    fprintf(f, "%s\n", "5-9+3");
-    fprintf(f, "%s\n", "2/0");
-    fprintf(f, "%s", "3+3*3");
-
-    fclose(f);
-
-    fileFixedToFloating(f, fname);
-
-    f = fopen(fname, "r");
-
-    int size = 4;
-    char ans[4][MAX_STR_SIZE] = {"0.00\n",
-                                 "3.00\n",
-                                 "4.58\n",
-                                 "-10.32"};
-
-    int i = 0;
-
-    char buffer[MAX_STR_SIZE];
-
-    while (fgets(buffer, sizeof(buffer), f) || i < size)
-    {
-        ASSERT_STRING(ans[i], buffer, i + 1);
-        i++;
-        *buffer = '\0';
-    }
-}
-
-
 void test_fsolve()
 {
     char fname[] = "problem_3-1.txt";
@@ -244,8 +207,41 @@ void test_fsaveOnlyLongestWordInEveryLine()
         *buffer = '\0';
     }
 
-    i++;
     *buffer = '\0';
+}
+
+
+void test_fsortPosAndNeg()
+{
+    char fname[] = "problem_7.txt";
+
+    FILE* f = fopen(fname, "w");
+
+    fprintf(f, "%s\n", "3 -7 -9 16 4 -22");
+    fprintf(f, "%s\n", "3 4 5");
+    fprintf(f, "%s", "-12 -5 4 4 2 -1 15");
+
+    fclose(f);
+
+    fsortPosAndNeg(f, fname);
+
+    f = fopen(fname, "r");
+
+    int size = 3;
+    char ans[3][MAX_STR_SIZE] = {"3 16 4 -7 -9 -22\n",
+                                 "3 4 5\n",
+                                 "4 4 2 15 -12 -5 -1"};
+
+    int i = 0;
+
+    char buffer[MAX_STR_SIZE];
+
+    while (fgets(buffer, sizeof(buffer), f) || i < size)
+    {
+        ASSERT_STRING(ans[i], buffer, i + 1);
+        i++;
+        *buffer = '\0';
+    }
 }
 
 
@@ -253,8 +249,10 @@ void test()
 {
     test_ftranspose();
     test_fileFixedToFloating();
+    // test_fsolve();
     test_fsaveWordsWithSequence();
     test_fsaveOnlyLongestWordInEveryLine();
+    test_fsortPosAndNeg();
 }
 
 int main()

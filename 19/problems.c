@@ -208,7 +208,7 @@ void fsaveWordsWithSequence(FILE* f, char* fname, char* sequence)
         buffer_ptr = w.end;
     }
 
-    if (*(res_ptr - 1) == ' ' && *res_ptr != '\0')
+    if (*(res_ptr - 1) == ' ')
         *(res_ptr - 1) = '\0';
     else if (*res_ptr != '\0')
         *res_ptr = '\0';
@@ -263,6 +263,88 @@ void fsaveOnlyLongestWordInEveryLine(FILE* f, char* fname)
 
         *(longest_word + max_len) = '\0';
         strcpy(res[j++], longest_word);
+
+        *buffer = '\0';
+    }
+
+    fclose(f);
+
+    f = fopen(fname, "w");
+
+    if (j == 0)
+        fprintf(f, "%s", "");
+    else
+    {
+        for (int k = 0; k < j; k++)
+        {
+            if (k < j - 1)
+                fprintf(f, "%s\n", res[k]);
+            else
+                fprintf(f, "%s", res[k]);
+        }
+    }
+
+    fclose(f);
+}
+
+
+/* преобразовывает файл таким образом, чтобы сначала были
+   целые положительные числа, а затем отрицательные;
+   порядок следования как положительных,
+   так и отрицательных чисел сохраняется */
+void fsortPosAndNeg(FILE* f, char* fname)
+{
+    f = fopen(fname, "r");
+
+    char buffer[MAX_STR_SIZE];
+    char res[MAX_SIZE][MAX_STR_SIZE];
+
+    int j = 0;
+
+    while (fgets(buffer, sizeof(buffer), f))
+    {
+        Word w;
+
+        char str[MAX_STR_SIZE];
+        strcpy(str, buffer);
+        char* str_ptr = str;
+
+        char* buffer_ptr = buffer;
+
+        while (getWord(str_ptr, &w))
+        {
+            if (*w.beginning != '-')
+            {
+                strcpy(buffer_ptr, w.beginning);
+                buffer_ptr += w.end - w.beginning;
+                *buffer_ptr = ' ';
+                buffer_ptr++;
+            }
+
+            str_ptr = w.end;
+        }
+
+        str_ptr = str;
+
+        while (getWord(str_ptr, &w))
+        {
+            if (*w.beginning == '-')
+            {
+                strcpy(buffer_ptr, w.beginning);
+                buffer_ptr += w.end - w.beginning;
+                *buffer_ptr = ' ';
+                buffer_ptr++;
+            }
+
+            str_ptr = w.end;
+        }
+
+        if (*(buffer_ptr - 1) == ' ')
+            *(buffer_ptr - 1) = '\0';
+        else if (*(buffer_ptr - 1) == ' ' || *buffer_ptr != '\0')
+            *buffer_ptr = '\0';
+
+        strcpy(res[j++], buffer);
 
         *buffer = '\0';
     }
