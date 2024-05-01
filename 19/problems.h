@@ -32,4 +32,7 @@ void fsaveOnlyLongestWordInEveryLine(FILE*, char*);
    так и отрицательных чисел сохраняется */
 void fsortPosAndNeg(FILE*, char*);
 
+/* транспонирует матрицу в файле, если она не симметрична */
+void ftransposeIfNonSymmetric(FILE*, char*);
+
 #endif //INC_19_PROBLEMS_H

@@ -213,24 +213,55 @@ void test_fsaveOnlyLongestWordInEveryLine()
 
 void test_fsortPosAndNeg()
 {
-    char fname[] = "problem_7.txt";
+    char fname[] = "problem_7.bin";
 
-    FILE* f = fopen(fname, "w");
+    FILE* f = fopen(fname, "wb");
 
-    fprintf(f, "%s\n", "3 -7 -9 16 4 -22");
-    fprintf(f, "%s\n", "3 4 5");
-    fprintf(f, "%s", "-12 -5 4 4 2 -1 15");
+    fwrite("3 -7 -9 16 4 -22\n", sizeof(char), 17, f);
+    fwrite("3 4 5\n", sizeof(char), 6, f);
+    fwrite("-12 -5 4 4 2 -1 15\n", sizeof(char), 19, f);
 
     fclose(f);
 
     fsortPosAndNeg(f, fname);
 
-    f = fopen(fname, "r");
+    f = fopen(fname, "rb");
 
     int size = 3;
     char ans[3][MAX_STR_SIZE] = {"3 16 4 -7 -9 -22\n",
                                  "3 4 5\n",
-                                 "4 4 2 15 -12 -5 -1"};
+                                 "4 4 2 15 -12 -5 -1\n"};
+
+    int i = 0;
+
+    char buffer[MAX_STR_SIZE];
+
+    while (fgets(buffer, sizeof(buffer), f) || i < size)
+    {
+        ASSERT_STRING(ans[i], buffer, i + 1);
+        i++;
+        *buffer = '\0';
+    }
+}
+
+
+void test_ftransposeIfSymmetric()
+{
+    char fname[] = "problem_8.bin";
+
+    FILE* f = fopen(fname, "wb");
+
+    fwrite("3 3 -2 4 -2 6 2 4 2 3\n", sizeof(char), 22, f);
+
+    fclose(f);
+
+    ftransposeIfNonSymmetric(f, fname);
+
+    f = fopen(fname, "rb");
+
+    int size = 3;
+    char ans[3][MAX_STR_SIZE] = {
+                                 "3 3 -2 4 -2 6 2 4 2 3\n"};
 
     int i = 0;
 
@@ -253,6 +284,7 @@ void test()
     test_fsaveWordsWithSequence();
     test_fsaveOnlyLongestWordInEveryLine();
     test_fsortPosAndNeg();
+    test_ftransposeIfSymmetric();
 }
 
 int main()

@@ -25,7 +25,7 @@ void ftranspose(FILE* f, char* fname)
         char* chr_order = token;
         char* chr_order_ptr = chr_order;
 
-        int order = atoi(token);
+        int order = strtol(token, NULL, 10);
 
         token = strtok(NULL, " ");
 
@@ -35,7 +35,7 @@ void ftranspose(FILE* f, char* fname)
 
         while (token)
         {
-            arr[i] = atoi(token);
+            arr[i] = strtol(token, NULL, 10);
             token = strtok(NULL, " ");
             i++;
         }
@@ -294,7 +294,7 @@ void fsaveOnlyLongestWordInEveryLine(FILE* f, char* fname)
    так и отрицательных чисел сохраняется */
 void fsortPosAndNeg(FILE* f, char* fname)
 {
-    f = fopen(fname, "r");
+    f = fopen(fname, "rb");
 
     char buffer[MAX_STR_SIZE];
     char res[MAX_SIZE][MAX_STR_SIZE];
@@ -340,30 +340,112 @@ void fsortPosAndNeg(FILE* f, char* fname)
         }
 
         if (*(buffer_ptr - 1) == ' ')
-            *(buffer_ptr - 1) = '\0';
-        else if (*(buffer_ptr - 1) == ' ' || *buffer_ptr != '\0')
+        {
+            *(buffer_ptr - 1) = '\n';
+            *buffer_ptr = '\0';
+        }
+        else if (*buffer_ptr != '\0')
             *buffer_ptr = '\0';
 
         strcpy(res[j++], buffer);
+
+        memset(buffer, 0, sizeof(buffer));
+    }
+
+    for (int i = 0; i < j; i++)
+        printf("%s", res[i]);
+
+    fclose(f);
+
+    f = fopen(fname, "wb");
+
+    if (j == 0)
+        fwrite("", 0, 0, f);
+    else
+    {
+        for (int k = 0; k < j; k++)
+            fwrite(res[k], sizeof(char), strlen(res[k]), f);
+    }
+
+    fclose(f);
+}
+
+
+/* транспонирует матрицу в файле, если она не симметрична */
+void ftransposeIfNonSymmetric(FILE* f, char* fname)
+{
+    f = fopen(fname, "rb");
+
+    char buffer[MAX_STR_SIZE];
+    char str_arr[MAX_SIZE][MAX_STR_SIZE];
+
+    int j = 0;
+
+    while (fgets(buffer, sizeof(buffer), f))
+    {
+        char* token = strtok(buffer, " ");
+
+        char* chr_order = token;
+        char* chr_order_ptr = chr_order;
+
+        int order = strtol(token, NULL, 10);;
+
+        token = strtok(NULL, " ");
+
+        int* mx_arr = malloc(sizeof(int) * order * order);
+        int i = 0;
+        mx_arr[i++] = order;
+
+        while (token)
+        {
+            mx_arr[i] = strtol(token, NULL, 10);
+            token = strtok(NULL, " ");
+            i++;
+        }
+
+        matrix mx = createMatrixFromArray(mx_arr + 1, order, order);
+
+        if (!isSymmetricMatrix(&mx))
+            transposeMatrix(&mx);
+
+        int shift = 0;
+
+        while (order > 0)
+        {
+            order /= 10;
+            shift++;
+        }
+
+        chr_order_ptr += sizeof(char) * shift;
+        *(chr_order_ptr++) = ' ';
+        *chr_order_ptr = '\0';
+
+        int str_size;
+
+        char* res = matrixIntoCharArr(mx, &str_size);
+        strcat(chr_order, res);
+
+        chr_order_ptr = chr_order + strlen(chr_order);
+        *(chr_order_ptr++) = '\n';
+        *chr_order_ptr = '\0';
+
+        strcpy(str_arr[j++], chr_order);
+
+
 
         *buffer = '\0';
     }
 
     fclose(f);
 
-    f = fopen(fname, "w");
+    f = fopen(fname, "wb");
 
     if (j == 0)
-        fprintf(f, "%s", "");
+        fwrite("", 0, 0, f);
     else
     {
         for (int k = 0; k < j; k++)
-        {
-            if (k < j - 1)
-                fprintf(f, "%s\n", res[k]);
-            else
-                fprintf(f, "%s", res[k]);
-        }
+            fwrite(str_arr[k], sizeof(char), strlen(str_arr[k]), f);
     }
 
     fclose(f);
