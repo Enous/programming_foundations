@@ -101,13 +101,13 @@ void test_fileFixedToFloating()
 }
 
 
-void test_fsolve()
+void test_fsolve1()
 {
     char fname[] = "problem_3-1.txt";
 
     FILE* f = fopen(fname, "w");
 
-    fprintf(f, "%s\n", "3 + 9");
+    fprintf(f, "%s", "-3 / 9 * 2\n");
 
     fclose(f);
 
@@ -115,17 +115,81 @@ void test_fsolve()
 
     f = fopen(fname, "r");
 
-    char ans[MAX_STR_SIZE] = {"12"};
-    char buffer[MAX_STR_SIZE];
+    int size = 2;
+    char ans[2][MAX_STR_SIZE] = {"-3 / 9 * 2\n",
+                                 "-0.67"};
+
     int i = 0;
 
-    fgets(buffer, sizeof(buffer), f);
+    char buffer[MAX_STR_SIZE];
 
-    ASSERT_STRING(ans, buffer, i + 1);
+    while (fgets(buffer, sizeof(buffer), f) || i < size)
+    {
+        ASSERT_STRING(ans[i], buffer, i + 1);
+        i++;
+        *buffer = '\0';
+    }
+}
 
-    i++;
-    *buffer = '\0';
-    *ans = '\0';
+
+void test_fsolve2()
+{
+    char fname[] = "problem_3-2.txt";
+
+    FILE* f = fopen(fname, "w");
+
+    fprintf(f, "%s", "-3 + 9 * 2\n");
+
+    fclose(f);
+
+    fsolve(f, fname);
+
+    f = fopen(fname, "r");
+
+    int size = 2;
+    char ans[2][MAX_STR_SIZE] = {"-3 + 9 * 2\n",
+                                 "15"};
+
+    int i = 0;
+
+    char buffer[MAX_STR_SIZE];
+
+    while (fgets(buffer, sizeof(buffer), f) || i < size)
+    {
+        ASSERT_STRING(ans[i], buffer, i + 1);
+        i++;
+        *buffer = '\0';
+    }
+}
+
+
+void test_fsolve3()
+{
+    char fname[] = "problem_3-3.txt";
+
+    FILE* f = fopen(fname, "w");
+
+    fprintf(f, "%s", "");
+
+    fclose(f);
+
+    fsolve(f, fname);
+
+    f = fopen(fname, "r");
+
+    int size = 1;
+    char ans[1][MAX_STR_SIZE] = {""};
+
+    int i = 0;
+
+    char buffer[MAX_STR_SIZE];
+
+    while (fgets(buffer, sizeof(buffer), f) || i < size)
+    {
+        ASSERT_STRING(ans[i], buffer, i + 1);
+        i++;
+        *buffer = '\0';
+    }
 }
 
 
@@ -280,9 +344,9 @@ void test_ftransposeIfSymmetric()
 }
 
 
-void test_fileFormSportsTeam()
+void test_fileFormSportsTeam1()
 {
-    char fname[] = "problem_9.bin";
+    char fname[] = "problem_9-1.bin";
 
     FILE* f = fopen(fname, "wb");
 
@@ -296,23 +360,90 @@ void test_fileFormSportsTeam()
 
     fileFormSportsTeam(f, fname, n);
 
-    /* f = fopen(fname, "rb");
+    f = fopen(fname, "rb");
 
     int size = 2;
     char ans[2][MAX_STR_SIZE] = {"I O F 546\n",
                                  "I F O 421\n"};
 
     int i = 0;
-    int t = 1;
 
     char buffer[MAX_STR_SIZE];
 
     while (fgets(buffer, sizeof(buffer), f) || i < size)
     {
-        ASSERT_STRING(ans[i], buffer, t);
+        ASSERT_STRING(ans[i], buffer, i + 1);
         i++;
         *buffer = '\0';
-    } */
+    }
+}
+
+
+void test_fileFormSportsTeam2()
+{
+    char fname[] = "problem_9-2.bin";
+
+    FILE* f = fopen(fname, "wb");
+
+    fwrite("", sizeof(char), 1, f);
+
+    fclose(f);
+
+    int n = 2;
+
+    fileFormSportsTeam(f, fname, n);
+
+    f = fopen(fname, "rb");
+
+    int size = 1;
+    char ans[1][MAX_STR_SIZE] = {""};
+
+    int i = 0;
+
+    char buffer[MAX_STR_SIZE];
+
+    while (fgets(buffer, sizeof(buffer), f) || i < size)
+    {
+        ASSERT_STRING(ans[i], buffer, i + 1);
+        i++;
+        *buffer = '\0';
+    }
+}
+
+
+void test_fileFormSportsTeam3()
+{
+    char fname[] = "problem_9-3.bin";
+
+    FILE* f = fopen(fname, "wb");
+
+    fwrite("F I O 233\n", sizeof(char), 10, f);
+    fwrite("I O F 546\n", sizeof(char), 10, f);
+    fwrite("I F O 421\n", sizeof(char), 10, f);
+
+    fclose(f);
+
+    int n = 4;
+
+    fileFormSportsTeam(f, fname, n);
+
+    f = fopen(fname, "rb");
+
+    int size = 3;
+    char ans[3][MAX_STR_SIZE] = {"I O F 546\n",
+                                 "I F O 421\n",
+                                 "F I O 233\n"};
+
+    int i = 0;
+
+    char buffer[MAX_STR_SIZE];
+
+    while (fgets(buffer, sizeof(buffer), f) || i < size)
+    {
+        ASSERT_STRING(ans[i], buffer, i + 1);
+        i++;
+        *buffer = '\0';
+    }
 }
 
 
@@ -406,7 +537,7 @@ void test_fwares3()
 
     FILE* f = fopen(fname, "wb");
 
-    fwrite("", sizeof(char), 0, f);
+    fwrite("", sizeof(char), 1, f);
 
     fclose(f);
 
@@ -445,7 +576,9 @@ void test()
 
     test_fileFixedToFloating();
 
-    // test_fsolve();
+    test_fsolve1();
+    test_fsolve2();
+    test_fsolve3();
 
     test_fsaveWordsWithSequence();
 
@@ -455,7 +588,9 @@ void test()
 
     test_ftransposeIfSymmetric();
 
-    // test_fileFormSportsTeam();
+    test_fileFormSportsTeam1();
+    test_fileFormSportsTeam2();
+    test_fileFormSportsTeam3();
 
     test_fwares1();
     test_fwares2();

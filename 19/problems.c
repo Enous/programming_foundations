@@ -133,36 +133,110 @@ void fileFixedToFloating(FILE* f, char* fname)
 }
 
 
-/* решает выражение из 2-3 операндов, находящееся в файле,
+/* решает выражение из 2-3 операндов
    и записывает в конец данного файла результат */
 void fsolve(FILE* f, char* fname)
 {
     f = fopen(fname, "r");
 
     char buffer[MAX_STR_SIZE];
-    double nums[MAX_SIZE];
+    float nums[MAX_SIZE];
+    char operators[MAX_SIZE];
 
-    int j = 0;
-    char operator;
-    float res = 0;
+    fgets(buffer, sizeof(buffer), f);
+
+    int i, j;
+    i = j = 0;
 
     char* token = strtok(buffer, " ");
 
     while (token)
     {
-        if (isdigit(*buffer) && (operator == '*' || operator == '/'))
-            nums[j++] = *buffer - '0';
-        else if (*buffer == '+' || *buffer == '-')
-        {
-            operator = *buffer;
-        }
-        else if (*buffer == '*' || *buffer == '/')
-        {
-
-        }
+        if (*token == '+' || !strcmp(token, "-") ||
+            *token == '*' || *token == '/')
+            operators[j++] = *token;
+        else
+            nums[i++] = atof(token);
 
         token = strtok(NULL, " ");
     }
+
+    fclose(f);
+
+    float res = 0;
+
+    if (i == 0)
+    {
+        f = fopen(fname, "w");
+        fprintf(f, "");
+        fclose(f);
+        return;
+    }
+
+    if (j == 1)
+    {
+        if (operators[0] == '+')
+            res = nums[0] + nums[1];
+        else if (operators[0] == '-')
+            res = nums[0] - nums[1];
+        else if (operators[0] == '*')
+            res = nums[0] * nums[1];
+        else if (operators[0] == '/')
+            res = nums[0] / nums[1];
+    }
+    else if (j == 2)
+    {
+        if (operators[0] == '+')
+        {
+            if (operators[1] == '*')
+                res = nums[0] + nums[1] * nums[2];
+            else if (operators[1] == '/')
+                res = nums[0] + nums[1] / nums[2];
+            else if (operators[0] == '+')
+                res = nums[0] + nums[1] + nums[2];
+            else
+                res = nums[0] + nums[1] - nums[2];
+        }
+        else if (operators[0] == '-')
+        {
+            if (operators[1] == '*')
+                res = nums[0] - nums[1] * nums[2];
+            else if (operators[1] == '/')
+                res = nums[0] - nums[1] / nums[2];
+            else if (operators[0] == '+')
+                res = nums[0] - nums[1] + nums[2];
+            else
+                res = nums[0] - nums[1] - nums[2];
+        }
+        else if (operators[0] == '*')
+        {
+            if (operators[1] == '*')
+                res = nums[0] * nums[1] * nums[2];
+            else if (operators[1] == '/')
+                res = nums[0] * nums[1] / nums[2];
+            else if (operators[0] == '+')
+                res = nums[0] * nums[1] + nums[2];
+            else
+                res = nums[0] * nums[1] - nums[2];
+        }
+        else if (operators[0] == '/')
+        {
+            if (operators[1] == '*')
+                res = nums[0] / nums[1] * nums[2];
+            else if (operators[1] == '/')
+                res = nums[0] / nums[1] / nums[2];
+            else if (operators[0] == '+')
+                res = nums[0] / nums[1] + nums[2];
+            else
+                res = nums[0] / nums[1] - nums[2];
+        }
+    }
+
+    f = fopen(fname, "a");
+
+    fprintf(f, "%.2g", res);
+
+    fclose(f);
 }
 
 
@@ -460,20 +534,77 @@ void fileFormSportsTeam(FILE* f, char* fname, int n)
     f = fopen(fname, "rb");
 
     char buffer[MAX_STR_SIZE];
-    char res[MAX_SIZE][MAX_STR_SIZE];
+    str_matrix res = getMemStrMatrix(MAX_SIZE, MAX_STR_SIZE);
+    int scores[MAX_SIZE];
 
-    int j = 0;
+    int i = 0;
 
-    while (fgets(buffer, sizeof(buffer), f))
+    if (fgets(buffer, sizeof(buffer), f))
     {
-        strcpy(res[j++], buffer);
+        strcpy(res.values[i], buffer);
+
+        Word w;
+        getWordStartingFromEnd(buffer, getEndOfString(buffer), &w);
+
+        char str_score[MAX_STR_SIZE];
+        w.end++;
+        wordToStr(w, str_score);
+
+        int score = atoi(str_score);
+        scores[i++] = score;
+
+        *str_score = '\0';
+        *buffer = '\0';
+
+        while (fgets(buffer, sizeof(buffer), f))
+        {
+            strcpy(res.values[i], buffer);
+
+            Word w_score;
+            getWordStartingFromEnd(buffer, getEndOfString(buffer), &w_score);
+
+            w_score.end++;
+            wordToStr(w_score, str_score);
+
+            score = atoi(str_score);
+            scores[i] = score;
+            int temp = scores[i];
+            int j = i;
+
+            scores[j] = temp;
+
+            while (j > 0 && scores[j - 1] < temp)
+            {
+                scores[j] = scores[j - 1];
+                swapStrings(res, j, j - 1);
+                j--;
+            }
+
+            scores[j] = temp;
+            i++;
+
+            *str_score = '\0';
+            *buffer = '\0';
+        }
     }
 
     fclose(f);
 
-    for (int k = 0; k < n; k++)
-        printf("%s", res[k]);
+    f = fopen(fname, "wb");
 
+    if (i == 0)
+    {
+        fwrite("", 0, 0, f);
+        fclose(f);
+        return;
+    }
+
+    int count = n > i ? i : n;
+
+    for (int k = 0; k < count; k++)
+        fwrite(res.values[k], sizeof(char), strlen(res.values[k]), f);
+
+    fclose(f);
 }
 
 
@@ -522,7 +653,9 @@ void fwares(FILE* f, char* fname, FILE* g, char* gname)
 
     if (j == 0)
     {
+        f = fopen(fname, "wb");
         fwrite("", 0, 0, f);
+        fclose(f);
         return;
     }
 
