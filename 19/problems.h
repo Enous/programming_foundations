@@ -6,6 +6,7 @@
 
 #define MAX_STR_SIZE 100
 #define MAX_SIZE 20
+#define WARES_FIELDS_COUNT 4
 
 /* транспонирует матрицу в файле */
 void ftranspose(FILE*, char*);
@@ -34,5 +35,11 @@ void fsortPosAndNeg(FILE*, char*);
 
 /* транспонирует матрицу в файле, если она не симметрична */
 void ftransposeIfNonSymmetric(FILE*, char*);
+
+/* преобразовывает файл, сохранив в нем
+   информацию только о лучших n членах команды */
+void fileFormSportsTeam(FILE*, char*, int);
+
+void fwares(FILE*, char*, FILE*, char*);
 
 #endif //INC_19_PROBLEMS_H

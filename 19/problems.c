@@ -8,6 +8,14 @@
 #include "matrix.h"
 #include "string_.h"
 
+typedef struct wares
+{
+    char name[MAX_STR_SIZE];
+    int unit_cost;
+    int count;
+    int total_cost;
+} wares;
+
 /* транспонирует матрицу в файле */
 void ftranspose(FILE* f, char* fname)
 {
@@ -352,9 +360,6 @@ void fsortPosAndNeg(FILE* f, char* fname)
         memset(buffer, 0, sizeof(buffer));
     }
 
-    for (int i = 0; i < j; i++)
-        printf("%s", res[i]);
-
     fclose(f);
 
     f = fopen(fname, "wb");
@@ -431,8 +436,6 @@ void ftransposeIfNonSymmetric(FILE* f, char* fname)
 
         strcpy(str_arr[j++], chr_order);
 
-
-
         *buffer = '\0';
     }
 
@@ -446,6 +449,148 @@ void ftransposeIfNonSymmetric(FILE* f, char* fname)
     {
         for (int k = 0; k < j; k++)
             fwrite(str_arr[k], sizeof(char), strlen(str_arr[k]), f);
+    }
+
+    fclose(f);
+}
+
+
+void fileFormSportsTeam(FILE* f, char* fname, int n)
+{
+    f = fopen(fname, "rb");
+
+    char buffer[MAX_STR_SIZE];
+    char res[MAX_SIZE][MAX_STR_SIZE];
+
+    int j = 0;
+
+    while (fgets(buffer, sizeof(buffer), f))
+    {
+        strcpy(res[j++], buffer);
+    }
+
+    fclose(f);
+
+    for (int k = 0; k < n; k++)
+        printf("%s", res[k]);
+
+}
+
+
+void fwares(FILE* f, char* fname, FILE* g, char* gname)
+{
+    f = fopen(fname, "rb");
+
+    char buffer[MAX_STR_SIZE];
+    wares wares_arr[MAX_SIZE];
+
+    int j = 0;
+
+    while (fgets(buffer, sizeof(buffer), f))
+    {
+        Word w;
+        char* buffer_ptr = buffer;
+
+        wares ware;
+
+        int i = 0;
+
+        while (getWord(buffer_ptr, &w) || i < WARES_FIELDS_COUNT)
+        {
+            char str[MAX_STR_SIZE];
+            wordToStr(w, str);
+
+            if (i == 0)
+                strcpy(ware.name, str);
+            else if (i == 1)
+                ware.unit_cost = strtol(str, NULL, 10);
+            else if (i == 2)
+                ware.count = strtol(str, NULL, 10);
+            else if (i == 3)
+                ware.total_cost = strtol(str, NULL, 10);
+
+            i++;
+            buffer_ptr = w.end;
+        }
+
+        wares_arr[j++] = ware;
+
+        *buffer = '\0';
+    }
+
+    fclose(f);
+
+    if (j == 0)
+    {
+        fwrite("", 0, 0, f);
+        return;
+    }
+
+    g = fopen(gname, "rb");
+
+    while (fgets(buffer, sizeof(buffer), g))
+    {
+        char* buffer_ptr = buffer;
+
+        Word w;
+        getWord(buffer_ptr, &w);
+
+        char name[MAX_STR_SIZE];
+        wordToStr(w, name);
+
+        for (int i = 0; i < j; i++)
+        {
+            if (!strcmp(name, wares_arr[i].name))
+            {
+                buffer_ptr = w.end;
+
+                Word w_count;
+                getWord(buffer_ptr, &w_count);
+
+                char str_count[MAX_STR_SIZE];
+                wordToStr(w_count, str_count);
+
+                int count = strtol(str_count, NULL, 10);
+
+                wares_arr[i].count -= count;
+                wares_arr[i].total_cost = wares_arr[i].unit_cost * wares_arr[i].count;
+
+                break;
+            }
+        }
+
+        *buffer = '\0';
+    }
+
+    fclose(g);
+
+    f = fopen(fname, "wb");
+
+    for (int k = 0; k < j; k++)
+    {
+        if (wares_arr[k].count > 0)
+        {
+            char unit_cost[MAX_STR_SIZE];
+            itoa(wares_arr[k].unit_cost, unit_cost, 10);
+
+            char count[MAX_STR_SIZE];
+            itoa(wares_arr[k].count, count, 10);
+
+            char total_cost[MAX_STR_SIZE];
+            itoa(wares_arr[k].total_cost, total_cost, 10);
+
+            fwrite(wares_arr[k].name, sizeof(char), strlen(wares_arr[k].name), f);
+            fwrite(" ", sizeof(char), 1, f);
+
+            fwrite(unit_cost, sizeof(char), strlen(unit_cost), f);
+            fwrite(" ", sizeof(char), 1, f);
+
+            fwrite(count, sizeof(char), strlen(count), f);
+            fwrite(" ", sizeof(char), 1, f);
+
+            fwrite(total_cost, sizeof(char), strlen(total_cost), f);
+            fwrite("\n", sizeof(char), 1, f);
+        }
     }
 
     fclose(f);

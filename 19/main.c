@@ -4,6 +4,7 @@
 
 #include "problems.h"
 #include "matrix.h"
+#include "string_.h"
 
 #define ASSERT_STRING(expected, got, test) assertString(expected, got, test, \
 __FILE__, __FUNCTION__, __LINE__)
@@ -18,12 +19,12 @@ void assertString(const char *expected, char *got, int test,
     if (strcmp(expected, got))
     {
         fprintf(stderr, "File %s\n", fileName);
-        fprintf(stderr, "%s test %d - failed on line %d\n", funcName, test, line);
+        fprintf(stderr, "%s %d - failed on line %d\n", funcName, test, line);
         fprintf(stderr, "Expected: \"%s\"\n", expected);
         fprintf(stderr, "Got: \"%s\"\n\n", got);
     }
     else
-        fprintf(stderr, "%s test %d - OK\n", funcName, test);
+        fprintf(stderr, "%s %d - OK\n", funcName, test);
 }
 
 
@@ -251,6 +252,8 @@ void test_ftransposeIfSymmetric()
 
     FILE* f = fopen(fname, "wb");
 
+    fwrite("4 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16\n", sizeof(char), 41, f);
+    fwrite("2 4 3 2 1\n", sizeof(char), 10, f);
     fwrite("3 3 -2 4 -2 6 2 4 2 3\n", sizeof(char), 22, f);
 
     fclose(f);
@@ -260,8 +263,168 @@ void test_ftransposeIfSymmetric()
     f = fopen(fname, "rb");
 
     int size = 3;
-    char ans[3][MAX_STR_SIZE] = {
+    char ans[3][MAX_STR_SIZE] = {"4 1 5 9 13 2 6 10 14 3 7 11 15 4 8 12 16\n",
+                                 "2 4 2 3 1\n",
                                  "3 3 -2 4 -2 6 2 4 2 3\n"};
+
+    int i = 0;
+
+    char buffer[MAX_STR_SIZE];
+
+    while (fgets(buffer, sizeof(buffer), f) || i < size)
+    {
+        ASSERT_STRING(ans[i], buffer, i + 1);
+        i++;
+        *buffer = '\0';
+    }
+}
+
+
+void test_fileFormSportsTeam()
+{
+    char fname[] = "problem_9.bin";
+
+    FILE* f = fopen(fname, "wb");
+
+    fwrite("F I O 233\n", sizeof(char), 10, f);
+    fwrite("I O F 546\n", sizeof(char), 10, f);
+    fwrite("I F O 421\n", sizeof(char), 10, f);
+
+    fclose(f);
+
+    int n = 2;
+
+    fileFormSportsTeam(f, fname, n);
+
+    /* f = fopen(fname, "rb");
+
+    int size = 2;
+    char ans[2][MAX_STR_SIZE] = {"I O F 546\n",
+                                 "I F O 421\n"};
+
+    int i = 0;
+    int t = 1;
+
+    char buffer[MAX_STR_SIZE];
+
+    while (fgets(buffer, sizeof(buffer), f) || i < size)
+    {
+        ASSERT_STRING(ans[i], buffer, t);
+        i++;
+        *buffer = '\0';
+    } */
+}
+
+
+void test_fwares1()
+{
+    char fname[] = "problem_10-1_f.bin";
+
+    FILE* f = fopen(fname, "wb");
+
+    fwrite("asd 20 100 2000\n", sizeof(char), 16, f);
+    fwrite("fgh 10 32 320\n", sizeof(char), 14, f);
+    fwrite("jkl 5 14 70\n", sizeof(char), 12, f);
+
+    fclose(f);
+
+    char gname[] = "problem_10-1_g.bin";
+
+    FILE* g = fopen(gname, "wb");
+
+    fwrite("asd 10\n", sizeof(char), 7, g);
+    fwrite("jkl 1\n", sizeof(char), 6, g);
+
+    fclose(g);
+
+    fwares(f, fname, g, gname);
+
+    f = fopen(fname, "rb");
+
+    int size = 3;
+    char ans[3][MAX_STR_SIZE] = {"asd 20 90 1800\n",
+                                 "fgh 10 32 320\n",
+                                 "jkl 5 13 65\n"};
+
+    int i = 0;
+
+    char buffer[MAX_STR_SIZE];
+
+    while (fgets(buffer, sizeof(buffer), f) || i < size)
+    {
+        ASSERT_STRING(ans[i], buffer, i + 1);
+        i++;
+        *buffer = '\0';
+    }
+}
+
+
+void test_fwares2()
+{
+    char fname[] = "problem_10-2_f.bin";
+
+    FILE* f = fopen(fname, "wb");
+
+    fwrite("asd 20 100 2000\n", sizeof(char), 16, f);
+    fwrite("fgh 10 32 320\n", sizeof(char), 14, f);
+    fwrite("jkl 5 14 70\n", sizeof(char), 12, f);
+
+    fclose(f);
+
+    char gname[] = "problem_10-2_g.bin";
+
+    FILE* g = fopen(gname, "wb");
+
+    fwrite("asd 100\n", sizeof(char), 8, g);
+    fwrite("jkl 14\n", sizeof(char), 7, g);
+
+    fclose(g);
+
+    fwares(f, fname, g, gname);
+
+    f = fopen(fname, "rb");
+
+    int size = 1;
+    char ans[1][MAX_STR_SIZE] = {"fgh 10 32 320\n"};
+
+    int i = 0;
+
+    char buffer[MAX_STR_SIZE];
+
+    while (fgets(buffer, sizeof(buffer), f) || i < size)
+    {
+        ASSERT_STRING(ans[i], buffer, i + 1);
+        i++;
+        *buffer = '\0';
+    }
+}
+
+
+void test_fwares3()
+{
+    char fname[] = "problem_10-3_f.bin";
+
+    FILE* f = fopen(fname, "wb");
+
+    fwrite("", sizeof(char), 0, f);
+
+    fclose(f);
+
+    char gname[] = "problem_10-3_g.bin";
+
+    FILE* g = fopen(gname, "wb");
+
+    fwrite("asd 100\n", sizeof(char), 8, g);
+    fwrite("jkl 14\n", sizeof(char), 7, g);
+
+    fclose(g);
+
+    fwares(f, fname, g, gname);
+
+    f = fopen(fname, "rb");
+
+    int size = 1;
+    char ans[1][MAX_STR_SIZE] = {""};
 
     int i = 0;
 
@@ -279,12 +442,24 @@ void test_ftransposeIfSymmetric()
 void test()
 {
     test_ftranspose();
+
     test_fileFixedToFloating();
+
     // test_fsolve();
+
     test_fsaveWordsWithSequence();
+
     test_fsaveOnlyLongestWordInEveryLine();
+
     test_fsortPosAndNeg();
+
     test_ftransposeIfSymmetric();
+
+    // test_fileFormSportsTeam();
+
+    test_fwares1();
+    test_fwares2();
+    test_fwares3();
 }
 
 int main()
