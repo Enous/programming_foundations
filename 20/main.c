@@ -9,7 +9,7 @@
 #define ASSERT(expected, got) assert(expected, got, \
 __FILE__, __FUNCTION__, __LINE__)
 
-#define ASSERT_STRING(expected, got, test) assertString(expected, got, \
+#define ASSERT_STRING(expected, got) assertString(expected, got, \
 __FILE__, __FUNCTION__, __LINE__)
 
 void assertString(const char *expected, char *got,
@@ -243,6 +243,48 @@ void test_subdomainVisits1()
 }
 
 
+void test_shuffleStr1()
+{
+    int size = 3;
+    char* s = malloc(sizeof(char) * (size + 1));
+    strcpy(s, "abc");
+
+    int* indices = malloc(sizeof(int) * size);
+    memcpy(indices, (int[]) {0, 1, 2}, sizeof(int) * size);
+
+    shuffleStr(s, indices, size);
+
+    ASSERT_STRING("abc", s);
+
+    free(s);
+    free(indices);
+}
+
+
+void test_shuffleStr2()
+{
+    int size = 4;
+    char* s = malloc(sizeof(char) * (size + 1));
+    strcpy(s, "abap");
+
+    int* indices = malloc(sizeof(int) * size);
+    memcpy(indices, (int[]) {0, 3, 2, 1}, sizeof(int) * size);
+
+    shuffleStr(s, indices, size);
+
+    ASSERT_STRING("apab", s);
+
+    free(s);
+    free(indices);
+}
+
+
+void test_numTree()
+{
+
+}
+
+
 void test()
 {
     test_gameOfLife1();
@@ -252,7 +294,10 @@ void test()
     test_medianFilter2();
     test_medianFilter3();
 
-    test_subdomainVisits1;
+    // test_subdomainVisits1;
+
+    test_shuffleStr1();
+    test_shuffleStr2();
 }
 
 

@@ -7,5 +7,7 @@ matrix gameOfLife(matrix);
 void medianFilter(matrix*, int);
 int getArrMedian(matrix, int, int, int);
 char** subdomainVisits(char**, int, int*);
+void shuffleStr(char*, int*, int);
+int numTree(int*, int);
 
 #endif //INC_20_PROBLEMS_H

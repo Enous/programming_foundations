@@ -129,4 +129,35 @@ char** subdomainVisits(char** cpdomains, int size, int* return_size)
 
     for (int i = 0; i < MAX_SIZE; i++)
         subdomains[i] = malloc(sizeof(char) * MAX_STR_SIZE);
+
+    for (int i = 0; i < size; i++)
+    {
+        char* domain = cpdomains[i];
+        char** ptr = cpdomains;
+
+        for (int j = 0; j < size; j++)
+        {
+
+        }
+    }
+
+    return subdomains;
+}
+
+
+void shuffleStr(char* s, int* indices, int size)
+{
+    char* s_copy = malloc(sizeof(char) * size);
+    memcpy(s_copy, s, size);
+
+    for (int i = 0; i < size; i++)
+        s[i] = s_copy[indices[i]];
+
+    free(s_copy);
+}
+
+
+int numTree(int* nums, int size)
+{
+
 }
