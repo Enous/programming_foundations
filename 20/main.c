@@ -3,7 +3,6 @@
 #include <string.h>
 
 #include "matrix.h"
-#include "string_.h"
 #include "problems.h"
 
 #define ASSERT(expected, got) assert(expected, got, \
@@ -11,6 +10,7 @@ __FILE__, __FUNCTION__, __LINE__)
 
 #define ASSERT_STRING(expected, got) assertString(expected, got, \
 __FILE__, __FUNCTION__, __LINE__)
+
 
 void assertString(const char *expected, char *got,
                   char const *fileName, char const *funcName,
@@ -28,9 +28,9 @@ void assertString(const char *expected, char *got,
 }
 
 
-void assert(const bool expected, bool got,
-            char const *fileName, char const *funcName,
-            int line)
+void assert(const int expected, int got,
+                char const *fileName, char const *funcName,
+                int line)
 {
     if (expected != got)
     {
@@ -41,6 +41,130 @@ void assert(const bool expected, bool got,
     }
     else
         fprintf(stderr, "%s - OK\n", funcName);
+}
+
+
+bool arraysAreEqual(int* arr1, int size1, int* arr2, int size2)
+{
+    if (size1 != size2)
+        return false;
+
+    for (int i = 0; i < size1; i++)
+    {
+        for (int j = 0; j < size1; j++)
+        {
+            if (arr1[i] != arr1[j])
+                return false;
+        }
+    }
+
+    return true;
+}
+
+
+void test_matrixAdd1()
+{
+    int rows_count1 = 3;
+    int cols_count1 = 3;
+
+    matrix mx1 = createMatrixFromArray(
+            (int[]) {
+                    0, 0, 0,
+                    0, 0, 0,
+                    0, 0, 0
+            }, rows_count1, cols_count1);
+
+    int size = 2;
+
+    int arr1[2][SUBMAT_CORNER_COORDS] = {{1, 1, 2, 2}, {0, 0, 1, 1}};
+    int** arr2 = malloc(sizeof(int*) * size);
+
+    for (int i = 0; i < size; i++)
+        arr2[i] = malloc(sizeof(int) * SUBMAT_CORNER_COORDS);
+
+    for (int i = 0; i < size; i++)
+    {
+        for (int j = 0; j < SUBMAT_CORNER_COORDS; j++)
+            arr2[i][j] = arr1[i][j];
+    }
+
+    matrixAdd(&mx1, arr2, size);
+
+    matrix mx2 = createMatrixFromArray(
+            (int[]) {
+                    1, 1, 0,
+                    1, 2, 1,
+                    0, 1, 1
+            }, rows_count1, cols_count1);
+
+    bool res = TwoMatricesAreEqual(&mx1, &mx2);
+    bool ans = true;
+
+    ASSERT(res, ans);
+
+    freeMemMatrix(&mx1);
+    freeMemMatrix(&mx2);
+
+    for (int i = 0; i < size; i++)
+        free(arr2[i]);
+
+    free(arr2);
+}
+
+
+void test_matrixAdd2()
+{
+    int rows_count1 = 5;
+    int cols_count1 = 5;
+
+    matrix mx1 = createMatrixFromArray(
+            (int[]) {
+                    0, 0, 0, 0, 0,
+                    0, 0, 0, 0, 0,
+                    0, 0, 0, 0, 0,
+                    0, 0, 0, 0, 0,
+                    0, 0, 0, 0, 0
+            }, rows_count1, cols_count1);
+
+    int size = 3;
+
+    int arr1[3][SUBMAT_CORNER_COORDS] = {{0, 3, 1, 4},
+                                         {0, 0, 3, 3},
+                                         {2, 0, 4, 2}};
+    int** arr2 = malloc(sizeof(int*) * size);
+
+    for (int i = 0; i < size; i++)
+        arr2[i] = malloc(sizeof(int) * SUBMAT_CORNER_COORDS);
+
+    for (int i = 0; i < size; i++)
+    {
+        for (int j = 0; j < SUBMAT_CORNER_COORDS; j++)
+            arr2[i][j] = arr1[i][j];
+    }
+
+    matrixAdd(&mx1, arr2, size);
+
+    matrix mx2 = createMatrixFromArray(
+            (int[]) {
+                1, 1, 1, 2, 1,
+                1, 1, 1, 2, 1,
+                2, 2, 2, 1, 0,
+                2, 2, 2, 1, 0,
+                1, 1, 1, 0, 0
+            }, rows_count1, cols_count1);
+
+    bool res = TwoMatricesAreEqual(&mx1, &mx2);
+    bool ans = true;
+
+    ASSERT(res, ans);
+
+    freeMemMatrix(&mx1);
+    freeMemMatrix(&mx2);
+
+    for (int i = 0; i < size; i++)
+        free(arr2[i]);
+
+    free(arr2);
 }
 
 
@@ -223,26 +347,6 @@ void test_medianFilter3()
 }
 
 
-void test_subdomainVisits1()
-{
-    int size = 1;
-    char** cpdomains = malloc(sizeof(char*) * size);
-
-    for (int i = 0; i < size; i++)
-        cpdomains[i] = malloc(sizeof(char) * MAX_STR_SIZE);
-
-    cpdomains[0] = "9001 discuss.leetcode.com";
-
-    int subdomains_size;
-    char** subdomains;
-
-    subdomains = subdomainVisits(cpdomains, size, &subdomains_size);
-
-    for (int i = 0; i < subdomains_size; i++)
-        printf("%s", subdomains[i]);
-}
-
-
 void test_shuffleStr1()
 {
     int size = 3;
@@ -279,14 +383,32 @@ void test_shuffleStr2()
 }
 
 
-void test_numTree()
+void test_submatricesThatContainOnlyDigit1()
 {
+    int rows_count1 = 3;
+    int cols_count1 = 3;
 
+    matrix mx1 = createMatrixFromArray(
+            (int[]) {
+                    1, 0, 1,
+                    1, 1, 0,
+                    1, 1, 0
+            }, rows_count1, cols_count1);
+
+    int res = submatricesThatContainOnlyDigit1(mx1);
+    int ans = 13;
+
+    ASSERT(ans, res);
+
+    freeMemMatrix(&mx1);
 }
 
 
 void test()
 {
+    test_matrixAdd1();
+    test_matrixAdd2();
+
     test_gameOfLife1();
     test_gameOfLife2();
 
@@ -294,7 +416,7 @@ void test()
     test_medianFilter2();
     test_medianFilter3();
 
-    // test_subdomainVisits1;
+    test_submatricesThatContainOnlyDigit1();
 
     test_shuffleStr1();
     test_shuffleStr2();
@@ -304,4 +426,27 @@ void test()
 int main()
 {
     test();
+
+    /* char** d = malloc(sizeof(char*) * MAX_SIZE);
+    int size = 4;
+
+    for (int i = 0; i < size; i++)
+        d[i] = malloc(sizeof(char) * MAX_STR_SIZE);
+
+    d[0] = "900 google.mail.com";
+    d[1] = "50 yahoo.com";
+    d[2] = "1 intel.mail.com";
+    d[3] = "5 wiki.org";
+
+    int rsize;
+
+    char** t = subdomainVisits(d, size, &rsize);
+
+    for (int i = 0; i < rsize; i++)
+    {
+        printf("%s\n", t[i]);
+        free(t[i]);
+    }
+
+    free(t); */
 }

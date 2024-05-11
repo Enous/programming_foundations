@@ -4,8 +4,40 @@
 #include <math.h>
 
 #include "matrix.h"
-#include "string_.h"
 #include "problems.h"
+
+typedef struct map
+{
+    size_t value;
+    char* key;
+} map;
+
+
+void matrixAdd(matrix* mx1, int** arr, int arr_size)
+{
+    for (int i = 0; i < arr_size; i++)
+    {
+        int r1 = arr[i][0];
+        int r2 = arr[i][2];
+
+        int c1 = arr[i][1];
+        int c2 = arr[i][3];
+
+        while (r1 <= r2 && c1 <= c2)
+        {
+            mx1->values[r1][c1] += 1;
+
+            if (c1 + 1 <= c2)
+                c1++;
+            else
+            {
+                r1++;
+                c1 = arr[i][1];
+            }
+        }
+    }
+}
+
 
 int countLiveCells(matrix mx, int row, int col)
 {
@@ -123,28 +155,6 @@ void medianFilter(matrix* mx, int window_size)
 }
 
 
-char** subdomainVisits(char** cpdomains, int size, int* return_size)
-{
-    char** subdomains = malloc(sizeof(char*) * MAX_SIZE);
-
-    for (int i = 0; i < MAX_SIZE; i++)
-        subdomains[i] = malloc(sizeof(char) * MAX_STR_SIZE);
-
-    for (int i = 0; i < size; i++)
-    {
-        char* domain = cpdomains[i];
-        char** ptr = cpdomains;
-
-        for (int j = 0; j < size; j++)
-        {
-
-        }
-    }
-
-    return subdomains;
-}
-
-
 void shuffleStr(char* s, int* indices, int size)
 {
     char* s_copy = malloc(sizeof(char) * size);
@@ -157,7 +167,130 @@ void shuffleStr(char* s, int* indices, int size)
 }
 
 
-int numTree(int* nums, int size)
+int submatricesThatContainOnlyDigit1(matrix mx)
 {
+    int total_elems = mx.rows_count * mx.cols_count;
 
+    for (int i = 0; i < mx.rows_count; i++)
+    {
+        for (int j = mx.cols_count - 2; j >= 0; j--)
+        {
+            if (mx.values[i][j] == 1)
+                mx.values[i][j] += mx.values[i][j + 1];
+        }
+    }
+
+    int count = 0;
+
+    for (int i = 0; i < mx.rows_count; i++)
+    {
+        for (int j = 0; j < mx.cols_count; j++)
+        {
+            int min = mx.values[i][j];
+
+            for (int k = j; k < mx.rows_count; k++)
+            {
+                if (mx.values[k][j] == 0)
+                    break;
+
+                min = min < mx.values[k][j] ? min : mx.values[k][j];
+                count += min;
+            }
+        }
+    }
+
+    return count;
+}
+
+
+bool checkKey(map* arr, size_t size, char* key, int value)
+{
+    for (size_t i = 0; i < size; i++)
+    {
+        if (!strcmp(arr[i].key, key))
+        {
+            arr[i].value += value;
+            return true;
+        }
+    }
+
+    return false;
+}
+
+
+char* tok(char* s1, char* s2)
+{
+    while (*s1 != *s2 && *s1 != '\0')
+        s1++;
+
+    if (*s1 == *s2)
+        s1++;
+
+    return s1;
+}
+
+
+char** subdomainVisits(char** cpdomains, int size, int* return_size)
+{
+    map* map_subdomains = malloc(sizeof(map) * MAX_SIZE);
+    *return_size = 0;
+
+    char* cpdomain = malloc(sizeof(char) * MAX_SIZE);
+
+    for (int i = 0; i < size; i++)
+    {
+        strcpy(cpdomain, cpdomains[i]);
+
+        char* token = strtok(cpdomain, " ");
+        int total_visits = atoi(token);
+
+        token = strtok(NULL, " ");
+
+        if (!checkKey(map_subdomains, *return_size, token, total_visits))
+        {
+            memcpy(map_subdomains[*return_size].key, token, strlen(token) + 1);
+            map_subdomains[*return_size].value = total_visits;
+            (*return_size)++;
+        }
+
+        token = tok(token, ".");
+
+        while (*token)
+        {
+            if (!checkKey(map_subdomains, *return_size, token, total_visits))
+            {
+                memcpy(map_subdomains[*return_size].key, token, strlen(token) + 1);
+                map_subdomains[*return_size].value = total_visits;
+                (*return_size)++;
+            }
+
+            token = tok(token, ".");
+        }
+    }
+
+    char** subdomains = malloc(sizeof(char*) * MAX_SIZE);
+
+    char* elem = malloc(sizeof(char) * MAX_STR_SIZE);
+
+    for (int i = 0; i < *return_size; i++)
+    {
+        char* elem_ptr = elem;
+        itoa(map_subdomains[i].value, elem_ptr, 10);
+        elem_ptr += strlen(elem_ptr);
+        *(elem_ptr++) = ' ';
+        *elem_ptr = '\0';
+
+        strcat(elem_ptr, map_subdomains[i].key);
+
+        subdomains[i] = malloc(sizeof(char) * MAX_STR_SIZE);
+
+        strcpy(subdomains[i], elem);
+
+        *elem = '\0';
+    }
+
+    free(elem);
+    free(map_subdomains);
+
+    return subdomains;
 }
