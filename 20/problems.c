@@ -13,6 +13,64 @@ typedef struct map
 } map;
 
 
+typedef struct TreeNode
+{
+    int value;
+    struct TreeNode *left_child;
+    struct TreeNode *right_child;
+} TreeNode;
+
+
+void assertString(const char *expected, char *got,
+                  char const *fileName, char const *funcName,
+                  int line)
+{
+    if (strcmp(expected, got))
+    {
+        fprintf(stderr, "File %s\n", fileName);
+        fprintf(stderr, "%s - failed on line %d\n", funcName, line);
+        fprintf(stderr, "Expected: \"%s\"\n", expected);
+        fprintf(stderr, "Got: \"%s\"\n\n", got);
+    }
+    else
+        fprintf(stderr, "%s - OK\n", funcName);
+}
+
+
+void assert(const int expected, int got,
+            char const *fileName, char const *funcName,
+            int line)
+{
+    if (expected != got)
+    {
+        fprintf(stderr, "File %s\n", fileName);
+        fprintf(stderr, "%s - failed on line %d\n", funcName, line);
+        fprintf(stderr, "Expected: \"%d\"\n", expected);
+        fprintf(stderr, "Got: \"%d\"\n\n", got);
+    }
+    else
+        fprintf(stderr, "%s - OK\n", funcName);
+}
+
+
+int* binaryTree(int* nums, int size, int* return_size)
+{
+    TreeNode node;
+
+    for (int i = 0; i < size; i++)
+    {
+        if (!node.value || nums[i] > node.value)
+            node.value = nums[i];
+    }
+}
+
+
+TreeNode buildTree(TreeNode node, int* return_size)
+{
+
+}
+
+
 void matrixAdd(matrix* mx1, int** arr, int arr_size)
 {
     for (int i = 0; i < arr_size; i++)
@@ -293,4 +351,71 @@ char** subdomainVisits(char** cpdomains, int size, int* return_size)
     free(map_subdomains);
 
     return subdomains;
+}
+
+
+
+void createFileWithNumsSmallerThanN1(FILE* f, char* fname, char* new_fname, int x)
+{
+    f = fopen(fname, "r");
+
+    char* buffer = malloc(sizeof(char) * MAX_STR_SIZE);
+    char** res_arr = malloc(sizeof(char*) * MAX_SIZE);
+
+    int j = 0;
+
+    while (fgets(buffer, MAX_STR_SIZE, f))
+    {
+        char* tok = strtok(buffer, " ");
+        res_arr[j] = malloc(sizeof(char) * MAX_STR_SIZE);
+        char* ptr = res_arr[j];
+
+        while (tok)
+        {
+            int num = atoi(tok);
+
+            if (num < x)
+            {
+                strcpy(ptr, tok);
+                ptr++;
+                *ptr = ' ';
+                ptr++;
+            }
+
+            tok = strtok(NULL, " ");
+        }
+
+        if (!res_arr[j])
+            *ptr = '\0';
+        if (*(ptr - 1) == ' ')
+            *(ptr - 1) = '\0';
+
+        j++;
+        *buffer = '\0';
+    }
+
+    fclose(f);
+
+    free(buffer);
+
+    FILE* new_f = fopen(new_fname, "w");
+
+    if (j == 0)
+        fprintf(new_f, "%s", "");
+    else
+    {
+        for (int k = 0; k < j; k++)
+        {
+            if (k < j - 1)
+                fprintf(new_f, "%s\n", res_arr[k]);
+            else
+                fprintf(new_f, "%s", res_arr[k]);
+
+            free(res_arr[k]);
+        }
+    }
+
+    fclose(new_f);
+
+    free(res_arr);
 }

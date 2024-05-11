@@ -109,6 +109,20 @@ build CMakeFiles/20.dir/problems.c.obj: C_COMPILER__20_unscanned_Debug D$:/uni/p
   OBJECT_DIR = CMakeFiles\20.dir
   OBJECT_FILE_DIR = CMakeFiles\20.dir
 
+build CMakeFiles/20.dir/problem9.c.obj: C_COMPILER__20_unscanned_Debug D$:/uni/programming_foundations/20/problem9.c || cmake_object_order_depends_target_20
+  DEP_FILE = CMakeFiles\20.dir\problem9.c.obj.d
+  FLAGS = -g -std=gnu11 -fdiagnostics-color=always
+  INCLUDES = -ID:/uni/programming_foundations/20/../libs/data_structures/matrix -ID:/uni/programming_foundations/20/../libs/data_structures/string
+  OBJECT_DIR = CMakeFiles\20.dir
+  OBJECT_FILE_DIR = CMakeFiles\20.dir
+
+build CMakeFiles/20.dir/problem10.c.obj: C_COMPILER__20_unscanned_Debug D$:/uni/programming_foundations/20/problem10.c || cmake_object_order_depends_target_20
+  DEP_FILE = CMakeFiles\20.dir\problem10.c.obj.d
+  FLAGS = -g -std=gnu11 -fdiagnostics-color=always
+  INCLUDES = -ID:/uni/programming_foundations/20/../libs/data_structures/matrix -ID:/uni/programming_foundations/20/../libs/data_structures/string
+  OBJECT_DIR = CMakeFiles\20.dir
+  OBJECT_FILE_DIR = CMakeFiles\20.dir
+
 
 # =============================================================================
 # Link build statements for EXECUTABLE target 20
@@ -117,7 +131,7 @@ build CMakeFiles/20.dir/problems.c.obj: C_COMPILER__20_unscanned_Debug D$:/uni/p
 #############################################
 # Link the executable 20.exe
 
-build 20.exe: C_EXECUTABLE_LINKER__20_Debug CMakeFiles/20.dir/main.c.obj CMakeFiles/20.dir/problems.c.obj | libdata_structures.a || libdata_structures.a
+build 20.exe: C_EXECUTABLE_LINKER__20_Debug CMakeFiles/20.dir/main.c.obj CMakeFiles/20.dir/problems.c.obj CMakeFiles/20.dir/problem9.c.obj CMakeFiles/20.dir/problem10.c.obj | libdata_structures.a || libdata_structures.a
   FLAGS = -g
   LINK_LIBRARIES = libdata_structures.a  -lkernel32 -luser32 -lgdi32 -lwinspool -lshell32 -lole32 -loleaut32 -luuid -lcomdlg32 -ladvapi32
   OBJECT_DIR = CMakeFiles\20.dir

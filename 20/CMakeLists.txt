@@ -13,6 +13,9 @@ add_library(data_structures ../libs/data_structures/matrix/matrix.c
 
 add_executable(20 main.c
         problems.c
-        problems.h)
+        problems.h
+        problem9.c
+        problem10.c
+)
 
 target_link_libraries(20 data_structures)

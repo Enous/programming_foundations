@@ -5,44 +5,6 @@
 #include "matrix.h"
 #include "problems.h"
 
-#define ASSERT(expected, got) assert(expected, got, \
-__FILE__, __FUNCTION__, __LINE__)
-
-#define ASSERT_STRING(expected, got) assertString(expected, got, \
-__FILE__, __FUNCTION__, __LINE__)
-
-
-void assertString(const char *expected, char *got,
-                  char const *fileName, char const *funcName,
-                  int line)
-{
-    if (strcmp(expected, got))
-    {
-        fprintf(stderr, "File %s\n", fileName);
-        fprintf(stderr, "%s - failed on line %d\n", funcName, line);
-        fprintf(stderr, "Expected: \"%s\"\n", expected);
-        fprintf(stderr, "Got: \"%s\"\n\n", got);
-    }
-    else
-        fprintf(stderr, "%s - OK\n", funcName);
-}
-
-
-void assert(const int expected, int got,
-                char const *fileName, char const *funcName,
-                int line)
-{
-    if (expected != got)
-    {
-        fprintf(stderr, "File %s\n", fileName);
-        fprintf(stderr, "%s - failed on line %d\n", funcName, line);
-        fprintf(stderr, "Expected: \"%d\"\n", expected);
-        fprintf(stderr, "Got: \"%d\"\n\n", got);
-    }
-    else
-        fprintf(stderr, "%s - OK\n", funcName);
-}
-
 
 bool arraysAreEqual(int* arr1, int size1, int* arr2, int size2)
 {
@@ -347,6 +309,12 @@ void test_medianFilter3()
 }
 
 
+void test_buildTree1()
+{
+
+}
+
+
 void test_shuffleStr1()
 {
     int size = 3;
@@ -418,12 +386,14 @@ void test()
 
     test_submatricesThatContainOnlyDigit1();
 
+    test_buildTree1();
+
     test_shuffleStr1();
     test_shuffleStr2();
 }
 
 
-int main()
+int main1()
 {
     test();
 
