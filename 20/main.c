@@ -372,6 +372,21 @@ void test_submatricesThatContainOnlyDigit1()
 }
 
 
+void test_outputAns()
+{
+    int n = 10;
+    int q = 3;
+    char dict[MAX_SIZE][MAX_STR_SIZE] = {"aa", "aaa", "aab",
+                                      "ab", "abc", "ac",
+                                      "ba", "daa", "dab", "dadba"};
+
+    query* queries = malloc(sizeof(query) * q);
+    queries = (query[]) {{4, "a"}, {2, "da"}, {4, "da"}};
+
+    outputAns(dict, n, queries, q);
+}
+
+
 void test()
 {
     test_matrixAdd1();
@@ -390,10 +405,12 @@ void test()
 
     test_shuffleStr1();
     test_shuffleStr2();
+
+    test_outputAns();
 }
 
 
-int main123()
+int main()
 {
     /*int size;
     //binaryTree((int[]) {3, 2, 1, 6, 0, 5}, 6, &size);
@@ -413,7 +430,7 @@ int main123()
 
     printf("%d", d[0]);*/
 
-    //test();
+    test();
 
     /* char** d = malloc(sizeof(char*) * MAX_SIZE);
     int size = 4;

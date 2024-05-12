@@ -6,22 +6,6 @@
 #include "matrix.h"
 #include "problems.h"
 
-typedef struct map
-{
-    size_t value;
-    char* key;
-} map;
-
-
-typedef struct TreeNode
-{
-    int *value;
-    int *left_child;
-    int l_size;
-    int *right_child;
-    int r_size;
-} TreeNode;
-
 
 void assertString(const char *expected, char *got,
                   char const *fileName, char const *funcName,
@@ -441,4 +425,58 @@ void createFileWithNumsSmallerThanN(FILE* f, char* fname, char* new_fname, int x
     fclose(new_f);
 
     free(res_arr);
+}
+
+
+bool isPrefix(char* s1, char* s2)
+{
+    while (1)
+    {
+        if (*s1 && !*s2)
+            return false;
+        if (!*s1)
+            break;
+        if (*s1 - *s2 != 0)
+            return false;
+
+        s1++;
+        s2++;
+    }
+
+    return true;
+}
+
+
+void outputAns(char dict[MAX_SIZE][MAX_STR_SIZE], int n, query* queries, int q)
+{
+    for (int i = 0; i < q; i++)
+    {
+        int count = 0;
+        bool found = false;
+
+        for (int j = 0; j < n; j++)
+        {
+            char* chr = strstr(dict[j], queries[i].prefix);
+
+            if (!chr || chr != dict[j])
+                count = 0;
+            else
+            {
+                if (chr != dict[j])
+                    continue;
+
+                count++;
+
+                if (count == queries[i].pos)
+                {
+                    printf("%d\n", j + 1);
+                    found = true;
+                    break;
+                }
+            }
+        }
+
+        if (!found)
+            printf("%d\n", -1);
+    }
 }

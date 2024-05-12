@@ -32,7 +32,7 @@ void sigfunc(int sig)
 }
 
 
-int main(int argc, char* argv[])
+int main10(int argc, char* argv[])
 {
     if (argc >= 2)
     {
