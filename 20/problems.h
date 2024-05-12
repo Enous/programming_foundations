@@ -18,7 +18,7 @@ __FILE__, __FUNCTION__, __LINE__)
 typedef struct map
 {
     size_t value;
-    char* key;
+    char key[MAX_STR_SIZE];
 } map;
 
 typedef struct query

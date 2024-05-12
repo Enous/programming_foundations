@@ -300,7 +300,7 @@ char** subdomainVisits(char** cpdomains, int size, int* return_size)
     map* map_subdomains = malloc(sizeof(map) * MAX_SIZE);
     *return_size = 0;
 
-    char* cpdomain = malloc(sizeof(char) * MAX_SIZE);
+    char* cpdomain = malloc(sizeof(char) * MAX_STR_SIZE);
 
     for (int i = 0; i < size; i++)
     {
@@ -313,7 +313,7 @@ char** subdomainVisits(char** cpdomains, int size, int* return_size)
 
         if (!checkKey(map_subdomains, *return_size, token, total_visits))
         {
-            memcpy(map_subdomains[*return_size].key, token, strlen(token) + 1);
+            strcpy(map_subdomains[*return_size].key, token);
             map_subdomains[*return_size].value = total_visits;
             (*return_size)++;
         }
@@ -324,7 +324,7 @@ char** subdomainVisits(char** cpdomains, int size, int* return_size)
         {
             if (!checkKey(map_subdomains, *return_size, token, total_visits))
             {
-                memcpy(map_subdomains[*return_size].key, token, strlen(token) + 1);
+                strcpy(map_subdomains[*return_size].key, token);
                 map_subdomains[*return_size].value = total_visits;
                 (*return_size)++;
             }

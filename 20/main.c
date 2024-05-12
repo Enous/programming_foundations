@@ -414,6 +414,65 @@ void test_smallestNum2()
 }
 
 
+void test_subdomainVisits1()
+{
+    char** d = malloc(sizeof(char*) * MAX_SIZE);
+    int size = 1;
+
+    for (int i = 0; i < size; i++)
+        d[i] = malloc(sizeof(char) * MAX_STR_SIZE);
+
+    strcpy(d[0], "9001 discuss.codeforces.com");
+
+    int rsize;
+
+    char** t = subdomainVisits(d, size, &rsize);
+
+    char ans_size = 3;
+
+    ASSERT(ans_size, rsize);
+
+    for (int i = 0; i < rsize; i++)
+    {
+        printf("%s\n", t[i]);
+        free(t[i]);
+    }
+
+    free(t);
+}
+
+
+void test_subdomainVisits2()
+{
+    char** d = malloc(sizeof(char*) * MAX_SIZE);
+    int size = 4;
+
+    for (int i = 0; i < size; i++)
+        d[i] = malloc(sizeof(char) * MAX_STR_SIZE);
+
+    strcpy(d[0], "900 google.mail.com");
+    strcpy(d[1], "50 yahoo.com");
+    strcpy(d[2], "1 intel.mail.com");
+    strcpy(d[3], "5 wiki.org");
+
+    int rsize;
+
+    char** t = subdomainVisits(d, size, &rsize);
+
+    char ans_size = 7;
+
+    ASSERT(ans_size, rsize);
+
+    for (int i = 0; i < rsize; i++)
+    {
+        printf("%s\n", t[i]);
+        free(t[i]);
+    }
+
+    free(t);
+}
+
+
 void test()
 {
     test_matrixAdd1();
@@ -421,6 +480,9 @@ void test()
 
     test_gameOfLife1();
     test_gameOfLife2();
+
+    test_subdomainVisits1();
+    test_subdomainVisits2();
 
     test_medianFilter1();
     test_medianFilter2();
@@ -461,27 +523,4 @@ int main()
     printf("%d", d[0]);*/
 
     test();
-
-    /* char** d = malloc(sizeof(char*) * MAX_SIZE);
-    int size = 4;
-
-    for (int i = 0; i < size; i++)
-        d[i] = malloc(sizeof(char) * MAX_STR_SIZE);
-
-    d[0] = "900 google.mail.com";
-    d[1] = "50 yahoo.com";
-    d[2] = "1 intel.mail.com";
-    d[3] = "5 wiki.org";
-
-    int rsize;
-
-    char** t = subdomainVisits(d, size, &rsize);
-
-    for (int i = 0; i < rsize; i++)
-    {
-        printf("%s\n", t[i]);
-        free(t[i]);
-    }
-
-    free(t); */
 }
