@@ -468,57 +468,6 @@ void outputAns(char dict[MAX_SIZE][MAX_STR_SIZE], int n, query* queries, int q)
 }
 
 
-char* smallestNum123(char* pattern)
-{
-    int i = 0;
-    char smallest_num[MAX_DIGIT + 1];
-    bool used_digits[MAX_DIGIT + 1];
-    char temp[MAX_DIGIT + 1] = "";
-    int temp_size = 0;
-
-    putDigit(i, pattern, smallest_num, used_digits, temp, temp_size);
-
-    return smallest_num;
-}
-
-
-void putDigit(int i, char* pattern, char* smallest_num, bool* used_digits, char* temp, int temp_size)
-{
-    if (strcmp(smallest_num, ""))
-        return;
-
-    if (i == strlen(pattern) + 1)
-    {
-        strcpy(smallest_num, temp);
-        return;
-    }
-
-    for (int j = 1; j < 10; j++)
-    {
-        if (!used_digits[i])
-        {
-            if (i > 0 && pattern[i - 1] == 'I' && temp[temp_size - 1] - '0' >= i)
-                continue;
-
-            if (i > 0 && pattern[i - 1] == 'D' && temp[temp_size - 1] - '0' <= i)
-                continue;
-
-            used_digits[i] = true;
-
-            char num = i + '0';
-
-            temp[temp_size] = num;
-            temp_size++;
-
-            putDigit(i + 1, pattern, smallest_num, used_digits, temp, temp_size);
-
-            temp[temp_size] = '\0';
-            used_digits[i] = false;
-        }
-    }
-}
-
-
 char* smallestNum(char* pattern)
 {
     int size = strlen(pattern);
