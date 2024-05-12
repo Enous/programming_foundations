@@ -39,43 +39,117 @@ void assert(const int expected, int got,
 }
 
 
-/*int* binaryTree(int* nums, int size, int* return_size)
+void add_to_queue(TreeNode* node, TreeNode** queue, int* queue_size, int* first_element)
 {
-    *return_size = 0;
-
-    TreeNode node;
-    node.value = malloc(sizeof(int));
-    node.left_child = malloc(sizeof(int) * MAX_SIZE);
-    node.right_child = malloc(sizeof(int) * MAX_SIZE);
-    node.value[0] = nums[0];
-    node.r_size = 0;
-    node.l_size = 0;
-
-    int** return_arr = malloc(sizeof(int*) * MAX_SIZE);
-    return_arr[*return_size] = malloc(sizeof(int) * MAX_SIZE);
-    // memcpy(return_arr[*return_size], node.value, sizeof(int));
+    queue[*first_element + (*queue_size)++] = node;
 }
 
 
-void buildTree(int* nums, int** return_arr, int* return_size)
+TreeNode* delete_from_queue(TreeNode** queue, int* queue_size, int* first_element)
 {
-    for (int i = 1; i < size; i++)
+    TreeNode* first = NULL;
+
+    if (queue_size > 0)
     {
-        if (nums[i] > node.value[0])
+        first = queue[(*first_element)++];
+        (*queue_size)--;
+    }
+    return first;
+}
+
+
+int is_empty(int queue_size)
+{
+    return queue_size == 0;
+}
+
+
+int getMax(int* arr, int size)
+{
+    if (size > 0)
+    {
+        int max_i = 0;
+        int max = arr[max_i];
+
+        for (int i = 1; i < size; i++)
         {
-            memcpy(node.left_child, node.right_child, sizeof(int) * node.r_size);
-            memset(node.right_child, 0,  node.r_size * sizeof(int));
+            if (max < arr[i])
+            {
+                max_i = i;
+                max = arr[i];
+            }
+        }
 
-            node.l_size = node.r_size;
-            node.r_size = 0;
-            node.left_child[node.l_size++] = node.value[0];
+        return max_i;
+    }
 
-            node.value[0] = nums[i];
+    return -1;
+}
+
+
+void width(TreeNode *root, TreeNode** queue, int* queue_size, int* first_element)
+{
+    if (!root)
+        return;
+
+    add_to_queue(root, queue, queue_size, first_element);
+
+    while (!is_empty(*queue_size))
+    {
+        TreeNode *curr = delete_from_queue(queue, queue_size, first_element);
+        if (curr)
+        {
+            printf("%d ", curr->max);
+
+            if (curr->left_child || curr->right_child)
+            {
+                add_to_queue(curr->left_child, queue, queue_size, first_element);
+                add_to_queue(curr->right_child, queue, queue_size, first_element);
+            }
         }
         else
-            node.right_child[node.r_size++] = nums[i];
+            printf("null ");
     }
-}*/
+}
+
+
+TreeNode* binaryTree(int* nums, int size)
+{
+    if (size > 0)
+    {
+        TreeNode* node = malloc(sizeof(TreeNode));
+
+        int max_idx = getMax(nums, size);
+
+        node->max = nums[max_idx];
+
+        if (max_idx > 0)
+            node->left_child = binaryTree(nums, max_idx);
+        else
+            node->left_child = NULL;
+
+        if (size - max_idx > 0)
+            node->right_child = binaryTree(nums + max_idx + 1, size - max_idx - 1);
+        else
+            node->right_child = NULL;
+
+        return node;
+    }
+
+    return NULL;
+}
+
+
+void buildTree(int* nums, int size)
+{
+    TreeNode* root_node = binaryTree(nums, size);
+
+    TreeNode* queue[50];
+    int queue_size = 0;
+    int first_element = 0;
+
+    width(root_node, queue, &queue_size, &first_element);
+}
 
 
 void matrixAdd(matrix* mx1, int** arr, int arr_size)

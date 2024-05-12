@@ -29,11 +29,9 @@ typedef struct query
 
 typedef struct TreeNode
 {
-    int *value;
-    int *left_child;
-    int l_size;
-    int *right_child;
-    int r_size;
+    int max;
+    struct TreeNode *left_child;
+    struct TreeNode *right_child;
 } TreeNode;
 
 void assert(const int, int,
@@ -49,7 +47,8 @@ void medianFilter(matrix*, int);
 int getArrMedian(matrix, int, int, int);
 //char** subdomainVisits(char**, int, int*);
 void shuffleStr(char*, int*, int);
-int* binaryTree(int*, int, int*);
+void buildTree(int*, int);
+TreeNode* binaryTree(int*, int);
 int submatricesThatContainOnlyDigit1(matrix);
 char** subdomainVisits(char**, int, int*);
 char* smallestNum(char*);
