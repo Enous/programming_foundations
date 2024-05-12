@@ -3,11 +3,9 @@ project(20 C)
 
 set(CMAKE_C_STANDARD 11)
 
-include_directories(../libs/data_structures/matrix
-        ../libs/data_structures/string)
+include_directories(../libs/data_structures/matrix)
 
 add_library(data_structures ../libs/data_structures/matrix/matrix.c
-        ../libs/data_structures/string/string_.c
         problems.c
         problems.h)
 

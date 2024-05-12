@@ -29,13 +29,13 @@
 			{
 				"command" : 0,
 				"file" : 0,
-				"line" : 14,
+				"line" : 12,
 				"parent" : 0
 			},
 			{
 				"command" : 1,
 				"file" : 0,
-				"line" : 21,
+				"line" : 19,
 				"parent" : 0
 			},
 			{
@@ -60,10 +60,6 @@
 				{
 					"backtrace" : 3,
 					"path" : "D:/uni/programming_foundations/20/../libs/data_structures/matrix"
-				},
-				{
-					"backtrace" : 3,
-					"path" : "D:/uni/programming_foundations/20/../libs/data_structures/string"
 				}
 			],
 			"language" : "C",

@@ -5,6 +5,7 @@
 
 #define MAX_SIZE 20
 #define MAX_STR_SIZE 100
+#define MAX_DIGIT 9
 
 #define SUBMAT_CORNER_COORDS 4
 
@@ -51,8 +52,9 @@ void shuffleStr(char*, int*, int);
 int* binaryTree(int*, int, int*);
 int submatricesThatContainOnlyDigit1(matrix);
 char** subdomainVisits(char**, int, int*);
+char* smallestNum(char*);
 void createFileWithNumsSmallerThanN(FILE*, char*, char*, int);
-bool isPrefix(char*, char*);
 void outputAns(char[MAX_SIZE][MAX_STR_SIZE], int, query*, int);
+void putDigit(int, char*, char*, bool*, char*, int);
 
 #endif //INC_20_PROBLEMS_H

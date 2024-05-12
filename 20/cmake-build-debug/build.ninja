@@ -52,21 +52,14 @@ build cmake_object_order_depends_target_data_structures: phony || CMakeFiles/dat
 build CMakeFiles/data_structures.dir/D_/uni/programming_foundations/libs/data_structures/matrix/matrix.c.obj: C_COMPILER__data_structures_unscanned_Debug D$:/uni/programming_foundations/libs/data_structures/matrix/matrix.c || cmake_object_order_depends_target_data_structures
   DEP_FILE = CMakeFiles\data_structures.dir\D_\uni\programming_foundations\libs\data_structures\matrix\matrix.c.obj.d
   FLAGS = -g -std=gnu11 -fdiagnostics-color=always
-  INCLUDES = -ID:/uni/programming_foundations/20/../libs/data_structures/matrix -ID:/uni/programming_foundations/20/../libs/data_structures/string
+  INCLUDES = -ID:/uni/programming_foundations/20/../libs/data_structures/matrix
   OBJECT_DIR = CMakeFiles\data_structures.dir
   OBJECT_FILE_DIR = CMakeFiles\data_structures.dir\D_\uni\programming_foundations\libs\data_structures\matrix
-
-build CMakeFiles/data_structures.dir/D_/uni/programming_foundations/libs/data_structures/string/string_.c.obj: C_COMPILER__data_structures_unscanned_Debug D$:/uni/programming_foundations/libs/data_structures/string/string_.c || cmake_object_order_depends_target_data_structures
-  DEP_FILE = CMakeFiles\data_structures.dir\D_\uni\programming_foundations\libs\data_structures\string\string_.c.obj.d
-  FLAGS = -g -std=gnu11 -fdiagnostics-color=always
-  INCLUDES = -ID:/uni/programming_foundations/20/../libs/data_structures/matrix -ID:/uni/programming_foundations/20/../libs/data_structures/string
-  OBJECT_DIR = CMakeFiles\data_structures.dir
-  OBJECT_FILE_DIR = CMakeFiles\data_structures.dir\D_\uni\programming_foundations\libs\data_structures\string
 
 build CMakeFiles/data_structures.dir/problems.c.obj: C_COMPILER__data_structures_unscanned_Debug D$:/uni/programming_foundations/20/problems.c || cmake_object_order_depends_target_data_structures
   DEP_FILE = CMakeFiles\data_structures.dir\problems.c.obj.d
   FLAGS = -g -std=gnu11 -fdiagnostics-color=always
-  INCLUDES = -ID:/uni/programming_foundations/20/../libs/data_structures/matrix -ID:/uni/programming_foundations/20/../libs/data_structures/string
+  INCLUDES = -ID:/uni/programming_foundations/20/../libs/data_structures/matrix
   OBJECT_DIR = CMakeFiles\data_structures.dir
   OBJECT_FILE_DIR = CMakeFiles\data_structures.dir
 
@@ -78,7 +71,7 @@ build CMakeFiles/data_structures.dir/problems.c.obj: C_COMPILER__data_structures
 #############################################
 # Link the static library libdata_structures.a
 
-build libdata_structures.a: C_STATIC_LIBRARY_LINKER__data_structures_Debug CMakeFiles/data_structures.dir/D_/uni/programming_foundations/libs/data_structures/matrix/matrix.c.obj CMakeFiles/data_structures.dir/D_/uni/programming_foundations/libs/data_structures/string/string_.c.obj CMakeFiles/data_structures.dir/problems.c.obj
+build libdata_structures.a: C_STATIC_LIBRARY_LINKER__data_structures_Debug CMakeFiles/data_structures.dir/D_/uni/programming_foundations/libs/data_structures/matrix/matrix.c.obj CMakeFiles/data_structures.dir/problems.c.obj
   LANGUAGE_COMPILE_FLAGS = -g
   OBJECT_DIR = CMakeFiles\data_structures.dir
   POST_BUILD = cd .
@@ -98,28 +91,28 @@ build cmake_object_order_depends_target_20: phony || cmake_object_order_depends_
 build CMakeFiles/20.dir/main.c.obj: C_COMPILER__20_unscanned_Debug D$:/uni/programming_foundations/20/main.c || cmake_object_order_depends_target_20
   DEP_FILE = CMakeFiles\20.dir\main.c.obj.d
   FLAGS = -g -std=gnu11 -fdiagnostics-color=always
-  INCLUDES = -ID:/uni/programming_foundations/20/../libs/data_structures/matrix -ID:/uni/programming_foundations/20/../libs/data_structures/string
+  INCLUDES = -ID:/uni/programming_foundations/20/../libs/data_structures/matrix
   OBJECT_DIR = CMakeFiles\20.dir
   OBJECT_FILE_DIR = CMakeFiles\20.dir
 
 build CMakeFiles/20.dir/problems.c.obj: C_COMPILER__20_unscanned_Debug D$:/uni/programming_foundations/20/problems.c || cmake_object_order_depends_target_20
   DEP_FILE = CMakeFiles\20.dir\problems.c.obj.d
   FLAGS = -g -std=gnu11 -fdiagnostics-color=always
-  INCLUDES = -ID:/uni/programming_foundations/20/../libs/data_structures/matrix -ID:/uni/programming_foundations/20/../libs/data_structures/string
+  INCLUDES = -ID:/uni/programming_foundations/20/../libs/data_structures/matrix
   OBJECT_DIR = CMakeFiles\20.dir
   OBJECT_FILE_DIR = CMakeFiles\20.dir
 
 build CMakeFiles/20.dir/problem9.c.obj: C_COMPILER__20_unscanned_Debug D$:/uni/programming_foundations/20/problem9.c || cmake_object_order_depends_target_20
   DEP_FILE = CMakeFiles\20.dir\problem9.c.obj.d
   FLAGS = -g -std=gnu11 -fdiagnostics-color=always
-  INCLUDES = -ID:/uni/programming_foundations/20/../libs/data_structures/matrix -ID:/uni/programming_foundations/20/../libs/data_structures/string
+  INCLUDES = -ID:/uni/programming_foundations/20/../libs/data_structures/matrix
   OBJECT_DIR = CMakeFiles\20.dir
   OBJECT_FILE_DIR = CMakeFiles\20.dir
 
 build CMakeFiles/20.dir/problem10.c.obj: C_COMPILER__20_unscanned_Debug D$:/uni/programming_foundations/20/problem10.c || cmake_object_order_depends_target_20
   DEP_FILE = CMakeFiles\20.dir\problem10.c.obj.d
   FLAGS = -g -std=gnu11 -fdiagnostics-color=always
-  INCLUDES = -ID:/uni/programming_foundations/20/../libs/data_structures/matrix -ID:/uni/programming_foundations/20/../libs/data_structures/string
+  INCLUDES = -ID:/uni/programming_foundations/20/../libs/data_structures/matrix
   OBJECT_DIR = CMakeFiles\20.dir
   OBJECT_FILE_DIR = CMakeFiles\20.dir
 

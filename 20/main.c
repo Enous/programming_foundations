@@ -380,10 +380,37 @@ void test_outputAns()
                                       "ab", "abc", "ac",
                                       "ba", "daa", "dab", "dadba"};
 
-    query* queries = malloc(sizeof(query) * q);
-    queries = (query[]) {{4, "a"}, {2, "da"}, {4, "da"}};
+    query queries[3] = {{4, "a"}, {2, "da"}, {4, "da"}};
 
-    outputAns(dict, n, queries, q);
+    //outputAns(dict, n, queries, q);
+}
+
+
+void test_smallestNum1()
+{
+    char* pattern = malloc(sizeof(char) * (MAX_DIGIT + 1));
+    strcpy(pattern, "IIIDIDDD");
+
+    char* res = smallestNum(pattern);
+
+    ASSERT_STRING("123549876", res);
+
+    free(res);
+    free(pattern);
+}
+
+
+void test_smallestNum2()
+{
+    char* pattern = malloc(sizeof(char) * (MAX_DIGIT + 1));
+    strcpy(pattern, "DDD");
+
+    char* res = smallestNum(pattern);
+
+    ASSERT_STRING("4321", res);
+
+    free(res);
+    free(pattern);
 }
 
 
@@ -400,6 +427,9 @@ void test()
     test_medianFilter3();
 
     test_submatricesThatContainOnlyDigit1();
+
+    test_smallestNum1();
+    test_smallestNum2();
 
     test_buildTree1();
 

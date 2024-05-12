@@ -39,7 +39,7 @@ void assert(const int expected, int got,
 }
 
 
-int* binaryTree(int* nums, int size, int* return_size)
+/*int* binaryTree(int* nums, int size, int* return_size)
 {
     *return_size = 0;
 
@@ -57,7 +57,7 @@ int* binaryTree(int* nums, int size, int* return_size)
 }
 
 
-/* void buildTree(TreeNode node, int** return_arr, int* return_size)
+void buildTree(int* nums, int** return_arr, int* return_size)
 {
     for (int i = 1; i < size; i++)
     {
@@ -75,7 +75,7 @@ int* binaryTree(int* nums, int size, int* return_size)
         else
             node.right_child[node.r_size++] = nums[i];
     }
-} */
+}*/
 
 
 void matrixAdd(matrix* mx1, int** arr, int arr_size)
@@ -428,41 +428,24 @@ void createFileWithNumsSmallerThanN(FILE* f, char* fname, char* new_fname, int x
 }
 
 
-bool isPrefix(char* s1, char* s2)
-{
-    while (1)
-    {
-        if (*s1 && !*s2)
-            return false;
-        if (!*s1)
-            break;
-        if (*s1 - *s2 != 0)
-            return false;
-
-        s1++;
-        s2++;
-    }
-
-    return true;
-}
-
-
 void outputAns(char dict[MAX_SIZE][MAX_STR_SIZE], int n, query* queries, int q)
 {
+    int j = 0;
+
     for (int i = 0; i < q; i++)
     {
         int count = 0;
         bool found = false;
 
-        for (int j = 0; j < n; j++)
+        while (j < n && *dict)
         {
-            char* chr = strstr(dict[j], queries[i].prefix);
+            char* chr = strstr(*dict, queries[i].prefix);
 
-            if (!chr || chr != dict[j])
+            if (!chr || chr != *dict)
                 count = 0;
             else
             {
-                if (chr != dict[j])
+                if (chr != *dict)
                     continue;
 
                 count++;
@@ -474,9 +457,99 @@ void outputAns(char dict[MAX_SIZE][MAX_STR_SIZE], int n, query* queries, int q)
                     break;
                 }
             }
+
+            j++;
+            dict++;
         }
 
         if (!found)
             printf("%d\n", -1);
     }
+}
+
+
+char* smallestNum123(char* pattern)
+{
+    int i = 0;
+    char smallest_num[MAX_DIGIT + 1];
+    bool used_digits[MAX_DIGIT + 1];
+    char temp[MAX_DIGIT + 1] = "";
+    int temp_size = 0;
+
+    putDigit(i, pattern, smallest_num, used_digits, temp, temp_size);
+
+    return smallest_num;
+}
+
+
+void putDigit(int i, char* pattern, char* smallest_num, bool* used_digits, char* temp, int temp_size)
+{
+    if (strcmp(smallest_num, ""))
+        return;
+
+    if (i == strlen(pattern) + 1)
+    {
+        strcpy(smallest_num, temp);
+        return;
+    }
+
+    for (int j = 1; j < 10; j++)
+    {
+        if (!used_digits[i])
+        {
+            if (i > 0 && pattern[i - 1] == 'I' && temp[temp_size - 1] - '0' >= i)
+                continue;
+
+            if (i > 0 && pattern[i - 1] == 'D' && temp[temp_size - 1] - '0' <= i)
+                continue;
+
+            used_digits[i] = true;
+
+            char num = i + '0';
+
+            temp[temp_size] = num;
+            temp_size++;
+
+            putDigit(i + 1, pattern, smallest_num, used_digits, temp, temp_size);
+
+            temp[temp_size] = '\0';
+            used_digits[i] = false;
+        }
+    }
+}
+
+
+char* smallestNum(char* pattern)
+{
+    int size = strlen(pattern);
+    char* smallest_num = malloc(sizeof(char) * (size + 2));
+
+    for(int i = 0; i < size + 1; i++)
+        smallest_num[i] = (i + 1) + '0';
+
+
+    for (int i = 0; i < size; i++)
+    {
+        int t = i;
+
+        while (t < size && pattern[t] == 'D')
+            t++;
+
+        int l = i;
+        int r = t;
+
+        while (l < r)
+        {
+            char temp = smallest_num[l];
+            smallest_num[l++] = smallest_num[r];
+            smallest_num[r--] = temp;
+        }
+
+        if (t != i)
+            i = t - 1;
+    }
+
+    smallest_num[size + 1] = '\0';
+
+    return smallest_num;
 }
