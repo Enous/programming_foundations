@@ -393,9 +393,27 @@ void test()
 }
 
 
-int main1()
+int main123()
 {
-    test();
+    /*int size;
+    //binaryTree((int[]) {3, 2, 1, 6, 0, 5}, 6, &size);
+
+    int** v = malloc(sizeof(int*));
+
+    for (int i = 0; i < 1; i++)
+        v[i] = malloc(sizeof(int));
+
+    int* d = malloc(sizeof(int));
+
+    d = (int[]) {1};
+
+    memcpy(v[0], d, sizeof(int));
+
+    v[0][0]++;
+
+    printf("%d", d[0]);*/
+
+    //test();
 
     /* char** d = malloc(sizeof(char*) * MAX_SIZE);
     int size = 4;

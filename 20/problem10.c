@@ -1,15 +1,42 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <signal.h>
+#include <unistd.h>
 
-#include "matrix.h"
 #include "problems.h"
+
+FILE* f;
+int count;
+
+void sigfunc(int sig)
+{
+    signal(SIGINT,sigfunc);
+
+    char* buffer = malloc(sizeof(char) * MAX_STR_SIZE);
+
+    if (sig == SIGINT)
+    {
+        for (int i = 0; i < count; i++)
+        {
+            if (fgets(buffer, MAX_STR_SIZE, f))
+                printf("%s", buffer);
+            else
+            {
+                free(buffer);
+                exit(0);
+            }
+        }
+
+        *buffer = '\0';
+    }
+}
+
 
 int main(int argc, char* argv[])
 {
     if (argc >= 2)
     {
-        FILE* f = fopen(argv[1], "w");
+        f = fopen(argv[1], "w");
 
         fprintf(f, "%s\n", "abcd");
         fprintf(f, "%s\n", "efgh");
@@ -21,14 +48,15 @@ int main(int argc, char* argv[])
 
         fclose(f);
 
-        int n = atoi(argv[3]);
+        f = fopen(argv[1], "r");
 
-        FILE* new_f = fopen(argv[2], "r");
+        count = atoi(argv[2]);
 
+        signal(SIGINT,sigfunc);
 
-
-        fclose(new_f);
+        while (1)
+        {
+            sleep(10);
+        }
     }
-
-    return 0;
 }

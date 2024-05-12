@@ -15,9 +15,11 @@ typedef struct map
 
 typedef struct TreeNode
 {
-    int value;
-    struct TreeNode *left_child;
-    struct TreeNode *right_child;
+    int *value;
+    int *left_child;
+    int l_size;
+    int *right_child;
+    int r_size;
 } TreeNode;
 
 
@@ -55,20 +57,41 @@ void assert(const int expected, int got,
 
 int* binaryTree(int* nums, int size, int* return_size)
 {
+    *return_size = 0;
+
     TreeNode node;
+    node.value = malloc(sizeof(int));
+    node.left_child = malloc(sizeof(int) * MAX_SIZE);
+    node.right_child = malloc(sizeof(int) * MAX_SIZE);
+    node.value[0] = nums[0];
+    node.r_size = 0;
+    node.l_size = 0;
 
-    for (int i = 0; i < size; i++)
-    {
-        if (!node.value || nums[i] > node.value)
-            node.value = nums[i];
-    }
+    int** return_arr = malloc(sizeof(int*) * MAX_SIZE);
+    return_arr[*return_size] = malloc(sizeof(int) * MAX_SIZE);
+    // memcpy(return_arr[*return_size], node.value, sizeof(int));
 }
 
 
-TreeNode buildTree(TreeNode node, int* return_size)
+/* void buildTree(TreeNode node, int** return_arr, int* return_size)
 {
+    for (int i = 1; i < size; i++)
+    {
+        if (nums[i] > node.value[0])
+        {
+            memcpy(node.left_child, node.right_child, sizeof(int) * node.r_size);
+            memset(node.right_child, 0,  node.r_size * sizeof(int));
 
-}
+            node.l_size = node.r_size;
+            node.r_size = 0;
+            node.left_child[node.l_size++] = node.value[0];
+
+            node.value[0] = nums[i];
+        }
+        else
+            node.right_child[node.r_size++] = nums[i];
+    }
+} */
 
 
 void matrixAdd(matrix* mx1, int** arr, int arr_size)
@@ -355,7 +378,7 @@ char** subdomainVisits(char** cpdomains, int size, int* return_size)
 
 
 
-void createFileWithNumsSmallerThanN1(FILE* f, char* fname, char* new_fname, int x)
+void createFileWithNumsSmallerThanN(FILE* f, char* fname, char* new_fname, int x)
 {
     f = fopen(fname, "r");
 

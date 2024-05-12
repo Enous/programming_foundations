@@ -1,6 +1,8 @@
 #ifndef INC_20_PROBLEMS_H
 #define INC_20_PROBLEMS_H
 
+#include "matrix.h"
+
 #define MAX_SIZE 20
 #define MAX_STR_SIZE 100
 
@@ -28,6 +30,6 @@ void shuffleStr(char*, int*, int);
 int* binaryTree(int*, int, int*);
 int submatricesThatContainOnlyDigit1(matrix);
 char** subdomainVisits(char**, int, int*);
-void createFileWithNumsSmallerThanN1(FILE*, char*, char*, int);
+void createFileWithNumsSmallerThanN(FILE*, char*, char*, int);
 
 #endif //INC_20_PROBLEMS_H

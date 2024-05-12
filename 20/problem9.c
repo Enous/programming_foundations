@@ -18,7 +18,7 @@ int main2(int argc, char* argv[])
 
         int x = atoi(argv[3]);
 
-        createFileWithNumsSmallerThanN1(f, argv[1], argv[2], x);
+        createFileWithNumsSmallerThanN(f, argv[1], argv[2], x);
 
         FILE* new_f = fopen(argv[2], "r");
 
